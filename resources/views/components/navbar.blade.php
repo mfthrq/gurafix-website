@@ -8,7 +8,7 @@
         </div>
 
         <div class="logo">
-            <a href="{{ route('home') }}">
+            <a href="{{ route('beranda') }}">
                 <img src="{{ asset('assets/img/logo_gurafix_no_bg.png') }}" width="50px" alt="img" />
             </a>
         </div>
@@ -16,16 +16,16 @@
         <div class="collapse navbar-collapse" id="xdyat_main_menu">
             <ul class="navbar-nav menu-open ps-lg-5 text-end">
                 <li>
-                    <a href="{{ route('home') }}" class="{{ Request::is('/') ? 'active' : '' }}">Beranda</a>
+                    <a href="{{ route('beranda') }}" class="{{ Request::is('/') ? 'active' : '' }}">Beranda</a>
                 </li>
                 <li>
-                    <a href="{{ route('about') }}" class="{{ Request::is('about') ? 'active' : '' }}">Tentang Kami</a>
+                    <a href="{{ route('tentang') }}" class="{{ Request::is('tentang') ? 'active' : '' }}">Tentang Kami</a>
                 </li>
                 <li>
-                    <a href="{{ route('service') }}" class="{{ Request::is('service') ? 'active' : '' }}">Layanan</a>
+                    <a href="{{ route('layanan') }}" class="{{ Request::is('layanan') ? 'active' : '' }}">Layanan</a>
                 </li>
                 <li>
-                    <a href="{{ route('contact') }}" class="{{ Request::is('contact') ? 'active' : '' }}">Contact Us</a>
+                    <a href="{{ route('kontak') }}" class="{{ Request::is('kontak') ? 'active' : '' }}">Contact Us</a>
                 </li>
             </ul>
         </div>

@@ -4,19 +4,19 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('customer/index');
-})->name('home');
+})->name('beranda');
 
-Route::get('/about', function () {
+Route::get('/tentang', function () {
     return view('customer/about');
-})->name('about');
+})->name('tentang');
 
-Route::get('/service', function () {
+Route::get('/layanan', function () {
     return view('customer/service');
-})->name('service');
+})->name('layanan');
 
-Route::get('/contact', function () {
+Route::get('/kontak', function () {
     return view('customer/contact');
-})->name('contact');
+})->name('kontak');
 
 Route::get('/login', function () {
     return view('customer/login');

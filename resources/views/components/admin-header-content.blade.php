@@ -4,6 +4,11 @@
     </div>
 
     <div class="geex-content__header__action">
+        <div class="geex-content__header__customizer">
+            <button class="geex-btn geex-btn__toggle-sidebar">   
+                <i class="uil uil-align-center-alt"></i> 
+            </button>
+        </div>
         <div class="geex-content__header__action__wrap">
             <ul class="geex-content__header__quickaction">
                 <li class="geex-content__header__quickaction__item">

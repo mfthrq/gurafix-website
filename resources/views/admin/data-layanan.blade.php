@@ -15,11 +15,10 @@
           <table class="table-reviews-geex-1">
             <thead>
               <tr style="width: 100%">
-                <th style="width: 20%">Nama</th>
-                <th style="width: 20%">Email</th>
-                <th style="width: 20%">No Telp</th>
-                <th style="width: 20%">Domisili</th>
-                <th style="width: 20%">Tanggal Lahir</th>
+                <th style="width: 20%">No</th>
+                <th style="width: 20%">Gambar Layanan</th>
+                <th style="width: 20%">Nama Layanan</th>
+                <th style="width: 20%">Aksi</th>
               </tr>
             </thead>
             <tbody class="">
@@ -41,12 +40,8 @@
                 </td>
                 <td>
                   <div class="author-area">
-                    <p>Fathi</p>
-                  </div>
-                </td>
-                <td>
-                  <div class="author-area">
-                    <p>Fathi</p>
+                    <button class="geex-btn geex-btn--primary">Edit</button>
+                    <button class="geex-btn geex-btn--danger">Hapus</button>
                   </div>
                 </td>
               </tr>

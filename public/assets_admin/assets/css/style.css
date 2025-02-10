@@ -793,7 +793,7 @@ Sidebar
 #. Variables
 ---------------------------------------*/
 :root {
-  --primary-color: #AB54DB;
+  --primary-color: #0055ff;
   --secondary-color: #B7DBF9;
   --dark-color: #17161E;
   --body-color: #464255;
@@ -9576,7 +9576,6 @@ blockquote span:before {
           align-items: flex-start;
   -webkit-box-pack: justify;
       -ms-flex-pack: justify;
-          justify-content: space-between;
 }
 
 @media only screen and (max-width: 1365px) {
@@ -9613,19 +9612,21 @@ blockquote span:before {
 }
 
 .geex-content__summary__count__single {
-  display: -webkit-inline-box;
-  display: -ms-inline-flexbox;
-  display: inline-flex;
-  gap: 10px;
-  -webkit-box-flex: 0;
-      -ms-flex: 0 0 47%;
-          flex: 0 0 47%;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  padding: 30px;
+  display: flex;
+  flex: 1 1 calc(33.33% - 20px); /* Tiga kolom dengan jarak antar item */
+  align-items: center;
+  padding: 20px;
   border-radius: 24px;
   background-color: #AB54DB;
+  width: 100%;
+}
+
+.geex-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 20px;
+  max-width: 100%;
 }
 
 @media only screen and (max-width: 1600px) {
