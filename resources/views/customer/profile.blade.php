@@ -54,7 +54,7 @@
                                             <span style="color: black; font-size: 15px;">Diverifikasi</span><br>
                                         </div>
                                         <div style="background-color: #004CE7; border-radius: 10px;">
-                                            <span style="color: white;">10000 </span>
+                                            <span style="color: white;">20 </span>
                                         </div>
                                     </div>
                                     <div class="col p-2">
