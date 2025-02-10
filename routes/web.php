@@ -41,3 +41,28 @@ Route::get('/profile', function () {
 Route::get('/riwayat', function () {
     return view('customer/riwayat');
 })->name('riwayat');
+
+// ======= ADMIN =======
+Route::get('/index-admin', function () {
+    return view('admin/index-admin');
+})->name('index-admin');
+
+Route::get('/data-pelanggan', function () {
+    return view('admin/data-pelanggan');
+})->name('data-pelanggan');
+
+Route::get('/data-paket', function () {
+    return view('admin/data-paket');
+})->name('data-paket');
+
+Route::get('/data-layanan', function () {
+    return view('admin/data-layanan');
+})->name('data-layanan');
+
+Route::get('/data-pemesanan', function () {
+    return view('admin/data-pemesanan');
+})->name('data-pemesanan');
+
+Route::get('/chat-admin', function () {
+    return view('admin/chat-admin');
+})->name('chat-admin');

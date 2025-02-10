@@ -49,10 +49,10 @@
                   </div>
                   <div class="col-xl-9 col-lg-8">
                       <form class="create-items-form">
-                          <input class="item-field" type="text" placeholder="Nama">
-                          <input class="item-field" type="number" placeholder="No Telp">
-                          <input class="item-field" type="text" placeholder="Email">
-                          <input class="item-field" type="text" placeholder="Rekomendasi Warna">
+                          {{-- <input class="item-field" type="text" placeholder="Nama" value="Fathi Ramdhana" style="color:white;" disabled>
+                          <input class="item-field" type="number" placeholder="No Telp" value="0892849339" style="color:white;" disabled>
+                          <input class="item-field" type="text" placeholder="Email" value="fathi@gmail.com" style="color:white;" disabled> --}}
+                          <input class="item-field" type="text" placeholder="Rekomendasi Warna" style="color: white;">
                           <div class="image-upload d-md-flex justify-content-between align-items-center mt-2">
                               <p class="mb-md-0">
                                   <img class="me-2" src="assets/img/icon/13.png" alt="img">
@@ -63,7 +63,7 @@
                                   Upload File
                               </label>
                           </div>
-                          <textarea class="item-field" placeholder="Catatan"></textarea>
+                          <textarea class="item-field" placeholder="Catatan" style="color: white;"></textarea>
                           <a class="btn btn-base mt-4" href="#">Submit Now</a>
                       </form>
                   </div>
