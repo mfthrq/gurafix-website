@@ -83,6 +83,7 @@
                                                 <span>23.59 PM</span>
                                             </div>
                                         </div>
+
                                     </div>
 
                                     <div class="geex-content__chat__send">
@@ -107,6 +108,7 @@
                                             </button>
                                         </div>
                                     </div>
+
                                 </div>
                             </div>
                         </div>

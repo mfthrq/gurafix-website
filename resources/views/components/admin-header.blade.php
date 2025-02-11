@@ -7,12 +7,12 @@
     <link href="https://fonts.googleapis.com/css2?family=Jost:wght@400;500;600;700&display=swap" rel="stylesheet">
 
     <!-- inject:css-->
-    <link rel="stylesheet" href="./assets_admin/assets/vendor/css/bootstrap/bootstrap.css">
+    <link rel="stylesheet" href="{{ asset('./assets_admin/assets/vendor/css/bootstrap/bootstrap.css') }}">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/apexcharts@3.27.0/dist/apexcharts.min.css">
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-    <link rel="stylesheet" href="assets_admin/assets/css/style.css">
+    <link rel="stylesheet" href="{{ asset('assets_admin/assets/css/style.css') }}">
     <!-- endinject -->
-    <link rel="icon" type="image/png" sizes="16x16" href="assets/img/favicon.svg">
+    <link rel="icon" href="{{ asset('assets/img/logo_gurafix_no_bg.png') }}" type="image/png" />
     <!-- Fonts -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@iconscout/unicons@4.0.8/css/line.min.css">
 

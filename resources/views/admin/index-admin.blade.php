@@ -201,7 +201,7 @@
                                     </div>
                                 </div>
                                 <div class="geex-content__section__content">
-                                    <div class="geex-content__section__content__top">
+                                    {{-- <div class="geex-content__section__content__top">
                                         <div class="geex-content__section__content__top__left">
                                         <h4 class="geex-content__section__content__amount increment">
                                             <i class="uil uil-angle-up"></i>
@@ -212,8 +212,8 @@
                                         <div class="geex-content__section__content__top__right">
                                         <h4 class="geex-content__section__content__price">$1,572.68</h4>
                                         </div>
-                                    </div>
-                                <div id="income-chart" class="column-chart"></div>
+                                    </div> --}}
+                                    <div id="income-chart" class="column-chart"></div>
                                 </div>
                             </div>
                         </div>
@@ -221,17 +221,7 @@
                             <div class="geex-content__widget__single geex-content__widget__summary">
                                 <div class="geex-content__widget__summary__header">
                                     <h4 class="geex-content__section__header__title">Persentase Domisili</h4>
-                                    <a href="#" class="geex-content__toggle__btn">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 28 28" fill="none">
-                                            <path d="M13.9998 8.16667C15.2885 8.16667 16.3332 7.122 16.3332 5.83333C16.3332 4.54467 15.2885 3.5 13.9998 3.5C12.7112 3.5 11.6665 4.54467 11.6665 5.83333C11.6665 7.122 12.7112 8.16667 13.9998 8.16667Z" fill="#A3A3A3"/>
-                                            <path d="M13.9998 16.3334C15.2885 16.3334 16.3332 15.2887 16.3332 14C16.3332 12.7114 15.2885 11.6667 13.9998 11.6667C12.7112 11.6667 11.6665 12.7114 11.6665 14C11.6665 15.2887 12.7112 16.3334 13.9998 16.3334Z" fill="#A3A3A3"/>
-                                            <path d="M13.9998 24.4999C15.2885 24.4999 16.3332 23.4553 16.3332 22.1666C16.3332 20.8779 15.2885 19.8333 13.9998 19.8333C12.7112 19.8333 11.6665 20.8779 11.6665 22.1666C11.6665 23.4553 12.7112 24.4999 13.9998 24.4999Z" fill="#A3A3A3"/>
-                                        </svg>
-                                    </a>
-                                    <ul class="geex-content__toggle__content">
-                                        <li><a href="#">Edit</a></li>
-                                        <li><a href="#">Delete</a></li>
-                                    </ul>
+                                    
                                 </div>
                                 <div class="geex-content__widget__summary__content">
                                     <div id="summary-chart"></div>

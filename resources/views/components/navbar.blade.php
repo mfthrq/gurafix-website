@@ -32,7 +32,7 @@
 
         <div class="nav-right-part nav-right-part-desktop d-lg-inline-flex align-item-center">
             <div class="btn-box d-inline-block">
-                <a class="btn btn-main style-small" href="{{ route('login') }}">
+                <a class="btn btn-main style-small" href="/login">
                     <span>Login</span>
                 </a>
             </div>
