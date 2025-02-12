@@ -5,6 +5,7 @@ use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\PelangganController;
 use App\Http\Controllers\LayananController;
 use App\Http\Controllers\PaketController;
+use App\Http\Controllers\PemesananController;
 use App\Http\Middleware\AdminMiddleware;
 use App\Http\Middleware\PelangganMiddleware;
 
@@ -27,13 +28,12 @@ Route::middleware([AdminMiddleware::class])->group(function () {
     
     Route::get('/admin/data-paket', [PaketController::class, 'indexDataPaket'])->name('admin.data-paket');
 
-    Route::get('/admin/data-pemesanan', function () {
-        return view('admin.data-pemesanan');
-    })->name('admin.data-pemesanan');
+    Route::get('/admin/data-pemesanan', [PemesananController::class, 'indexDataPemesanan'])->name('admin.data-pemesanan');
 
     Route::get('/admin/chat-admin', function () {
         return view('admin.chat-admin');
     })->name('admin.chat-admin');
+
 });
 
 // ====== CRUD DATA LAYANAN ======
@@ -45,6 +45,11 @@ Route::delete('/admin/data-layanan/{id}', [LayananController::class, 'destroy'])
 Route::post('/admin/data-paket/store', [PaketController::class, 'store'])->name('data-paket.store');
 Route::put('/admin/data-paket/{id}', [PaketController::class, 'update'])->name('data-paket.update');
 Route::delete('/admin/data-paket/{id}', [PaketController::class, 'destroy'])->name('data-paket.destroy');
+
+// ====== CRUD DATA PEMESANAN ======
+Route::post('/admin/data-pemesanan/store', [PemesananController::class, 'store'])->name('data-pemesanan.store');
+Route::put('/admin/data-pemesanan/{id}', [PemesananController::class, 'update'])->name('data-pemesanan.update');
+Route::delete('/admin/data-pemesanan/{id}', [PemesananController::class, 'destroy'])->name('data-pemesanan.destroy');
 
 // ========================== PELANGGAN ============================
 

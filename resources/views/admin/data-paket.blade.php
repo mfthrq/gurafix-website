@@ -194,7 +194,7 @@
                               >
                       </div>
 
-                      <img id="currentGambarPaket" src="" alt="Gambar Paket" width="100"
+                      <img id="currentGambarPaket" src="" alt="Gambar Paket" width="200"
                             class="mt-2 mb-3"> <br>
 
                       <label for="id_layanan" class="form-label">Pilih Layanan</label>
@@ -235,7 +235,7 @@
       </div>
     </div>
     
-    <script>
+  <script>
       document.querySelectorAll('.edit-btn').forEach(button => {
           button.addEventListener('click', function() {
               const id = this.getAttribute('data-id');
