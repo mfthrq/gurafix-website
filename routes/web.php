@@ -41,6 +41,11 @@ Route::post('/admin/data-layanan/store', [LayananController::class, 'store'])->n
 Route::put('/admin/data-layanan/{id}', [LayananController::class, 'update'])->name('data-layanan.update');
 Route::delete('/admin/data-layanan/{id}', [LayananController::class, 'destroy'])->name('data-layanan.destroy');
 
+// ====== CRUD DATA PAKET ======
+Route::post('/admin/data-paket/store', [PaketController::class, 'store'])->name('data-paket.store');
+Route::put('/admin/data-paket/{id}', [PaketController::class, 'update'])->name('data-paket.update');
+Route::delete('/admin/data-paket/{id}', [PaketController::class, 'destroy'])->name('data-paket.destroy');
+
 // ========================== PELANGGAN ============================
 
 // ========== LOGIN ==========
