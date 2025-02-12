@@ -6,6 +6,7 @@ use App\Http\Controllers\PelangganController;
 use App\Http\Controllers\LayananController;
 use App\Http\Controllers\PaketController;
 use App\Http\Controllers\PemesananController;
+use App\Http\Controllers\ChatController;
 use App\Http\Middleware\AdminMiddleware;
 use App\Http\Middleware\PelangganMiddleware;
 
@@ -30,9 +31,7 @@ Route::middleware([AdminMiddleware::class])->group(function () {
 
     Route::get('/admin/data-pemesanan', [PemesananController::class, 'indexDataPemesanan'])->name('admin.data-pemesanan');
 
-    Route::get('/admin/chat-admin', function () {
-        return view('admin.chat-admin');
-    })->name('admin.chat-admin');
+    Route::get('/admin/chat-admin', [ChatController::class, 'indexChatAdmin'])->name('admin.chat-admin');
 
 });
 
@@ -50,6 +49,10 @@ Route::delete('/admin/data-paket/{id}', [PaketController::class, 'destroy'])->na
 Route::post('/admin/data-pemesanan/store', [PemesananController::class, 'store'])->name('data-pemesanan.store');
 Route::put('/admin/data-pemesanan/{id}', [PemesananController::class, 'update'])->name('data-pemesanan.update');
 Route::delete('/admin/data-pemesanan/{id}', [PemesananController::class, 'destroy'])->name('data-pemesanan.destroy');
+
+// ====== CHAT ADMIN =======
+Route::get('/admin/chat-admin/get-chat/{id}', [ChatController::class, 'getChat'])->name('chat-admin.getChat');
+Route::post('/admin/chat-admin/store', [ChatController::class, 'store'])->name('chat-admin.store');
 
 // ========================== PELANGGAN ============================
 
