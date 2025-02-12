@@ -33,15 +33,20 @@
                             </div>
                             <div class="grid info-meta d-flex flex-column flex-lg-row justify-content-between align-self-center">
                                 <!-- Kolom untuk Nama -->
-                                <div class="col-12 col-md-8">
-                                    <h3 class="tt-capitalize" style="color: #004CE7;">
-                                        <img src="assets/img/team/info1.png" alt="img"> Fadiil Thoriq
+                                <div class="col-12 col-md-7">
+                                    <h3 class="tt-capitalize" style="color: #004CE7; font-size: 30px;">
+                                        <img src="assets/img/team/info1.png" alt="img"> {{ Auth::user()->nama }}
                                     </h3>
                                 </div>
                                 <!-- Kolom untuk Tombol -->
-                                <div class="col-12 col-md-4 d-flex flex-md-row justify-content-between">
-                                    <a class="btn btn-base d-flex justify-content-center align-items-center w-100 mb-2" style="background-color: #ddf247; margin-right: 10px;" href="/riwayat">Riwayat</a>
-                                    <a class="btn btn-base" href="#">Edit Data</a>
+                                <div class="col-12 col-md-5 d-flex flex-md-row justify-content-between">
+                                    <a class="btn btn-base d-flex justify-content-center align-items-center w-100 me-3" style="background-color: #ddf247;" href="{{ route('riwayat') }}">Riwayat</a>
+                                    <a class="btn btn-base me-3 d-flex justify-content-center align-items-center w-100" href="#">Edit</a>
+
+                                    <form action="{{ route('customer.logout') }}" method="POST">
+                                        @csrf
+                                        <button type="submit" class="btn btn-base d-flex justify-content-center align-items-center bg-danger text-white" style="width: 80px;" href="#">Logout</button>
+                                    </form>
                                 </div>
                             </div>
 
@@ -94,16 +99,16 @@
                                 <!-- Form Input -->
                                 <form class="login-form-inner mt-4">
                                     <div class="single-input-inner style-border">
-                                        <input value="Fathi Ramdhana" type="text" disabled >
+                                        <input value="{{ Auth::user()->nama }}" type="text" disabled >
                                     </div>
                                     <div class="single-input-inner style-border">
-                                        <input value="12/11/2003" type="text" disabled >
+                                        <input value="{{ \Carbon\Carbon::parse(Auth::user()->tanggal_lahir)->format('Y-m-d') }}" type="text" disabled >
                                     </div>
                                     <div class="single-input-inner style-border">
-                                        <input value="Bogor" type="text"disabled >
+                                        <input value="{{ Auth::user()->domisili }}" type="text"disabled >
                                     </div>
                                     <div class="single-input-inner style-border">
-                                        <input value="08123456789" type="number" disabled > 
+                                        <input value="{{ Auth::user()->no_telp }}" type="number" disabled > 
                                     </div>
                                 </form> 
                             </div>                     

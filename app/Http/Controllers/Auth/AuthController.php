@@ -54,7 +54,7 @@ class AuthController extends Controller
     
         // Attempt to authenticate with the updated input names
         if (Auth::attempt(['email' => $request->email, 'password' => $request->password, 'id_role' => 2])) {
-            return redirect()->intended('customer')->with('success', 'Login Pelanggan berhasil');
+            return redirect()->intended('profile')->with('success', 'Login Pelanggan berhasil');
         }
     
         return redirect()->back()->withErrors(['loginError' => 'Email atau Password Salah!']); 

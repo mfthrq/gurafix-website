@@ -45,7 +45,7 @@ Route::middleware([AdminMiddleware::class])->group(function () {
 // ========== LOGIN ==========
 Route::get('/login', [AuthController::class, 'showLoginFormCustomer'])->name('customer.login');
 Route::post('/login', [AuthController::class, 'loginCustomer'])->name('customer.login.submit');
-Route::post('/login', [AuthController::class, 'logoutCustomer'])->name('customer.logout');
+Route::post('/logout', [AuthController::class, 'logoutCustomer'])->name('customer.logout');
 
 // ========== SIGNUP ==========
 Route::get('/signup', function () {
@@ -55,8 +55,15 @@ Route::post('/signup/store', [PelangganController::class, 'storePelanggan'])->na
 
 // ========== MIDDLEWARE ==========
 Route::middleware([PelangganMiddleware::class])->group(function () { 
-    Route::view('/profile', 'customer.profile');
-    Route::view('/riwayat', 'customer.riwayat');
+    Route::get('/profile', function () {
+        return view('customer.profile');
+    })->name('profile');
+    Route::get('/chat', function () {
+        return view('customer.chat');
+    })->name('chat');
+    Route::get('/riwayat', function () {
+        return view('customer.riwayat');
+    })->name('riwayat');
 });
 
 // ========== OTHER CUSTOMER PAGES ==========

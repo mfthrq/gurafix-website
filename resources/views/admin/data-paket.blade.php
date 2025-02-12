@@ -17,6 +17,7 @@
               <tr style="width: 100%">
                 <th style="width: 20%">No</th>
                 <th style="width: 20%">Nama Paket</th>
+                <th style="width: 20%">Gambar Paket</th>
                 <th style="width: 20%">Nama Layanan</th>
                 <th style="width: 20%">Fitur</th>
                 <th style="width: 20%">Harga</th>
@@ -26,6 +27,11 @@
             </thead>
             <tbody class="">
               <tr>
+                <td>
+                  <div class="author-area">
+                    <p>Fathi</p>
+                  </div>
+                </td>
                 <td>
                   <div class="author-area">
                     <p>Fathi</p>
