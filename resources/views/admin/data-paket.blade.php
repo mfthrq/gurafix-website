@@ -11,6 +11,9 @@
       <div class="geex-content">
         <x-admin-header-content :title="'Data Paket'" />
 
+        <button class="geex-btn geex-btn--transparent mb-3" data-bs-toggle="modal" data-bs-target="#tambahModal">+ Tambah
+          Data</button>
+          
         <div class="geex-content__section geex-content__form table-responsive">
           <table class="table-reviews-geex-1">
             <thead>
@@ -26,40 +29,41 @@
               </tr>
             </thead>
             <tbody class="">
+              @forelse($pakets as $index => $paket)
               <tr>
                 <td>
                   <div class="author-area">
-                    <p>Fathi</p>
+                    <p>{{ $index + 1 }}</p>
                   </div>
                 </td>
                 <td>
                   <div class="author-area">
-                    <p>Fathi</p>
+                    <p>{{ $paket->nama }}</p>
                   </div>
                 </td>
                 <td>
                   <div class="author-area">
-                    <p>Fathi</p>
+                    <p>{{ $paket->gambar_paket }}</p>
                   </div>
                 </td>
                 <td>
                   <div class="author-area">
-                    <p>Fathi</p>
+                    <p>{{ $paket->layanan->nama }}</p>
                   </div>
                 </td>
                 <td>
                   <div class="author-area">
-                    <p>Fathi</p>
+                    <p>{{ $paket->fitur }}</p>
                   </div>
                 </td>
                 <td>
                   <div class="author-area">
-                    <p>Fathi</p>
+                    <p>{{ $paket->harga }}</p>
                   </div>
                 </td>
                 <td>
                   <div class="author-area">
-                    <p>Fathi</p>
+                    <p>{{ $paket->durasi_pengerjaan }}</p>
                   </div>
                 </td>
                 <td>
@@ -69,6 +73,13 @@
                   </div>
                 </td>
               </tr>
+              @empty
+              <tr>
+                <td colspan="8">
+                    <p class="text-center">Tidak ada data paket.</p>
+                </td>
+              </tr>
+              @endforelse
             </tbody>
           </table>
         </div>

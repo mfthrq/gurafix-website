@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\PelangganController;
 use App\Http\Controllers\LayananController;
+use App\Http\Controllers\PaketController;
 use App\Http\Middleware\AdminMiddleware;
 use App\Http\Middleware\PelangganMiddleware;
 
@@ -20,13 +21,11 @@ Route::middleware([AdminMiddleware::class])->group(function () {
         return view('admin.index-admin');
     })->name('admin.index-admin');
 
-    Route::get('/admin/data-pelanggan', [PelangganController::class, 'indexDataPelanggan'])->name('admin.data-pelanggan');;
+    Route::get('/admin/data-pelanggan', [PelangganController::class, 'indexDataPelanggan'])->name('admin.data-pelanggan');
     
-    Route::get('/admin/data-layanan', [LayananController::class, 'indexDataLayanan'])->name('admin.data-layanan');;
-
-    Route::get('/admin/data-paket', function () {
-        return view('admin.data-paket');
-    })->name('admin.data-paket');
+    Route::get('/admin/data-layanan', [LayananController::class, 'indexDataLayanan'])->name('admin.data-layanan');
+    
+    Route::get('/admin/data-paket', [PaketController::class, 'indexDataPaket'])->name('admin.data-paket');
 
     Route::get('/admin/data-pemesanan', function () {
         return view('admin.data-pemesanan');
@@ -37,7 +36,10 @@ Route::middleware([AdminMiddleware::class])->group(function () {
     })->name('admin.chat-admin');
 });
 
+// ====== CRUD DATA LAYANAN ======
 Route::post('/admin/data-layanan/store', [LayananController::class, 'store'])->name('data-layanan.store');
+Route::put('/admin/data-layanan/{id}', [LayananController::class, 'update'])->name('data-layanan.update');
+Route::delete('/admin/data-layanan/{id}', [LayananController::class, 'destroy'])->name('data-layanan.destroy');
 
 // ========================== PELANGGAN ============================
 
