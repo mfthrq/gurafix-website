@@ -2,7 +2,7 @@
     <footer class="footer-area footer-area-2 text-center pd-top-0">
         <div class="container">
             <div class="footer-top">
-                <a class="footer-logo" href="index.html">
+                <a class="footer-logo" href="/">
                     <img src="assets/img/logo_gurafix_no_bg.png" width="50px" alt="img" />
                 </a>
                 <ul class="p-0 m-0">

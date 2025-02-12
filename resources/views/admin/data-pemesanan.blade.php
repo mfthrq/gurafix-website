@@ -22,6 +22,7 @@
                 <th style="width: 20%">Paket</th>
                 <th style="width: 20%">Bukti Transaksi</th>
                 <th style="width: 20%">Status</th>
+                <th style="width: 20%">Link Desain</th>
                 <th style="width: 20%">Aksi</th>
               </tr>
             </thead>
@@ -74,6 +75,11 @@
                     <span class="geex-badge geex-badge--label-icon geex-badge--danger-transparent">
                       Gagal
                     </span> --}}
+                  </div>
+                </td>
+                <td>
+                  <div class="author-area">
+                    <p>Fathi</p>
                   </div>
                 </td>
                 <td>

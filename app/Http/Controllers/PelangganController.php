@@ -4,15 +4,18 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\Pelanggan;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 
 class PelangganController extends Controller
 {
+    public function IndexDataPelanggan(){
+        $users = User::where('id_role', 2)->get();
+        return view('admin.data-pelanggan', compact('users'));
+    }
+
     public function storePelanggan(Request $request)
     {
         // Ambil timezone lokal dari aplikasi Laravel

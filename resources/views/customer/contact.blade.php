@@ -32,15 +32,15 @@
                           <h2 class="title" style="color: #ddf247;">Kontak <span style="color: #0075CD;">Kami</span></h2>
                           <div class="contact-form pt-3">
                               <div class="single-input-inner style-border">
-                                  <input type="text" placeholder="Name">
+                                  <input type="text" placeholder="Nama" style="color: black;">
                               </div>
                               <div class="single-input-inner style-border">
-                                  <input type="text" placeholder="Email">
+                                  <input type="email" placeholder="Email" style="color: black;">
                               </div>
                               <div class="single-input-inner style-border">
-                                  <textarea placeholder="Message"></textarea>
+                                  <textarea placeholder="Pesan" style="color: black;"></textarea>
                               </div>
-                              <button class="btn btn-base border-radius-0 w-100 mt-2">Kirim</button>
+                              <button class="btn btn-base w-100 text-white" style="margin-top: 0; background-color: #0075CD; border: none; border-radius: 1s0px;">Kirim</button>
                           </div>
                       </div>
                   </div>

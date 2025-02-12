@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\PelangganController;
+use App\Http\Controllers\LayananController;
 use App\Http\Middleware\AdminMiddleware;
 use App\Http\Middleware\PelangganMiddleware;
 
@@ -19,17 +20,13 @@ Route::middleware([AdminMiddleware::class])->group(function () {
         return view('admin.index-admin');
     })->name('admin.index-admin');
 
-    Route::get('/admin/data-layanan', function () {
-        return view('admin.data-layanan');
-    })->name('admin.data-layanan');
+    Route::get('/admin/data-pelanggan', [PelangganController::class, 'indexDataPelanggan'])->name('admin.data-pelanggan');;
+    
+    Route::get('/admin/data-layanan', [LayananController::class, 'indexDataLayanan'])->name('admin.data-layanan');;
 
     Route::get('/admin/data-paket', function () {
         return view('admin.data-paket');
     })->name('admin.data-paket');
-
-    Route::get('/admin/data-pelanggan', function () {
-        return view('admin.data-pelanggan');
-    })->name('admin.data-pelanggan');
 
     Route::get('/admin/data-pemesanan', function () {
         return view('admin.data-pemesanan');
@@ -39,6 +36,8 @@ Route::middleware([AdminMiddleware::class])->group(function () {
         return view('admin.chat-admin');
     })->name('admin.chat-admin');
 });
+
+Route::post('/admin/data-layanan/store', [LayananController::class, 'store'])->name('data-layanan.store');
 
 // ========================== PELANGGAN ============================
 

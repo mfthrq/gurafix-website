@@ -48,11 +48,14 @@
                                     name="tanggal_lahir">
                             </div>
                             <div class="single-input-inner style-border">
-                                <input type="" placeholder="Domisili" id="domisili" name="domisili">
+                                <select id="domisili" name="domisili"
+                                    style="width: 100%; padding: 0 18px; border-radius: 10px; height: 75px; background-color: #1a2430; color: white; font-size: 15px;">
+                                    <option value="">-- Pilih Domisili --</option>
+                                </select>
                             </div>
                             <div class="single-input-inner style-border">
-                                <input type="tel" placeholder="Nomor Telepon" id="no_telp"
-                                    name="no_telp" required>
+                                <input type="tel" placeholder="Nomor Telepon" id="no_telp" name="no_telp"
+                                    required>
                             </div>
                             <div class="single-input-inner style-border">
                                 <input type="password" placeholder="Kata Sandi" id="password" name="password">
@@ -77,6 +80,25 @@
 
     <x-script-plugins />
 
+    <script>
+        fetch('https://www.emsifa.com/api-wilayah-indonesia/api/provinces.json')
+            .then(response => response.json())
+            .then(data => {
+                const select = document.getElementById('domisili');
+                data.forEach(provinsi => {
+                    let option = document.createElement('option');
+                    option.value = provinsi.name; // Menggunakan nama provinsi sebagai value
+                    option.textContent = provinsi.name;
+                    select.appendChild(option);
+                });
+            })
+            .catch(error => console.error('Error fetching data:', error));
+
+        document.getElementById('domisili').addEventListener('change', function() {
+            let selectedOption = this.options[this.selectedIndex];
+            console.log('Provinsi Terpilih:', selectedOption.value);
+        });
+    </script>
 </body>
 
 </html>

@@ -11607,11 +11607,6 @@ html[data-theme="dark"] .ui-widget-content .ui-state-default {
   min-width: max-content;
 }
 
-.table-reviews-geex-1 tbody tr td .author-area p {
-  font-weight: 600;
-  text-transform: capitalize;
-}
-
 .table-reviews-geex-1 tbody tr td .designation {
   color: #A3A3A3;
 }
