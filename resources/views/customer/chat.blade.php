@@ -23,14 +23,26 @@
         margin-bottom: 15px;
         padding: 10px;
         border-radius: 10px;
+        display: flex;
+        word-wrap: break-word;
+        flex-direction: column; /* Elemen ditumpuk secara vertikal */
+        gap: 5px;
+    }
+
+    .chat-message-container {
+        display: flex;
+        justify-content: flex-end; /* Dorong chat-message ke kanan */
+        width: 100%;
     }
 
     .chat-box-admin {
         align-self: flex-start;
+        max-width: 70%;
     }
 
     .chat-box-customer {
         align-self: flex-end;
+        max-width: 70%;
     }
 
     .admin-message {
@@ -72,6 +84,13 @@
     .customer-message .chat-time {
         color: white;
     }
+
+    .chat-message img {
+        max-width: 100%;
+        height: auto;
+        border-radius: 5px;
+        margin-top: 5px;
+    }
 </style>
 
 <body>
@@ -104,7 +123,7 @@
                     {{-- ISI BUBBLE CHAT DENGAN ADMIN --}}
 
                 </div>
-                <form action="{{ route('chat.storeCustomer') }}" method="POST">
+                <form action="{{ route('chat.storeCustomer') }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <input type="hidden" id="id_sender" name="id_sender" value="{{ Auth::id() }}" required>
                     <input type="hidden" id="id_receiver" name="id_receiver" value="1" required>
@@ -115,7 +134,7 @@
                         <input type="text" class="form-control" placeholder="Ketik pesan..."
                             style="border-top-left-radius: 10px; border-bottom-left-radius: 10px;" id="message"
                             name="message">
-                        <button class="btn btn-primary" id="send-button">Kirim</button>
+                        <button type="submit" class="btn btn-primary" id="send-button">Kirim</button>
                     </div>
                 </form>
             </div>
@@ -168,25 +187,37 @@
                             let formattedTime = formatDateTime(chat.created_at);
                             let chatHtml = "";
 
+                            // Cek apakah ada teks pesan
+                            let textMessage = chat.message ? `${chat.message}` : "";
+
+                            // Cek apakah ada gambar di kolom attachments
+                            let imageAttachment = chat.attachments ?
+                                `<img src="assets_admin/attachments/${chat.attachments}" alt="Attachment" width="200">` :
+                                "";
+
                             if (chat.id_sender == customerId) {
                                 // Jika pesan dari customer
                                 chatHtml = `
-                        <div class="chat-box-customer">
+                        <div class="chat-box-customer mt-3">
                             <span class="chat-name">{{ Auth::user()->nama }}</span>
-                            <div class="chat-message customer-message">
-                                ${chat.message}
+                            <div class="chat-message-container">
+                                <div class="chat-message customer-message">
+                                    ${imageAttachment}
+                                    ${textMessage}
+                                </div>
                             </div>
-                                <div class="chat-time">${formattedTime}</div>
+                            <div class="chat-time">${formattedTime}</div>
                         </div>`;
                             } else {
                                 // Jika pesan dari admin
                                 chatHtml = `
-                        <div class="chat-box-admin">
+                        <div class="chat-box-admin mt-3">
                             <span class="chat-name">Admin</span>
                             <div class="chat-message admin-message">
-                                ${chat.message}
-                                </div>
-                                <div class="chat-time" style="text-align: left;">${formattedTime}</div>
+                                ${imageAttachment}
+                                ${textMessage}
+                            </div>
+                            <div class="chat-time" style="text-align: left;">${formattedTime}</div>
                         </div>`;
                             }
 

@@ -73,7 +73,7 @@ class ChatController extends Controller
         $request->validate([
             'id_sender' => 'required',
             'id_receiver' => 'required',
-            'message' => 'required',
+            'message' => 'nullable|string',
             'attachments' => 'nullable|image|mimes:jpg,jpeg,png|max:10048',
         ]);
     
@@ -86,12 +86,17 @@ class ChatController extends Controller
             $filename = time() . '.' . $file->getClientOriginalExtension();
             $file->move(public_path('assets_admin/attachments'), $filename);
         }
+
+        // **Cegah data kosong tidak tersimpan**
+        if (empty($request->message) && empty($filename)) {
+            return redirect()->route('chat')->with('error', 'Pesan atau lampiran harus diisi!');
+        }
     
         // Simpan data ke database
         Chat::create([
             'id_sender' => $request->id_sender,
             'id_receiver' => $request->id_receiver,
-            'message' => $request->message,
+            'message' => $request->message ?? null,
             'attachments' => $filename, // Jika tidak ada file, tetap null
         ]);
     
