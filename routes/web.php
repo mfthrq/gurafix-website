@@ -50,11 +50,15 @@ Route::post('/admin/data-pemesanan/store', [PemesananController::class, 'store']
 Route::put('/admin/data-pemesanan/{id}', [PemesananController::class, 'update'])->name('data-pemesanan.update');
 Route::delete('/admin/data-pemesanan/{id}', [PemesananController::class, 'destroy'])->name('data-pemesanan.destroy');
 
-// ====== CHAT ADMIN =======
+// ====== CHAT FOR ADMIN =======
 Route::get('/admin/chat-admin/get-chat/{id}', [ChatController::class, 'getChat'])->name('chat-admin.getChat');
 Route::post('/admin/chat-admin/store', [ChatController::class, 'store'])->name('chat-admin.store');
 
 // ========================== PELANGGAN ============================
+
+// ====== CHAT FOR CUSTOMER ======
+Route::get('/customer/chat/get-chat', [ChatController::class, 'getChatForCustomer']);
+Route::post('/customer/chat/storeCustomer', [ChatController::class, 'storeCustomer'])->name('chat.storeCustomer');
 
 // ========== LOGIN ==========
 Route::get('/login', [AuthController::class, 'showLoginFormCustomer'])->name('customer.login');

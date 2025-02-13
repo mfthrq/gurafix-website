@@ -116,100 +116,73 @@
     <script src="jquery-3.7.1.min.js"></script>
 
     <script>
-        function formatDateTime(isoString) {
-            let date = new Date(isoString);
-
-            // Ambil komponen tanggal & waktu
-            let day = String(date.getDate()).padStart(2, '0');
-            let month = String(date.getMonth() + 1).padStart(2, '0'); // Bulan dimulai dari 0
-            let year = date.getFullYear();
-            let hours = String(date.getHours()).padStart(2, '0');
-            let minutes = String(date.getMinutes()).padStart(2, '0');
-            let seconds = String(date.getSeconds()).padStart(2, '0');
-
-            // Format akhir: "12/02/2025 | 20:21:34"
-            return `${day}/${month}/${year} | ${hours}:${minutes}:${seconds}`;
-        }
-
         $(document).ready(function() {
-            $(".chat-tab").click(function(e) {
-                e.preventDefault(); // Hindari reload halaman
+            var adminName = @json(auth()->user()->nama);
+            var savedUserId = localStorage.getItem("selectedUserId");
+            var savedUserName = localStorage.getItem("selectedUserName");
 
-                var userId = $(this).data("id"); // Ambil ID user yang diklik
-                var userName = $(this).data("nama"); // Ambil nama user
-                var adminName = @json(auth()->user()->nama);
+            if (savedUserId && savedUserName) {
+                $("#chat-header-title").text(savedUserName);
+                $("#id_receiver").val(savedUserId);
+                fetchChatMessages(savedUserId, savedUserName, adminName);
+            }
+
+            $(".chat-tab").click(function(e) {
+                e.preventDefault();
+                var userId = $(this).data("id");
+                var userName = $(this).data("nama");
 
                 $("#chat-header-title").text(userName);
-                $("#nama-chat-customer").text(userName); // Update nama di header chat
+                $("#id_receiver").val(userId);
 
-                // Ambil data chat dengan AJAX
+                localStorage.setItem("selectedUserId", userId);
+                localStorage.setItem("selectedUserName", userName);
+
+                fetchChatMessages(userId, userName, adminName);
+            });
+
+            function fetchChatMessages(userId, userName, adminName) {
                 $.ajax({
-                    url: "/admin/chat-admin/get-chat/" + userId, // Endpoint untuk mendapatkan chat
+                    url: "/admin/chat-admin/get-chat/" + userId,
                     type: "GET",
                     success: function(response) {
-                        console.log(response);
-
-                        var chatHtml = ""; // Variable untuk menampung chat
-
-                        // Looping chat dari response
+                        var chatHtml = "";
                         response.chats.forEach(function(chat) {
-
                             let formattedTime = formatDateTime(chat.created_at);
+                            let senderName = chat.id_sender == response.admin_id ? adminName :
+                                userName;
+                            let chatClass = chat.id_sender == response.admin_id ? "active" : "";
 
-                            if (chat.id_sender == response.admin_id) {
-                                // Jika admin adalah pengirim
-                                chatHtml += `
-                                <div class="geex-content__chat__list__single active">
-                                    <div class="geex-content__chat__list__single__text">
-                                        <span class="geex-content__chat__list__single__title">${adminName}</span>
-                                        <span class="geex-content__chat__list__single__msg latest">${chat.message}</span>
-                                        <span>${formattedTime}</span>
-                                    </div>
-                                </div>
-                            `;
-                            } else {
-                                // Jika customer adalah pengirim
-                                chatHtml += `
-                                <div class="geex-content__chat__list__single">
-                                    <div class="geex-content__chat__list__single__text">
-                                        <span class="geex-content__chat__list__single__title">${userName}</span>
-                                        <span class="geex-content__chat__list__single__msg latest">${chat.message}</span>
-                                        <span>${formattedTime}</span>
-                                    </div>
-                                </div>
-                            `;
-                            }
+                            chatHtml += `
+                        <div class="geex-content__chat__list__single ${chatClass}">
+                            <div class="geex-content__chat__list__single__text">
+                                <span class="geex-content__chat__list__single__title">${senderName}</span>
+                                <span class="geex-content__chat__list__single__msg latest">${chat.message}</span>
+                                <span>${formattedTime}</span>
+                            </div>
+                        </div>
+                    `;
                         });
-
-                        $("#chat-list").html(chatHtml); // Tampilkan chat ke dalam list
+                        $("#chat-list").html(chatHtml);
                     },
                     error: function() {
                         alert("Gagal mengambil data chat.");
                     }
                 });
-            });
-        });
+            }
 
-        document.addEventListener("DOMContentLoaded", function() {
-            // Tangkap semua elemen dengan class 'chat-tab'
-            const chatTabs = document.querySelectorAll(".chat-tab");
+            function formatDateTime(dateTime) {
+                let date = new Date(dateTime);
 
-            chatTabs.forEach(tab => {
-                tab.addEventListener("click", function(event) {
-                    event.preventDefault(); // Mencegah reload halaman
+                let day = String(date.getDate()).padStart(2, '0');
+                let month = String(date.getMonth() + 1).padStart(2, '0'); // Bulan dimulai dari 0
+                let year = date.getFullYear();
 
-                    // Ambil ID pengguna yang diklik
-                    let userId = this.getAttribute("data-id");
-                    let userName = this.getAttribute("data-nama");
+                let hours = String(date.getHours()).padStart(2, '0');
+                let minutes = String(date.getMinutes()).padStart(2, '0');
 
-                    // Update input hidden id_receiver
-                    document.getElementById("id_receiver").value = userId;
-
-                    // Ubah tampilan header chat agar sesuai dengan nama yang diklik
-                    document.querySelector(".geex-content__chat__header__title").textContent =
-                        userName;
-                });
-            });
+                return `${day}/${month}/${year} - ${hours}:${minutes}`;
+            }
         });
     </script>
 

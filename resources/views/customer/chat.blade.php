@@ -25,11 +25,11 @@
         border-radius: 10px;
     }
 
-    .chat-box-admin{
+    .chat-box-admin {
         align-self: flex-start;
     }
 
-    .chat-box-customer{
+    .chat-box-customer {
         align-self: flex-end;
     }
 
@@ -62,6 +62,7 @@
         font-size: 12px;
         margin-top: 5px;
         text-align: right;
+        color: black;
     }
 
     .admin-message .chat-time {
@@ -96,37 +97,27 @@
     <!-- creator-details start -->
     <div class="creator-details-area pd-top-120">
         <div class="container">
-            {{-- <div class="section-title">
-                <h2 class="title" style="color: #ddf100;">Chat <span>Admin</span></h2>
-            </div> --}}
             <div class="chat-container p-3">
                 <h4 class="text-center mb-3" style="color: #004CE7">Chat <span style="color: #ddf100">Admin</span></h4>
-                <div class="chat-box d-flex flex-column">
+                <div class="chat-box d-flex flex-column" id="chat-list">
 
-                    <div class="chat-box-admin">
-                        <span class="chat-name">Admin</span>
-                        <div class="chat-message admin-message">
-                            Halo, ada yang bisa kami bantu?
-                            <div class="chat-time">10:00 AM</div>
-                        </div>
-                    </div>
+                    {{-- ISI BUBBLE CHAT DENGAN ADMIN --}}
 
-                    <div class="chat-box-customer">
-                        <span class="chat-name">{{ Auth::user()->nama }}</span>
-                        <div class="chat-message customer-message">
-                            Ya, saya ingin bertanya tentang jasa desain.
-                            <div class="chat-time">10:05 AM</div>
-                        </div>
+                </div>
+                <form action="{{ route('chat.storeCustomer') }}" method="POST">
+                    @csrf
+                    <input type="hidden" id="id_sender" name="id_sender" value="{{ Auth::id() }}" required>
+                    <input type="hidden" id="id_receiver" name="id_receiver" value="1" required>
+                    <div class="input-group mt-3">
+                        <input type="file" class="form-control" id="attachments" name="attachments">
                     </div>
-                    
-                </div>
-                <div class="input-group mt-3">
-                    <input type="file" class="form-control" id="fileInput">
-                </div>
-                <div class="input-group mt-2">
-                    <input type="text" class="form-control" placeholder="Ketik pesan..." style="border-top-left-radius: 10px; border-bottom-left-radius: 10px;">
-                    <button class="btn btn-primary" id="sendButton">Kirim</button>
-                </div>
+                    <div class="input-group mt-2">
+                        <input type="text" class="form-control" placeholder="Ketik pesan..."
+                            style="border-top-left-radius: 10px; border-bottom-left-radius: 10px;" id="message"
+                            name="message">
+                        <button class="btn btn-primary" id="send-button">Kirim</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
@@ -143,6 +134,78 @@
 
     <x-script-plugins />
 
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const chatList = document.getElementById("chat-list");
+            const messageInput = document.getElementById("message");
+            const sendButton = document.getElementById("send-button");
+            const customerId = "{{ Auth::id() }}"; // ID customer saat ini
+            const adminId = "1"; // ID Admin (bisa diganti sesuai sistem)
+
+            // Fungsi format tanggal & waktu: 02/02/2025 - 08:50
+            function formatDateTime(dateTime) {
+                let date = new Date(dateTime);
+
+                let day = String(date.getDate()).padStart(2, '0');
+                let month = String(date.getMonth() + 1).padStart(2, '0');
+                let year = date.getFullYear();
+                let hours = String(date.getHours()).padStart(2, '0');
+                let minutes = String(date.getMinutes()).padStart(2, '0');
+
+                return `${day}/${month}/${year} - ${hours}:${minutes}`;
+            }
+
+            // **1. Ambil riwayat chat saat halaman dimuat**
+            function loadChat() {
+                $.ajax({
+                    url: "/customer/chat/get-chat/", // Sesuaikan dengan API backend
+                    type: "GET",
+                    success: function(response) {
+                        chatList.innerHTML = ""; // Bersihkan chat list sebelum update
+                        console.log("Data chat diterima:", response); // Debugging
+
+                        response.chats.forEach(function(chat) {
+                            let formattedTime = formatDateTime(chat.created_at);
+                            let chatHtml = "";
+
+                            if (chat.id_sender == customerId) {
+                                // Jika pesan dari customer
+                                chatHtml = `
+                        <div class="chat-box-customer">
+                            <span class="chat-name">{{ Auth::user()->nama }}</span>
+                            <div class="chat-message customer-message">
+                                ${chat.message}
+                            </div>
+                                <div class="chat-time">${formattedTime}</div>
+                        </div>`;
+                            } else {
+                                // Jika pesan dari admin
+                                chatHtml = `
+                        <div class="chat-box-admin">
+                            <span class="chat-name">Admin</span>
+                            <div class="chat-message admin-message">
+                                ${chat.message}
+                                </div>
+                                <div class="chat-time" style="text-align: left;">${formattedTime}</div>
+                        </div>`;
+                            }
+
+                            chatList.innerHTML += chatHtml;
+                        });
+
+                        // Auto scroll ke bawah
+                        chatList.scrollTop = chatList.scrollHeight;
+                    },
+                    error: function(xhr, status, error) {
+                        console.error("Gagal mengambil data chat:", error);
+                    }
+                });
+            }
+
+            // **3. Panggil loadChat saat halaman dimuat**
+            loadChat();
+        });
+    </script>
 </body>
 
 </html>
