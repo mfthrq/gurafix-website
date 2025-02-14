@@ -48,14 +48,29 @@
                                     name="tanggal_lahir">
                             </div>
                             <div class="single-input-inner style-border">
+                                <input type="tel" placeholder="Nomor Telepon" id="no_telp" name="no_telp"
+                                    required>
+                            </div>
+                            <div class="single-input-inner style-border">
                                 <select id="domisili" name="domisili"
                                     style="width: 100%; padding: 0 18px; border-radius: 10px; height: 75px; background-color: #1a2430; color: white; font-size: 15px;">
-                                    <option value="">-- Pilih Domisili --</option>
+                                    <option value="" disabled selected>-- Pilih Domisili --</option>
                                 </select>
                             </div>
                             <div class="single-input-inner style-border">
-                                <input type="tel" placeholder="Nomor Telepon" id="no_telp" name="no_telp"
-                                    required>
+                                <select id="pekerjaan" name="pekerjaan"
+                                    style="width: 100%; padding: 0 18px; border-radius: 10px; height: 75px; background-color: #1a2430; color: white; font-size: 15px;">
+                                    <option value="" disabled selected>-- Pilih Pekerjaan --</option>
+                                    <option value="Pelajar">Pelajar</option>
+                                    <option value="Mahasiswa">Mahasiswa</option>
+                                    <option value="UMKM/Wiraswasta">UMKM/Wiraswasta</option>
+                                    <option value="Freelancer">Freelancer</option>
+                                    <option value="Content Creator/Influencer">Content Creator/Influencer</option>
+                                    <option value="Lembaga/Organisasi">Lembaga/Organisasi</option>
+                                    <option value="Event Organizer">Event Organizer</option>
+                                    <option value="Pribadi/Personal">Pribadi/Personal</option>
+                                    <option value="Lainnya">Lainnya</option>
+                                </select>
                             </div>
                             <div class="single-input-inner style-border">
                                 <input type="password" placeholder="Kata Sandi" id="password" name="password">

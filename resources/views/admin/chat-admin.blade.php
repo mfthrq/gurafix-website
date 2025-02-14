@@ -72,12 +72,18 @@
 
                                     </div>
 
-                                    <form action="{{ route('chat-admin.store') }}" method="POST">
+                                    <form action="{{ route('chat-admin.store') }}" method="POST"
+                                        enctype="multipart/form-data">
                                         @csrf
+
+                                        <!-- Tempat Nama File -->
+                                        <p id="file-name" style="margin-left: 30px; margin-top: 15px; font-size: 18px; color: black; font-weight: bold;"></p>
+
                                         <div class="geex-content__chat__send">
                                             <input type="hidden" id="id_sender" name="id_sender"
                                                 value="{{ Auth::id() }}" required>
                                             <input type="hidden" id="id_receiver" name="id_receiver" required>
+
                                             <div class="geex-content__chat__send__input">
                                                 <input placeholder="Ketikkan Pesan.." name="message" id="message"
                                                     value="" required>
@@ -114,6 +120,14 @@
     <x-admin-footer />
 
     <script src="jquery-3.7.1.min.js"></script>
+
+    <!-- JavaScript untuk Menampilkan Nama File -->
+    <script>
+        document.getElementById("attachments").addEventListener("change", function() {
+            var fileName = this.files.length > 0 ? this.files[0].name : "";
+            document.getElementById("file-name").textContent = fileName ? "File: " + fileName : "";
+        });
+    </script>
 
     <script>
         $(document).ready(function() {
@@ -153,11 +167,23 @@
                                 userName;
                             let chatClass = chat.id_sender == response.admin_id ? "active" : "";
 
+                            let imageAttachment = chat.attachments ?
+                                `<img src="/assets_admin/attachments/${chat.attachments}" alt="Attachment" width="200">` :
+                                "";
+
                             chatHtml += `
                         <div class="geex-content__chat__list__single ${chatClass}">
                             <div class="geex-content__chat__list__single__text">
                                 <span class="geex-content__chat__list__single__title">${senderName}</span>
-                                <span class="geex-content__chat__list__single__msg latest">${chat.message}</span>
+                                <span class="geex-content__chat__list__single__msg latest" style="display: flex; flex-direction: column;">
+                                    <div style="max-width: 100%; border-radius: 8px; overflow: hidden;">
+                                        ${imageAttachment}
+                                    </div>
+                                    <div style="word-wrap: break-word;">
+                                        ${chat.message && chat.message !== "null" ? `${chat.message}` : ""}
+                                    </div>
+                                </span>
+
                                 <span>${formattedTime}</span>
                             </div>
                         </div>

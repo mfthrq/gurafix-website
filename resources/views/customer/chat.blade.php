@@ -192,7 +192,7 @@
 
                             // Cek apakah ada gambar di kolom attachments
                             let imageAttachment = chat.attachments ?
-                                `<img src="assets_admin/attachments/${chat.attachments}" alt="Attachment" width="200">` :
+                                `<img src="/assets_admin/attachments/${chat.attachments}" alt="Attachment" width="200">` :
                                 "";
 
                             if (chat.id_sender == customerId) {

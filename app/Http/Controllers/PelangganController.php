@@ -32,6 +32,7 @@ class PelangganController extends Controller
             'no_telp' => $request->no_telp,
             'domisili' => $request->domisili,
             'tanggal_lahir' => $request->tanggal_lahir,
+            'pekerjaan' => $request->pekerjaan,
             'password' => Hash::make($request->password),
             'created_at' => $currentTime
         ]);

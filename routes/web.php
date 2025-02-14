@@ -69,6 +69,7 @@ Route::post('/logout', [AuthController::class, 'logoutCustomer'])->name('custome
 Route::get('/signup', function () {
     return view('customer/signup');
 })->name('signup');
+
 Route::post('/signup/store', [PelangganController::class, 'storePelanggan'])->name('signup.store');
 
 // ========== MIDDLEWARE ==========
