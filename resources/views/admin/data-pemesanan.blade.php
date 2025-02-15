@@ -19,16 +19,16 @@
                 <table class="table-reviews-geex-1">
                     <thead>
                         <tr style="width: 100%">
-                            <th style="width: 20%">No</th>
-                            <th style="width: 20%">Pelanggan</th>
-                            <th style="width: 20%">Layanan</th>
-                            <th style="width: 20%">Paket</th>
-                            <th style="width: 20%">Pelanggan Referensi Desain</th>
-                            <th style="width: 20%">Pelanggan Brief</th>
-                            <th style="width: 20%">Tanggal Pemesanan</th>
-                            <th style="width: 20%">Status</th>
-                            <th style="width: 20%">Link Desain</th>
-                            <th style="width: 20%">Aksi</th>
+                            <th>No</th>
+                            <th>Pelanggan</th>
+                            <th>Layanan</th>
+                            <th>Paket</th>
+                            <th>Pelanggan Referensi Desain</th>
+                            <th>Pelanggan Brief</th>
+                            <th>Tanggal Pemesanan</th>
+                            <th>Status</th>
+                            <th>Link Desain</th>
+                            <th>Aksi</th>
                         </tr>
                     </thead>
                     <tbody class="">
@@ -45,7 +45,7 @@
                                     </div>
                                 </td>
                                 <td>
-                                    <div class="author-area">
+                                    <div  style="max-height: 150px; overflow-y: auto;">
                                         <p>{{ $pemesanan->layanan->nama }}</p>
                                     </div>
                                 </td>
@@ -61,7 +61,7 @@
                                     </div>
                                 </td>
                                 <td>
-                                    <div class="author-area">
+                                    <div style="max-height: 200px; overflow-y: auto;">
                                         <p>{{ $pemesanan->pelanggan_brief }}</p>
                                     </div>
                                 </td>
@@ -112,7 +112,7 @@
                                 </td>
                                 <td>
                                     <div class="author-area">
-                                        <p>{{ $pemesanan->link_desain ? $pemesanan->link_desain : "-" }}</p>
+                                        <p>{{ $pemesanan->link_desain ? $pemesanan->link_desain : '-' }}</p>
                                     </div>
                                 </td>
                                 <td>
@@ -188,9 +188,10 @@
                         <label for="id_paket" class="form-label">Pilih Paket</label>
                         <div class="geex-content__form__single__box mb-20">
                             <select class="form-control" id="id_paket" name="id_paket" required>
-                                <option value="">Pilih paket</option>
+                                <option value="">Pilih Paket</option>
                                 @foreach ($pakets as $paket)
-                                    <option value="{{ $paket->id }}">{{ $paket->nama }}</option>
+                                    <option value="{{ $paket->id }}" data-id_layanan="{{ $paket->id_layanan }}">
+                                        {{ $paket->nama }}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -203,8 +204,8 @@
 
                         <label for="pelanggan_brief" class="form-label">Pelanggan Brief</label>
                         <div class="geex-content__form__single__box mb-20">
-                            <input type="text" placeholder="Masukkan pelanggan brief" class="form-control"
-                                id="pelanggan_brief" name="pelanggan_brief" required>
+                            <textarea placeholder="Masukkan pelanggan brief" class="form-control"
+                                id="pelanggan_brief" name="pelanggan_brief" style="height: 200px" required></textarea>
                         </div>
 
                         <label for="tanggal_pemesanan" class="form-label">Tanggal Pemesanan</label>
@@ -282,7 +283,8 @@
                             <select class="form-control" id="editId_paket" name="id_paket" required>
                                 <option value="">Pilih paket</option>
                                 @foreach ($pakets as $paket)
-                                    <option value="{{ $paket->id }}">{{ $paket->nama }}</option>
+                                    <option value="{{ $paket->id }}" data-id_layanan="{{ $paket->id_layanan }}">
+                                        {{ $paket->nama }}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -295,10 +297,10 @@
                         <img id="currentPelangganReferensiDesain" src="" alt="referensi Desain"
                             width="200" class="mt-2 mb-3"> <br>
 
-                        <label for="pelanggan_brief" class="form-label">Pelanggan Brief (Opsional)</label>
+                        <label for="pelanggan_brief" class="form-label">Pelanggan Brief</label>
                         <div class="geex-content__form__single__box mb-20">
-                            <input type="text" placeholder="Masukkan pelanggan brief" class="form-control"
-                                id="editPelanggan_brief" name="pelanggan_brief">
+                            <textarea placeholder="Masukkan pelanggan brief" class="form-control"
+                                id="editPelanggan_brief" name="pelanggan_brief" style="height: 200px;"></textarea>
                         </div>
 
                         <label for="tanggal_pemesanan" class="form-label">Tanggal Pemesanan</label>
@@ -335,6 +337,72 @@
             </div>
         </div>
     </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            let layananSelect = document.getElementById("id_layanan");
+            let paketSelect = document.getElementById("id_paket");
+            let paketOptions = Array.from(paketSelect.querySelectorAll("option"));
+
+            layananSelect.addEventListener("change", function() {
+                let selectedLayanan = this.value;
+
+                // Reset pilihan paket
+                paketSelect.innerHTML = '<option value="">Pilih Paket</option>';
+
+                // Filter paket yang sesuai dengan layanan yang dipilih
+                let filteredOptions = paketOptions.filter(option =>
+                    option.getAttribute("data-id_layanan") === selectedLayanan
+                );
+
+                // Tambahkan opsi paket yang sesuai
+                filteredOptions.forEach(option => paketSelect.appendChild(option));
+
+                // Jika tidak ada paket yang sesuai, opsi tetap kosong
+                if (filteredOptions.length === 0) {
+                    paketSelect.innerHTML = '<option value="">Tidak ada paket tersedia</option>';
+                }
+            });
+        });
+    </script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const layananSelect = document.getElementById("editId_layanan");
+            const paketSelect = document.getElementById("editId_paket");
+            // Ambil seluruh opsi paket yang tersedia (termasuk opsi default)
+            const paketOptions = Array.from(paketSelect.querySelectorAll("option"));
+
+            // Fungsi untuk memfilter opsi paket berdasarkan layanan yang dipilih
+            function filterPaket(selectedLayanan) {
+                // Reset opsi paket dengan opsi default
+                paketSelect.innerHTML = '<option value="">Pilih Paket</option>';
+
+                // Filter opsi yang memiliki data-id_layanan sesuai pilihan
+                const filteredOptions = paketOptions.filter(option =>
+                    option.getAttribute("data-id_layanan") === selectedLayanan
+                );
+
+                // Tambahkan opsi paket yang sesuai
+                filteredOptions.forEach(option => paketSelect.appendChild(option));
+
+                // Jika tidak ada paket yang tersedia, tampilkan pesan tidak ada paket
+                if (filteredOptions.length === 0) {
+                    paketSelect.innerHTML = '<option value="">Tidak ada paket tersedia</option>';
+                }
+            }
+
+            // Jika form edit sudah memiliki nilai layanan yang terpilih, filter paket secara otomatis
+            if (layananSelect.value) {
+                filterPaket(layananSelect.value);
+            }
+
+            // Event listener untuk saat layanan berubah
+            layananSelect.addEventListener("change", function() {
+                filterPaket(this.value);
+            });
+        });
+    </script>
 
     <script>
         document.querySelectorAll('.edit-btn').forEach(button => {

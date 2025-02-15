@@ -70,15 +70,19 @@ Route::post('/signup/store', [PelangganController::class, 'storePelanggan'])->na
 
 // ========== MIDDLEWARE ==========
 Route::middleware([PelangganMiddleware::class])->group(function () { 
+
+    // ========== PROFILE ==========
     Route::get('/profile', function () {
         return view('customer.profile');
     })->name('profile');
+    
+    // ========== CHAT FOR CUSTOMER PAGE ==========
     Route::get('/chat', function () {
         return view('customer.chat');
     })->name('chat');
-    Route::get('/riwayat', function () {
-        return view('customer.riwayat');
-    })->name('riwayat');
+
+    // ========== RIWAYAT ==========
+    Route::get('/riwayat', [PemesananController::class, 'indexRiwayat'])->name('riwayat');
 });
 
 // ====== CHAT FOR CUSTOMER ======

@@ -8,9 +8,11 @@ use App\Models\Layanan;
 use App\Models\Paket;
 use App\Models\Pemesanan;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 
 class PemesananController extends Controller
 {
+    // ========= admin ========
     public function IndexDataPemesanan(){
         $pemesanans = Pemesanan::all();
         $pakets = Paket::all();
@@ -112,4 +114,23 @@ class PemesananController extends Controller
 
         return redirect()->route('admin.data-pemesanan')->with('success', 'Data berhasil dihapus!');
     } 
+
+    // ========= customer ========
+    public function indexRiwayat(){
+        // Pastikan user sudah login, jika tidak, middleware harus meng-handle-nya
+        $userId = Auth::id();
+        if(!$userId){
+            abort(403, 'Anda harus login.');
+        }
+        
+        // Ambil data pemesanan berdasarkan kolom id_pelanggan
+        $pemesanans = Pemesanan::where('id_pelanggan', $userId)->get();
+    
+        // Pastikan data terkait memiliki kolom yang dibutuhkan
+        $pakets     = Paket::all();
+        $layanans   = Layanan::all();
+        $users      = User::where('id_role', 2)->get();
+    
+        return view('customer.riwayat', compact('pemesanans', 'pakets', 'layanans', 'users'));
+    }
 }
