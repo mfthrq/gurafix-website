@@ -5,9 +5,12 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Layanan;
+use App\Models\Paket;
 
 class LayananController extends Controller
 {
+
+    // ===== admin ======
     public function IndexDataLayanan(){
         $layanans = Layanan::all();
         return view('admin.data-layanan', compact('layanans'));
@@ -86,4 +89,22 @@ class LayananController extends Controller
 
         return redirect()->route('admin.data-layanan')->with('success', 'Data berhasil dihapus!');
     }  
+
+    // ===== customer ======
+    public function IndexLayanan(){
+        $layanans = Layanan::all();
+        return view('customer.service', compact('layanans'));
+    }
+
+    public function showDetailLayanan($id)
+    {
+        // Cari layanan berdasarkan id
+        $layanan = Layanan::findOrFail($id);
+
+        // Ambil data paket yang memiliki id_layanan sama dengan parameter $id
+        $pakets = Paket::where('id_layanan', $id)->get();
+
+        // Kirim data layanan dan paket ke view
+        return view('customer.detail-layanan', compact('layanan', 'pakets'));
+    }
 }

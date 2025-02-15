@@ -23,7 +23,8 @@
                             <th style="width: 20%">Pelanggan</th>
                             <th style="width: 20%">Layanan</th>
                             <th style="width: 20%">Paket</th>
-                            <th style="width: 20%">Bukti Transaksi</th>
+                            <th style="width: 20%">Pelanggan Referensi Desain</th>
+                            <th style="width: 20%">Pelanggan Brief</th>
                             <th style="width: 20%">Tanggal Pemesanan</th>
                             <th style="width: 20%">Status</th>
                             <th style="width: 20%">Link Desain</th>
@@ -55,8 +56,13 @@
                                 </td>
                                 <td>
                                     <div class="author-area">
-                                        <img src="{{ asset('assets_admin/bukti_transaksi/' . $pemesanan->bukti_transaksi) }}"
-                                            alt="Bukti Transaksi" width="100">
+                                        <img src="{{ asset('assets_admin/pelanggan_referensi_desain/' . $pemesanan->pelanggan_referensi_desain) }}"
+                                            alt="referensi desain" width="100">
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="author-area">
+                                        <p>{{ $pemesanan->pelanggan_brief }}</p>
                                     </div>
                                 </td>
                                 <td>
@@ -66,30 +72,35 @@
                                 </td>
                                 <td>
                                     <div class="author-area">
-                                        @if ($pemesanan->status == 'diverifikasi')
+                                        @if ($pemesanan->status == 'Menunggu Pembayaran')
                                             <span
                                                 class="geex-badge geex-badge--label-icon geex-badge--primary-transparent">
-                                                Diverifikasi
+                                                Menunggu Pembayaran
                                             </span>
-                                        @elseif ($pemesanan->status == 'progress')
-                                            <span
-                                                class="geex-badge geex-badge--label-icon geex-badge--warning-transparent">
-                                                Progress
-                                            </span>
-                                        @elseif ($pemesanan->status == 'revisi')
-                                            <span
-                                                class="geex-badge geex-badge--label-icon geex-badge--info-transparent">
-                                                Revisi
-                                            </span>
-                                        @elseif ($pemesanan->status == 'berhasil')
+                                        @elseif ($pemesanan->status == 'Pembayaran Berhasil')
                                             <span
                                                 class="geex-badge geex-badge--label-icon geex-badge--success-transparent">
-                                                Berhasil
+                                                Pembayaran Berhasil
                                             </span>
-                                        @elseif ($pemesanan->status == 'gagal')
+                                        @elseif ($pemesanan->status == 'Progress')
+                                            <span
+                                                class="geex-badge geex-badge--label-icon geex-badge--info-transparent">
+                                                Progress
+                                            </span>
+                                        @elseif ($pemesanan->status == 'Revisi')
+                                            <span
+                                                class="geex-badge geex-badge--label-icon geex-badge--warning-transparent">
+                                                Revisi
+                                            </span>
+                                        @elseif ($pemesanan->status == 'Gagal')
                                             <span
                                                 class="geex-badge geex-badge--label-icon geex-badge--danger-transparent">
                                                 Gagal
+                                            </span>
+                                        @elseif ($pemesanan->status == 'Selesai')
+                                            <span
+                                                class="geex-badge geex-badge--label-icon geex-badge--success-transparent">
+                                                Selesai
                                             </span>
                                         @else
                                             <span
@@ -101,24 +112,24 @@
                                 </td>
                                 <td>
                                     <div class="author-area">
-                                        <p>{{ $pemesanan->link_desain }}</p>
+                                        <p>{{ $pemesanan->link_desain ? $pemesanan->link_desain : "-" }}</p>
                                     </div>
                                 </td>
                                 <td>
                                     <div class="author-area">
                                         <button class="geex-btn geex-btn--primary edit-btn" data-bs-toggle="modal"
-                                            data-bs-target="#editModal" 
-                                            data-id="{{ $pemesanan->id }}"
+                                            data-bs-target="#editModal" data-id="{{ $pemesanan->id }}"
                                             data-id_pelanggan="{{ $pemesanan->id_pelanggan }}"
                                             data-id_layanan="{{ $pemesanan->id_layanan }}"
                                             data-id_paket="{{ $pemesanan->id_paket }}"
-                                            data-bukti_transaksi="{{ $pemesanan->bukti_transaksi }}"
+                                            data-pelanggan_referensi_desain="{{ $pemesanan->pelanggan_referensi_desain }}"
+                                            data-pelanggan_brief="{{ $pemesanan->pelanggan_brief }}"
                                             data-tanggal_pemesanan="{{ $pemesanan->tanggal_pemesanan }}"
                                             data-status="{{ $pemesanan->status }}"
-                                            data-link_desain="{{ $pemesanan->link_desain }}"
-                                            >Edit</button>
+                                            data-link_desain="{{ $pemesanan->link_desain }}">Edit</button>
 
-                                        <form action="{{ route('data-pemesanan.destroy', $pemesanan->id) }}" method="POST">
+                                        <form action="{{ route('data-pemesanan.destroy', $pemesanan->id) }}"
+                                            method="POST">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit"
@@ -129,7 +140,7 @@
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="9">
+                                <td colspan="10">
                                     <p class="text-center">Tidak ada data pemesanan.</p>
                                 </td>
                             </tr>
@@ -184,10 +195,16 @@
                             </select>
                         </div>
 
-                        <label for="bukti_transaksi" class="form-label">Bukti Transaksi</label>
+                        <label for="pelanggan_referensi_desain" class="form-label">Pelanggan referensi Desain</label>
                         <div class="geex-content__form__single__box mb-20">
-                            <input type="file" class="form-control" id="bukti_transaksi" name="bukti_transaksi"
-                                required>
+                            <input type="file" class="form-control" id="pelanggan_referensi_desain"
+                                name="pelanggan_referensi_desain" required>
+                        </div>
+
+                        <label for="pelanggan_brief" class="form-label">Pelanggan Brief</label>
+                        <div class="geex-content__form__single__box mb-20">
+                            <input type="text" placeholder="Masukkan pelanggan brief" class="form-control"
+                                id="pelanggan_brief" name="pelanggan_brief" required>
                         </div>
 
                         <label for="tanggal_pemesanan" class="form-label">Tanggal Pemesanan</label>
@@ -200,11 +217,12 @@
                         <div class="geex-content__form__single__box mb-20">
                             <select class="form-control" id="status" name="status" required>
                                 <option value="">Pilih Status</option>
-                                <option value="diverifikasi">Diverifikasi</option>
-                                <option value="progress">Progress</option>
-                                <option value="revisi">Revisi</option>
-                                <option value="berhasil">Berhasil</option>
-                                <option value="gagal">Gagal</option>
+                                <option value="Menunggu Pembayaran">Menunggu Pembayaran</option>
+                                <option value="Pembayaran Berhasil">Pembayaran Berhasil</option>
+                                <option value="Progress">Progress</option>
+                                <option value="Revisi">Revisi</option>
+                                <option value="Gagal">Gagal</option>
+                                <option value="Selesai">Selesai</option>
                             </select>
                         </div>
 
@@ -269,13 +287,19 @@
                             </select>
                         </div>
 
-                        <label for="bukti_transaksi" class="form-label">Bukti Transaksi</label>
+                        <label for="pelanggan_referensi_desain" class="form-label">Referensi Desain</label>
                         <div class="geex-content__form__single__box mb-20">
-                            <input type="file" class="form-control" name="bukti_transaksi">
+                            <input type="file" class="form-control" name="pelanggan_referensi_desain">
                         </div>
 
-                        <img id="currentBuktiTransaksi" src="" alt="Bukti Transaksi" width="200"
-                            class="mt-2 mb-3"> <br>
+                        <img id="currentPelangganReferensiDesain" src="" alt="referensi Desain"
+                            width="200" class="mt-2 mb-3"> <br>
+
+                        <label for="pelanggan_brief" class="form-label">Pelanggan Brief (Opsional)</label>
+                        <div class="geex-content__form__single__box mb-20">
+                            <input type="text" placeholder="Masukkan pelanggan brief" class="form-control"
+                                id="editPelanggan_brief" name="pelanggan_brief">
+                        </div>
 
                         <label for="tanggal_pemesanan" class="form-label">Tanggal Pemesanan</label>
                         <div class="geex-content__form__single__box mb-20">
@@ -287,11 +311,12 @@
                         <div class="geex-content__form__single__box mb-20">
                             <select class="form-control" id="editStatus" name="status" required>
                                 <option value="">Pilih Status</option>
-                                <option value="diverifikasi">Diverifikasi</option>
-                                <option value="progress">Progress</option>
-                                <option value="revisi">Revisi</option>
-                                <option value="berhasil">Berhasil</option>
-                                <option value="gagal">Gagal</option>
+                                <option value="Menunggu Pembayaran">Menunggu Pembayaran</option>
+                                <option value="Pembayaran Berhasil">Pembayaran Berhasil</option>
+                                <option value="Progress">Progress</option>
+                                <option value="Revisi">Revisi</option>
+                                <option value="Gagal">Gagal</option>
+                                <option value="Selesai">Selesai</option>
                             </select>
                         </div>
 
@@ -318,7 +343,8 @@
                 const id_pelanggan = this.getAttribute('data-id_pelanggan');
                 const id_layanan = this.getAttribute('data-id_layanan');
                 const id_paket = this.getAttribute('data-id_paket');
-                const bukti_transaksi = this.getAttribute('data-bukti_transaksi');
+                const pelanggan_referensi_desain = this.getAttribute('data-pelanggan_referensi_desain');
+                const pelanggan_brief = this.getAttribute('data-pelanggan_brief');
                 const tanggal_pemesanan = this.getAttribute('data-tanggal_pemesanan');
                 const status = this.getAttribute('data-status');
                 const link_desain = this.getAttribute('data-link_desain');
@@ -328,12 +354,14 @@
                 document.getElementById('editId_pelanggan').value = id_pelanggan;
                 document.getElementById('editId_layanan').value = id_layanan;
                 document.getElementById('editId_paket').value = id_paket;
+                document.getElementById('editPelanggan_brief').value = pelanggan_brief;
                 document.getElementById('editTanggal_pemesanan').value = tanggal_pemesanan;
                 document.getElementById('editStatus').value = status;
                 document.getElementById('editLink_desain').value = link_desain;
-                
+
                 // Set src dari gambar saat ini
-                document.getElementById('currentBuktiTransaksi').src = `/assets_admin/bukti_transaksi/${bukti_transaksi}`;
+                document.getElementById('currentPelangganReferensiDesain').src =
+                    `/assets_admin/pelanggan_referensi_desain/${pelanggan_referensi_desain}`;
 
                 // Update action URL form edit
                 document.getElementById('editForm').action = `/admin/data-pemesanan/${id}`;

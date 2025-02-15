@@ -22,7 +22,7 @@
                                 <img src="{{ asset('assets_admin/assets/img/avatar/user.svg') }}" alt="user" />
                             </div>
                             <div class="geex-content__header__popup__header__content">
-                                <h3 class="geex-content__header__popup__header__title">Admin Gurafix</h3>
+                                <h3 class="geex-content__header__popup__header__title">{{ Auth::user()->nama }}</h3>
                             </div>
                         </div>
                         <div class="geex-content__header__popup__footer mt-3">

@@ -9,6 +9,8 @@ use App\Models\Layanan;
 
 class PaketController extends Controller
 {
+
+    // ===== admin ======
     public function IndexDataPaket(){
         $pakets = Paket::all();
         $layanans = Layanan::all();
@@ -101,5 +103,15 @@ class PaketController extends Controller
 
         return redirect()->route('admin.data-paket')->with('success', 'Data berhasil dihapus!');
     } 
+
+    // ===== customer ======
+    public function showDetailPaket($id)
+    {
+        // Cari layanan berdasarkan id
+        $paket = Paket::findOrFail($id);
+
+        // Kirim data layanan dan paket ke view
+        return view('customer.detail-paket', compact('paket'));
+    }
     
 }

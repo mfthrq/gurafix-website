@@ -38,17 +38,17 @@
                         <form class="login-form-inner" action="{{ route('signup.store') }}" method="POST">
                             @csrf
                             <div class="single-input-inner style-border">
-                                <input type="text" placeholder="Email" id="email" name="email">
+                                <input type="email" placeholder="Email" id="email" name="email">
                             </div>
                             <div class="single-input-inner style-border">
-                                <input type="username" placeholder="Nama Pengguna" id="nama" name="nama">
+                                <input type="text" placeholder="Nama Pengguna" id="nama" name="nama">
                             </div>
                             <div class="single-input-inner style-border">
                                 <input type="date" placeholder="Tanggal Lahir" id="tanggal_lahir"
                                     name="tanggal_lahir">
                             </div>
                             <div class="single-input-inner style-border">
-                                <input type="tel" placeholder="Nomor Telepon" id="no_telp" name="no_telp"
+                                <input type="number" placeholder="Nomor Telepon" id="no_telp" name="no_telp"
                                     required>
                             </div>
                             <div class="single-input-inner style-border">
@@ -73,7 +73,7 @@
                                 </select>
                             </div>
                             <div class="single-input-inner style-border">
-                                <input type="password" placeholder="Kata Sandi" id="password" name="password">
+                                <input type="password" placeholder="Kata Sandi" id="password" name="password" autocomplete="new-password">
                                 <span><img src="assets/img/icon/18.png" alt="img"></span>
                             </div>
                             <button type="submit" class="btn btn-base tt-uppercase w-100">Daftar</button>

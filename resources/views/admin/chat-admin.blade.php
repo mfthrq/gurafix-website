@@ -177,7 +177,7 @@
                                 <span class="geex-content__chat__list__single__title">${senderName}</span>
                                 <span class="geex-content__chat__list__single__msg latest" style="display: flex; flex-direction: column;">
                                     <div style="max-width: 100%; border-radius: 8px; overflow: hidden;">
-                                        ${imageAttachment}
+                                        ${imageAttachment && imageAttachment !== "null" ? `<div style="margin-bottom: 10px;">${imageAttachment}</div>` : ""}
                                     </div>
                                     <div style="word-wrap: break-word;">
                                         ${chat.message && chat.message !== "null" ? `${chat.message}` : ""}

@@ -24,25 +24,27 @@ class PemesananController extends Controller
             'id_pelanggan' => 'required',
             'id_layanan' => 'required',
             'id_paket' => 'required',
-            'bukti_transaksi' => 'required|image|mimes:jpg,jpeg,png|max:10048',
+            'pelanggan_referensi_desain' => 'required|image|mimes:jpg,jpeg,png|max:10048',
+            'pelanggan_brief' => 'required',
             'tanggal_pemesanan' => 'required',
             'status' => 'required',
             'link_desain' => 'nullable',
         ]);
 
         // Mengambil file gambar
-        $file = $request->file('bukti_transaksi');
+        $file = $request->file('pelanggan_referensi_desain');
         
         // Menentukan nama file dan menyimpan gambar
         $filename = time() . '.' . $file->getClientOriginalExtension();
-        $file->move(public_path('assets_admin/bukti_transaksi'), $filename);
+        $file->move(public_path('assets_admin/pelanggan_referensi_desain'), $filename);
 
         // Simpan data ke database
         Pemesanan::create([
             'id_pelanggan' => $request->id_pelanggan,
             'id_layanan' => $request->id_layanan,
             'id_paket' => $request->id_paket,
-            'bukti_transaksi' => $filename,
+            'pelanggan_referensi_desain' => $filename,
+            'pelanggan_brief' => $request->pelanggan_brief,
             'tanggal_pemesanan' => $request->tanggal_pemesanan,
             'status' => $request->status,
             'link_desain' => $request->link_desain,
@@ -60,6 +62,8 @@ class PemesananController extends Controller
             'id_pelanggan' => 'required',
             'id_layanan' => 'required',
             'id_paket' => 'required',
+            'pelanggan_referensi_desain' => 'nullable|image|mimes:jpg,jpeg,png|max:10048',
+            'pelanggan_brief' => 'required',
             'bukti_transaksi' => 'nullable|image|mimes:jpg,jpeg,png|max:10048',
             'tanggal_pemesanan' => 'required',
             'status' => 'required',
@@ -69,30 +73,31 @@ class PemesananController extends Controller
         $pemesanan->id_pelanggan = $request->id_pelanggan;
         $pemesanan->id_layanan = $request->id_layanan;
         $pemesanan->id_paket = $request->id_paket;
+        $pemesanan->pelanggan_brief = $request->pelanggan_brief;
         $pemesanan->tanggal_pemesanan = $request->tanggal_pemesanan;
         $pemesanan->status = $request->status;
         $pemesanan->link_desain = $request->link_desain;
 
         // Mengambil file gambar
-        $file = $request->file('bukti_transaksi');
+        $file = $request->file('pelanggan_referensi_desain');
         
         // Jika ada file gambar baru yang diupload
-        if ($request->hasFile('bukti_transaksi')) {
+        if ($request->hasFile('pelanggan_referensi_desain')) {
             // Menghapus gambar lama jika ada
-            if ($pemesanan->bukti_transaksi) {
-                $oldFilePath = public_path('assets_admin/bukti_transaksi/' . $pemesanan->bukti_transaksi);
+            if ($pemesanan->pelanggan_referensi_desain) {
+                $oldFilePath = public_path('assets_admin/pelanggan_referensi_desain/' . $pemesanan->pelanggan_referensi_desain);
                 if (file_exists($oldFilePath)) {
                     unlink($oldFilePath);
                 }
             }
 
             // Mengambil file gambar baru
-            $file = $request->file('bukti_transaksi');
+            $file = $request->file('pelanggan_referensi_desain');
             $filename = time() . '.' . $file->getClientOriginalExtension();
-            $file->move(public_path('assets_admin/bukti_transaksi'), $filename);
+            $file->move(public_path('assets_admin/pelanggan_referensi_desain'), $filename);
 
             // Update foto_produk dengan nama file baru
-            $pemesanan->bukti_transaksi = $filename;
+            $pemesanan->pelanggan_referensi_desain = $filename;
         }
 
         $pemesanan->save();

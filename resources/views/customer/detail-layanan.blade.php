@@ -6,17 +6,6 @@
         <div class="cursor"></div>
         <div class="cursor-follower"></div>
         <!-- cursor End -->
-        
-        <!-- search popup start-->
-        <div class="td-search-popup" id="td-search-popup">
-            <form action="index.html" class="search-form">
-                <div class="form-group">
-                    <input type="text" class="form-control" placeholder="Search.....">
-                </div>
-                <button type="submit" class="submit-btn"><i class="fa fa-search"></i></button>
-            </form>
-        </div>
-        <!-- search popup end-->
 
         <div class="body-overlay" id="body-overlay"></div>
 
@@ -26,45 +15,45 @@
         <div class="tournament-area pd-top-120">
             <div class="container">
                 <div class="section-title">
-                    <h2 class="title move-line-3d" style="color: #ddf247;">Desain Identitas dan <span>Produk Fisik</span></h2>
+                    <h2 class="title move-line-3d" style="color: #ddf247;">{{ $layanan->nama }}</h2>
                 </div>
                 <div class="row">
+                    @forelse ($pakets as $paket)
                     <div class="col-lg-4 fade-slide bottom" data-delay="0.2">
                         <div class="single-tournament-2">
-                            <img class="bg-img" src="assets/img/tournament/bg-3.png" alt="img">
+                            <img class="bg-img" src="{{ asset('assets/img/tournament/bg-3.png') }}" alt="img">
                             <div class="content-area">
                                 <div class="top-area d-flex align-items-center align-self-center">
-                                    <img class="me-3 main-img" src="assets/img/tournament/7.png" alt="img">
+                                    <img class="me-3 main-img" src="{{ asset('assets_admin/gambar_paket/' . $paket->gambar_paket) }}" alt="img" />
                                     <div class="details">
-                                        <h3 class="mb-0">Standar</h3>
+                                        <h3 class="mb-0">{{ $paket->nama }}</h3>
                                     </div>
                                 </div>
                                 <span class="line-shadow"></span>
                                 <div class="bottom-area">
                                     <div class="row">
                                         <div class="col-6">
-                                            <span>Biaya</span> <br>
+                                            <span>Harga</span> <br>
                                             <span class="color-base">
-                                                Rp25.000
+                                                Rp{{ $paket->harga }}
                                             </span>
                                         </div>
                                         <div class="col-6">
-                                            <span>TIME</span> <br>
+                                            <span>Druasi</span> <br>
                                             <span>
                                                 <i class="fa fa-clock"></i>
-                                                5 Hari Kerja
+                                                {{ $paket->durasi_pengerjaan }} Hari Kerja
                                             </span>
                                         </div>
                                         <div class="mt-3">
                                             <ul>
-                                                <li>Fitur paket 1</li>
-                                                <li>Fitur paket 2</li>
-                                                <li>Fitur paket 3</li>
-                                                <li>Fitur paket 4</li>
+                                                @foreach(explode(',', $paket->fitur) as $fitur)
+                                                    <li>{{ trim($fitur) }}</li>
+                                                @endforeach
                                             </ul>
                                         </div>
                                         <div class="mt-3">
-                                            <a class="btn btn-gray" href="/detail-paket">
+                                            <a class="btn btn-gray" href="{{ route('paket.detail', $paket->id) }}">
                                                 Pilih Paket
                                                 <i class="fa fa-arrow-right" aria-hidden="true"></i>
                                             </a>
@@ -74,96 +63,8 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-4 fade-slide bottom" data-delay="0.3">
-                        <div class="single-tournament-2">
-                            <img class="bg-img" src="assets/img/tournament/bg-3.png" alt="img">
-                            <div class="content-area">
-                                <div class="top-area d-flex align-items-center align-self-center">
-                                    <img class="me-3 main-img" src="assets/img/tournament/8.png" alt="img">
-                                    <div class="details">
-                                        <h3 class="mb-0">Medium</h3>
-                                    </div>
-                                </div>
-                                <span class="line-shadow"></span>
-                                <div class="bottom-area">
-                                    <div class="row">
-                                        <div class="col-6">
-                                            <span>Biaya</span> <br>
-                                            <span class="color-base">
-                                                Rp25.000
-                                            </span>
-                                        </div>
-                                        <div class="col-6">
-                                            <span>TIME</span> <br>
-                                            <span>
-                                                <i class="fa fa-clock"></i>
-                                                5 Hari Kerja
-                                            </span>
-                                        </div>
-                                        <div class="mt-3">
-                                            <ul>
-                                                <li>Fitur paket 1</li>
-                                                <li>Fitur paket 2</li>
-                                                <li>Fitur paket 3</li>
-                                                <li>Fitur paket 4</li>
-                                            </ul>
-                                        </div>
-                                        <div class="mt-3">
-                                            <a class="btn btn-gray" href="#">
-                                                Pilih Paket
-                                                <i class="fa fa-arrow-right" aria-hidden="true"></i>
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-4 fade-slide bottom" data-delay="0.4">
-                        <div class="single-tournament-2">
-                            <img class="bg-img" src="assets/img/tournament/bg-3.png" alt="img">
-                            <div class="content-area">
-                                <div class="top-area d-flex align-items-center align-self-center">
-                                    <img class="me-3 main-img" src="assets/img/tournament/9.png" alt="img">
-                                    <div class="details">
-                                        <h3 class="mb-0">Premium</h3>
-                                    </div>
-                                </div>
-                                <span class="line-shadow"></span>
-                                <div class="bottom-area">
-                                    <div class="row">
-                                        <div class="col-6">
-                                            <span>Biaya</span> <br>
-                                            <span class="color-base">
-                                                Rp25.000
-                                            </span>
-                                        </div>
-                                        <div class="col-6">
-                                            <span>TIME</span> <br>
-                                            <span>
-                                                <i class="fa fa-clock"></i>
-                                                5 Hari Kerja
-                                            </span>
-                                        </div>
-                                        <div class="mt-3">
-                                            <ul>
-                                                <li>Fitur paket 1</li>
-                                                <li>Fitur paket 2</li>
-                                                <li>Fitur paket 3</li>
-                                                <li>Fitur paket 4</li>
-                                            </ul>
-                                        </div>
-                                        <div class="mt-3">
-                                            <a class="btn btn-gray" href="#">
-                                                Pilih Paket
-                                                <i class="fa fa-arrow-right" aria-hidden="true"></i>
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    @empty
+                    @endforelse
                 </div>
             </div>
         </div>

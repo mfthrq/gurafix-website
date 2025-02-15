@@ -56,10 +56,6 @@ Route::post('/admin/chat-admin/store', [ChatController::class, 'store'])->name('
 
 // ========================== PELANGGAN ============================
 
-// ====== CHAT FOR CUSTOMER ======
-Route::get('/customer/chat/get-chat', [ChatController::class, 'getChatForCustomer']);
-Route::post('/customer/chat/storeCustomer', [ChatController::class, 'storeCustomer'])->name('chat.storeCustomer');
-
 // ========== LOGIN ==========
 Route::get('/login', [AuthController::class, 'showLoginFormCustomer'])->name('customer.login');
 Route::post('/login', [AuthController::class, 'loginCustomer'])->name('customer.login.submit');
@@ -85,9 +81,23 @@ Route::middleware([PelangganMiddleware::class])->group(function () {
     })->name('riwayat');
 });
 
-// ========== PROFILE =========
+// ====== CHAT FOR CUSTOMER ======
+Route::get('/customer/chat/get-chat', [ChatController::class, 'getChatForCustomer']);
+Route::post('/customer/chat/storeCustomer', [ChatController::class, 'storeCustomer'])->name('chat.storeCustomer');
 
+// ========== PROFILE =========
 Route::put('/profile/{id}', [PelangganController::class, 'updatePelanggan'])->name('profile.updatePelanggan');
+
+// ========== LAYANAN =========
+Route::get('/layanan', [LayananController::class, 'indexLayanan'])->name('layanan');
+Route::get('/detail-layanan/{id}', [LayananController::class, 'showDetailLayanan'])->name('layanan.detail');
+
+// ========== PAKET ==========
+Route::get('/detail-paket/{id}', [PaketController::class, 'showDetailPaket'])->name('paket.detail');
+
+
+
+
 
 // ========== OTHER CUSTOMER PAGES ==========
 Route::get('/', function () {
@@ -98,10 +108,6 @@ Route::get('/tentang', function () {
     return view('customer/about');
 })->name('tentang');
 
-Route::get('/layanan', function () {
-    return view('customer/service');
-})->name('layanan');
-
 Route::get('/kontak', function () {
     return view('customer/contact');
 })->name('kontak');
@@ -109,7 +115,3 @@ Route::get('/kontak', function () {
 Route::get('/detail-layanan', function () {
     return view('customer/detail-layanan');
 })->name('detail-layanan');
-
-Route::get('/detail-paket', function () {
-    return view('customer/detail-paket');
-})->name('detail-paket');

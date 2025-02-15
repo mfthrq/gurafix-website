@@ -18,11 +18,11 @@
                 <table class="table-reviews-geex-1">
                     <thead>
                         <tr style="width: 100%">
-                            <th style="width: 20%">No</th>
-                            <th style="width: 20%">Nama</th>
-                            <th style="width: 20%">Deskripsi</th>
-                            <th style="width: 20%">Gambar Layanan</th>
-                            <th style="width: 20%">Aksi</th>
+                            <th>No</th>
+                            <th>Nama</th>
+                            <th>Deskripsi</th>
+                            <th>Gambar Layanan</th>
+                            <th>Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -39,8 +39,8 @@
                                     </div>
                                 </td>
                                 <td>
-                                    <div class="author-area">
-                                        <p>{{ $layanan->deskripsi }}</p>
+                                    <div style="max-height: 100px; overflow-y: auto;">
+                                        {{ $layanan->deskripsi }}
                                     </div>
                                 </td>
                                 <td>

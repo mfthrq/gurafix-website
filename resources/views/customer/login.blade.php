@@ -41,7 +41,7 @@
                         <form action="{{ route('customer.login.submit') }}" class="login-form-inner" method="POST">
                             @csrf
                             <div class="single-input-inner style-border">
-                                <input type="text" placeholder="Masukkan Email Anda" id="email" name="email">
+                                <input type="email" placeholder="Masukkan Email Anda" id="email" name="email">
                                 <span><img src="assets/img/icon/17.png" alt="img"></span>
                             </div>
                             <div class="single-input-inner style-border">

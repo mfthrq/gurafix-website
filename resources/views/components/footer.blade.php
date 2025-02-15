@@ -3,7 +3,7 @@
         <div class="container">
             <div class="footer-top">
                 <a class="footer-logo" href="/">
-                    <img src="assets/img/logo_gurafix_no_bg.png" width="50px" alt="img" />
+                    <img src="{{ asset('assets/img/logo_gurafix_no_bg.png') }}" width="50px" alt="img" />
                 </a>
                 <ul class="p-0 m-0">
                     <li><a href="index-2.html">Beranda</a></li>

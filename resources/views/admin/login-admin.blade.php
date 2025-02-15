@@ -9,9 +9,9 @@
 			<div class="geex-content__authentication__content">
 				<div class="geex-content__authentication__content__wrapper">
 					<div class="geex-content__authentication__content__logo">
-						<a href="index.html">
+						
 							<img class="logo-lite" src="assets/img/logo_gurafix_no_bg.png" width="70px" alt="logo">
-						</a>
+						
 					</div>
 					<form action="{{ route('admin.login.submit') }}" id="signInForm" class="geex-content__authentication__form" method="POST">
 						@csrf
