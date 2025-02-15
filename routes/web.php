@@ -85,6 +85,10 @@ Route::middleware([PelangganMiddleware::class])->group(function () {
     })->name('riwayat');
 });
 
+// ========== PROFILE =========
+
+Route::put('/profile/{id}', [PelangganController::class, 'updatePelanggan'])->name('profile.updatePelanggan');
+
 // ========== OTHER CUSTOMER PAGES ==========
 Route::get('/', function () {
     return view('customer/index');

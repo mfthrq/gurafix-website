@@ -11,6 +11,8 @@ use Carbon\Carbon;
 
 class PelangganController extends Controller
 {
+
+    // ==== admin ====
     public function IndexDataPelanggan(){
         $users = User::where('id_role', 2)->get();
         return view('admin.data-pelanggan', compact('users'));
@@ -38,5 +40,58 @@ class PelangganController extends Controller
         ]);
     
         return redirect()->route('customer.login')->with('success', 'Akun berhasil dibuat');
+    }
+
+    // ==== customer ====
+    public function IndexPelanggan(){
+        $users = User::where('id_role', 2)->get();
+        return view('customer.profile', compact('users'));
+    }
+
+    public function updatePelanggan(Request $request, $id)
+    {
+        // Mencari pelanggan berdasarkan ID
+        $pelanggan = User::findOrFail($id); // Menggunakan findOrFail untuk langsung mengalihkan jika tidak ditemukan
+    
+        // Validasi data yang masuk
+        $request->validate([
+            'nama' => 'required|string',
+            'email' => 'required|string',
+            'no_telp' => 'required|string',
+            'domisili' => 'required|string',
+            'pekerjaan' => 'required|string',
+            'tanggal_lahir' => 'required',
+            'password' => 'nullable', // Password opsional, min 6 karakter
+        ]);
+    
+        // Memperbarui data pelanggan
+        $pelanggan->nama = $request->nama;
+        $pelanggan->email = $request->email;
+        $pelanggan->no_telp = $request->no_telp;
+        $pelanggan->domisili = $request->domisili;
+        $pelanggan->pekerjaan = $request->pekerjaan;
+        $pelanggan->tanggal_lahir = $request->tanggal_lahir;
+
+        // Update password hanya jika diisi
+        if ($request->filled('password')) {
+            $pelanggan->password = bcrypt($request->password);
+        }
+    
+        // Simpan perubahan ke database
+        $pelanggan->save();
+    
+        // Perbarui session dengan data terbaru
+        session([
+            'id' => $pelanggan->id,
+            'email' => $pelanggan->email,
+            'nama' => $pelanggan->nama,
+            'no_telp' => $pelanggan->no_telp,
+            'domisili' => $pelanggan->domisili,
+            'pekerjaan' => $pelanggan->pekerjaan,
+            'tanggal_lahir' => $pelanggan->tanggal_lahir,
+        ]);
+    
+        // Redirect ke /profile dengan pesan sukses
+        return redirect('/profile')->with('success', 'Data berhasil diperbarui!');
     }
 }
