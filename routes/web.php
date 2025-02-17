@@ -99,7 +99,8 @@ Route::get('/detail-layanan/{id}', [LayananController::class, 'showDetailLayanan
 // ========== PAKET ==========
 Route::get('/detail-paket/{id}', [PaketController::class, 'showDetailPaket'])->name('paket.detail');
 
-
+// ========== PEMESANAN ==========
+Route::post('/pemesanan/store', [PemesananController::class, 'storeCustomer'])->name('pemesanan.store');
 
 
 

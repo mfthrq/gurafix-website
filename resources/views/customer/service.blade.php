@@ -33,14 +33,14 @@
             <div class="row">
                 @forelse ($layanans as $index => $layanan)
                     <div class="col-lg-3 mb-lg-0 mb-5 mt-2 fade-slide bottom" data-delay="0.8">
-                        <div class="trusted-wallet-inner p-3 py-5">
+                        <div class="trusted-wallet-inner p-3 py-5" style="height: 400px;">
                             <img class="bg-one w-100" src="assets/img/bg/5.png" alt="img" />
                             <div class="content-inner text-center">
                                 <div class="icon">
                                     <img src="{{ asset('assets_admin/gambar_layanan/' . $layanan->gambar_layanan) }}" alt="img" />
                                 </div>
                                 <span class="mt-3">Layanan {{ $index + 1 }}</span>
-                                <h4>{{ $layanan->nama }}</h4>
+                                <h4>{{ $layanan->nama }}</h3>
                                 <a class="read-more link-layanan" href="{{ route('layanan.detail', $layanan->id) }}">Detail Layanan > </a>
                             </div>
                         </div>
@@ -62,6 +62,7 @@
     <!-- back to top area end -->
 
     <x-script-plugins />
+
 
 </body>
 

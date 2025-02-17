@@ -59,20 +59,28 @@
                     </div>
                 </div>
                 <div class="col-xl-9 col-lg-8">
-                    <form class="create-items-form">
+                    <form class="create-items-form" action="{{ route('pemesanan.store') }}" method="POST" enctype="multipart/form-data">
+                        @csrf
                         <h4 style="color: white;">Form Brief Desain</h4>
+                        
+                        <input type="hidden" id="id_pelanggan" name="id_pelanggan" value="{{ Auth::user()->id }}">
+                        <input type="hidden" id="id_paket" name="id_paket" value="{{ $paket->id }}">
+                        <input type="hidden" id="id_layanan" name="id_layanan" value="{{ $paket->layanan->id }}">
+                        <input type="hidden" id="tanggal_pemesanan" name="tanggal_pemesanan">
+
+                        <span id="selected-file-name" style="color: white;"></span>
                         <div class="image-upload d-md-flex justify-content-between align-items-center mt-2">
                             <p class="mb-md-0">
                                 <img class="me-2" src="{{ asset('assets/img/icon/13.png') }}" alt="img">
                                 Refrensi Desain (Format: PNG, JPG, GIF, WEBP Max 10Mb)
                             </p>
                             <label class="upload-file">
-                                <input type="file" required>
+                                <input type="file" id="pelanggan_referensi_desain" name="pelanggan_referensi_desain" required>
                                 Upload File
                             </label>
                         </div>
-                        <textarea class="item-field" placeholder="Masukkan brief desain" style="color: white;" required></textarea>
-                        <a class="btn btn-base mt-4" href="#">Pesan</a>
+                        <textarea class="item-field" placeholder="Masukkan brief desain" style="color: white;" id="pelanggan_brief" name="pelanggan_brief" required></textarea>
+                        <button type="submit" class="btn btn-base mt-4" href="#">Pesan</button>
                     </form>
                 </div>
             </div>
@@ -89,6 +97,16 @@
     <!-- back to top area end -->
 
     <x-script-plugins />
+
+    <script>
+        document.getElementById('pelanggan_referensi_desain').addEventListener('change', function(e) {
+            // Pastikan file dipilih dan setidaknya ada satu file
+            if (e.target.files && e.target.files.length > 0) {
+                var fileName = e.target.files[0].name;
+                document.getElementById('selected-file-name').textContent = fileName;
+            }
+        });
+    </script>
 
 </body>
 
