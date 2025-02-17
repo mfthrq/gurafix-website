@@ -109,7 +109,7 @@ class PaketController extends Controller
     {
         // Cari layanan berdasarkan id
         $paket = Paket::findOrFail($id);
-
+        
         // Kirim data layanan dan paket ke view
         return view('customer.detail-paket', compact('paket'));
     }

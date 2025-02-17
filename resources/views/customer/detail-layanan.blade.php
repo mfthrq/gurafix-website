@@ -35,7 +35,7 @@
                                         <div class="col-6">
                                             <span>Harga</span> <br>
                                             <span class="color-base">
-                                                Rp{{ $paket->harga }}
+                                                Rp{{ number_format($paket->harga, 0, ',', '.') }}
                                             </span>
                                         </div>
                                         <div class="col-6">

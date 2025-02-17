@@ -133,4 +133,40 @@ class PemesananController extends Controller
     
         return view('customer.riwayat', compact('pemesanans', 'pakets', 'layanans', 'users'));
     }
+
+    public function storeCustomer(Request $request){
+        $request->validate([
+            'id_pelanggan' => 'required',
+            'id_layanan' => 'required',
+            'id_paket' => 'required',
+            'pelanggan_referensi_desain' => 'required|image|mimes:jpg,jpeg,png|max:10048',
+            'pelanggan_brief' => 'required',
+        ]);
+
+        // Mengambil file gambar
+        $file = $request->file('pelanggan_referensi_desain');
+        
+        // Menentukan nama file dan menyimpan gambar
+        $filename = time() . '.' . $file->getClientOriginalExtension();
+        $file->move(public_path('assets_admin/pelanggan_referensi_desain'), $filename);
+
+        // Mengatur zona waktu Indonesia
+        date_default_timezone_set('Asia/Jakarta');
+        $tanggalPemesanan = date('Y-m-d H:i');
+
+        // Simpan data ke database
+        Pemesanan::create([
+            'id_pelanggan' => $request->id_pelanggan,
+            'id_layanan' => $request->id_layanan,
+            'id_paket' => $request->id_paket,
+            'pelanggan_referensi_desain' => $filename,
+            'pelanggan_brief' => $request->pelanggan_brief,
+            'tanggal_pemesanan' => $tanggalPemesanan,
+            'status' => 'Menunggu Pembayaran',
+        ]);
+
+        session()->flash('success', 'Data berhasil ditambahkan!');    
+        return redirect()->route('riwayat')->with('success', 'Data pemesanan berhasil ditambahkan!');
+    }
+
 }
