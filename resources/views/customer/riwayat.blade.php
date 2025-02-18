@@ -2,8 +2,8 @@
 <html lang="zxx">
 <x-header :title="'Riwayat Pemesanan | Gurafix'" />
 
-<script type="text/javascript" src="https://app.sandbox.midtrans.com/snap/snap.js" 
-data-client-key="{{ config('midtrans.client_key') }}"></script>
+<script type="text/javascript" src="https://app.sandbox.midtrans.com/snap/snap.js"
+    data-client-key="{{ config('midtrans.client_key') }}"></script>
 
 
 <body>
@@ -96,7 +96,8 @@ data-client-key="{{ config('midtrans.client_key') }}"></script>
                                         @if ($pemesanan->status == 'Menunggu Pembayaran')
                                             <div>
                                                 <button class="btn btn-base pay-button"
-                                                    style="background-color: #ddf100; width: 100%;" href="#">
+                                                    data-snap-token="{{ $snapTokens[$pemesanan->id] ?? '' }}"
+                                                    style="background-color: #ddf100; width: 100%;">
                                                     Bayar
                                                 </button>
                                             </div>
@@ -132,16 +133,16 @@ data-client-key="{{ config('midtrans.client_key') }}"></script>
         <x-script-plugins />
 
         <script type="text/javascript">
-            var snapToken = '{{ $snapToken }}';
-        
-            if(snapToken !== ''){
-                document.querySelectorAll('.pay-button').forEach(function(button) {
-                    button.addEventListener('click', function() {
-                        console.log("Button clicked!");
+            document.querySelectorAll('.pay-button').forEach(function(button) {
+                button.addEventListener('click', function() {
+                    var snapToken = this.getAttribute('data-snap-token');
+                    if (snapToken !== '') {
                         window.snap.pay(snapToken, {
                             onSuccess: function(result) {
                                 alert("Payment success!");
                                 console.log(result);
+                                // Refresh halaman setelah user menekan OK pada alert
+                                location.reload();
                             },
                             onPending: function(result) {
                                 alert("Waiting for your payment!");
@@ -155,13 +156,13 @@ data-client-key="{{ config('midtrans.client_key') }}"></script>
                                 alert("You closed the popup without finishing the payment");
                             }
                         });
-                    });
-                });
-            }
-        </script>
-        
+                    } else {
+                        alert("Token tidak tersedia untuk transaksi ini.");
+                    }
 
-        
+                });
+            });
+        </script>
 
     </body>
 

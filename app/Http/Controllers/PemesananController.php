@@ -118,29 +118,28 @@ class PemesananController extends Controller
 
     // ========= customer ========
     public function indexRiwayat(){
-        // Pastikan user sudah login, jika tidak, middleware harus meng-handle-nya
+        // Pastikan user sudah login
         $userId = Auth::id();
         if(!$userId){
             abort(403, 'Anda harus login.');
         }
         
-        // Ambil data pemesanan berdasarkan kolom id_pelanggan
+        // Ambil data pemesanan berdasarkan id_pelanggan
         $pemesanans = Pemesanan::where('id_pelanggan', $userId)
-            ->with(['pelanggan', 'layanan', 'paket']) // Eager loading untuk menghindari N+1 Query
+            ->with(['pelanggan', 'layanan', 'paket'])
             ->get();
     
-        // Inisialisasi snapToken dan transactionStatusResponse sebagai string kosong
-        $snapToken = '';
-        $transactionStatusResponse = '';
+        // Array untuk menyimpan snap token tiap pemesanan pending
+        $snapTokens = [];
     
-        // Cari pemesanan dengan status "Menunggu Pembayaran"
-        $pendingPemesanan = $pemesanans->firstWhere('status', 'Menunggu Pembayaran');
+        // Loop melalui semua pemesanan yang statusnya Menunggu Pembayaran
+        $pendingPemesanans = $pemesanans->where('status', 'Menunggu Pembayaran');
     
-        if ($pendingPemesanan) {
-            $pelanggan = $pendingPemesanan->pelanggan;
-            $paket = $pendingPemesanan->paket;
-        
-            // Konfigurasi Midtrans untuk Snap Token
+        foreach ($pendingPemesanans as $pemesanan) {
+            $pelanggan = $pemesanan->pelanggan;
+            $paket = $pemesanan->paket;
+    
+            // Konfigurasi Midtrans
             \Midtrans\Config::$serverKey = config('midtrans.server_key');
             \Midtrans\Config::$isProduction = false;
             \Midtrans\Config::$isSanitized = true;
@@ -148,64 +147,46 @@ class PemesananController extends Controller
         
             $params = [
                 'transaction_details' => [
-                    'order_id' => $pendingPemesanan->id,
+                    'order_id' => $pemesanan->id,
                     'gross_amount' => $paket->harga ?? 0,
                 ],
                 'customer_details' => [
-                    'nama'     => $pelanggan->nama ?? 'Guest',
-                    'email'    => $pelanggan->email ?? 'guest@example.com',
-                    'no_telp'  => $pelanggan->no_telp ?? '0000000000',
+                    'nama'    => $pelanggan->nama ?? 'Guest',
+                    'email'   => $pelanggan->email ?? 'guest@example.com',
+                    'no_telp' => $pelanggan->no_telp ?? '0000000000',
                 ],
             ];
     
             try {
-                $snapToken = \Midtrans\Snap::getSnapToken($params);
+                $snapTokens[$pemesanan->id] = \Midtrans\Snap::getSnapToken($params);
             } catch (\Exception $e) {
-                Log::error("Midtrans Snap Error: " . $e->getMessage());
-                $snapToken = '';
+                Log::error("Midtrans Snap Error (Order {$pemesanan->id}): " . $e->getMessage());
+                $snapTokens[$pemesanan->id] = '';
             }
             
-            // Ambil status transaksi dari Midtrans dengan menggunakan Guzzle
+            // Opsional: Perbarui status jika token sudah berhasil diambil (bisa juga dilakukan via webhook)
+            // Misalnya, ambil status transaksi dan update jika perlu.
             try {
                 $client = new \GuzzleHttp\Client();
-                $orderId = $pendingPemesanan->id;
+                $orderId = $pemesanan->id;
                 $response = $client->request('GET', "https://api.sandbox.midtrans.com/v2/{$orderId}/status", [
                     'headers' => [
                         'accept' => 'application/json',
-                        // Gunakan base64_encode untuk menyusun header authorization sesuai format Basic
                         'authorization' => 'Basic ' . base64_encode(config('midtrans.server_key') . ':'),
                     ],
                 ]);
-                $transactionStatusResponse = $response->getBody()->getContents();
-                
-                // Decode response JSON untuk mendapatkan nilai transaction_status
-                $statusData = json_decode($transactionStatusResponse, true);
-                if(isset($statusData['transaction_status']) && $statusData['transaction_status'] === 'capture'){
-                    // Update kolom status pemesanan menjadi "Pembayaran Berhasil"
-                    $pendingPemesanan->update(['status' => 'Pembayaran Berhasil']);
+                $statusData = json_decode($response->getBody()->getContents(), true);
+                if (isset($statusData['transaction_status']) && $statusData['transaction_status'] === 'capture') {
+                    $pemesanan->update(['status' => 'Pembayaran Berhasil']);
                 }
             } catch (\Exception $e) {
-                Log::error("Midtrans Status Request Error: " . $e->getMessage());
-                $transactionStatusResponse = 'Gagal mengambil status transaksi';
+                Log::error("Midtrans Status Request Error (Order {$pemesanan->id}): " . $e->getMessage());
             }
         }
         
-        return view('customer.riwayat', compact('pemesanans', 'snapToken', 'transactionStatusResponse'));
+        return view('customer.riwayat', compact('pemesanans', 'snapTokens'));
     }
     
-    
-
-        // public function callback(Request $request){
-        //     $serverKey = config('midtrans.server_key');
-        //     $hashed = hash("sha512", $request->order_id.$request->status_code.$request->gross_amount.$serverKey);
-
-        //     if($hashed == $request->signature_key){
-        //         if($request->transaction_status == 'capture'){
-        //             $pemesanan = Pemesanan::find($request->order_id);
-        //             $pemesanan->update(['status' => 'Pembayaran Berhasil']);
-        //         }
-        //     }
-        // }
 
     public function storeCustomer(Request $request){
         $request->validate([
