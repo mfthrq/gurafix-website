@@ -9,6 +9,7 @@ use App\Http\Controllers\PemesananController;
 use App\Http\Controllers\ChatController;
 use App\Http\Middleware\AdminMiddleware;
 use App\Http\Middleware\PelangganMiddleware;
+use App\Http\Middleware\DisableCsrfForMidtrans;
 
 // ========================== ADMIN ============================
 
@@ -102,7 +103,7 @@ Route::get('/detail-paket/{id}', [PaketController::class, 'showDetailPaket'])->n
 // ========== PEMESANAN ==========
 Route::post('/pemesanan/store', [PemesananController::class, 'storeCustomer'])->name('pemesanan.store');
 
-
+// Route::post('/midtrans-callback', [PemesananController::class, 'callback']);
 
 // ========== OTHER CUSTOMER PAGES ==========
 Route::get('/', function () {

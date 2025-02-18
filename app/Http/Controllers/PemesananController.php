@@ -3,12 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use App\Models\Layanan;
 use App\Models\Paket;
 use App\Models\Pemesanan;
 use App\Models\User;
-use Illuminate\Support\Facades\Auth;
 
 class PemesananController extends Controller
 {
@@ -124,14 +125,61 @@ class PemesananController extends Controller
         }
         
         // Ambil data pemesanan berdasarkan kolom id_pelanggan
-        $pemesanans = Pemesanan::where('id_pelanggan', $userId)->get();
-    
-        // Pastikan data terkait memiliki kolom yang dibutuhkan
-        $pakets     = Paket::all();
-        $layanans   = Layanan::all();
-        $users      = User::where('id_role', 2)->get();
-    
-        return view('customer.riwayat', compact('pemesanans', 'pakets', 'layanans', 'users'));
+        $pemesanans = Pemesanan::where('id_pelanggan', $userId)
+        ->with(['pelanggan', 'layanan', 'paket']) // Eager loading untuk menghindari N+1 Query
+        ->get();
+
+        // Inisialisasi snapToken sebagai string kosong
+        $snapToken = '';
+
+        // Cari pemesanan dengan status "Menunggu Pembayaran"
+        $pendingPemesanan = $pemesanans->firstWhere('status', 'Menunggu Pembayaran');
+
+        if ($pendingPemesanan) {
+            $pelanggan = $pendingPemesanan->pelanggan;
+            $paket = $pendingPemesanan->paket;
+        
+            // Konfigurasi Midtrans
+            \Midtrans\Config::$serverKey = config('midtrans.server_key');
+            \Midtrans\Config::$isProduction = false;
+            \Midtrans\Config::$isSanitized = true;
+            \Midtrans\Config::$is3ds = true;
+        
+            $params = array (
+                'transaction_details' => array(
+                    'order_id' => $pendingPemesanan->id,
+                    'gross_amount' => $paket->harga ?? 0,
+                ),
+                'customer_details' => array(
+                    'nama' => $pelanggan->nama ?? 'Guest',
+                    'email' => $pelanggan->email ?? 'guest@example.com',
+                    'no_telp' => $pelanggan->no_telp ?? '0000000000',
+                ),
+            );
+
+            try {
+                $snapToken = \Midtrans\Snap::getSnapToken($params);
+            } catch (\Exception $e) {
+                Log::error("Midtrans Error: " . $e->getMessage());
+                // Jika terjadi error, snapToken tetap kosong
+                $snapToken = '';
+            }
+            
+        }
+        
+        return view('customer.riwayat', compact('pemesanans', 'snapToken'));
+    } 
+
+    public function callback(Request $request){
+        $serverKey = config('midtrans.server_key');
+        $hashed = hash("sha512", $request->order_id.$request->status_code.$request->gross_amount.$serverKey);
+
+        if($hashed == $request->signature_key){
+            if($request->transaction_status == 'capture'){
+                $pemesanan = Pemesanan::find($request->order_id);
+                $pemesanan->update(['status' => 'Pembayaran Berhasil']);
+            }
+        }
     }
 
     public function storeCustomer(Request $request){

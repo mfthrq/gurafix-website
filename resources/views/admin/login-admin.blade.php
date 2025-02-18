@@ -10,7 +10,7 @@
 				<div class="geex-content__authentication__content__wrapper">
 					<div class="geex-content__authentication__content__logo">
 						
-							<img class="logo-lite" src="assets/img/logo_gurafix_no_bg.png" width="70px" alt="logo">
+							<img class="logo-lite" src="{{ asset('assets/img/logo_gurafix_no_bg.png') }}" width="70px" alt="logo">
 						
 					</div>
 					<form action="{{ route('admin.login.submit') }}" id="signInForm" class="geex-content__authentication__form" method="POST">

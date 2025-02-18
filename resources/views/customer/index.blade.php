@@ -265,7 +265,7 @@
             class="btn-box d-inline-block fade-slide bottom mt-4"
             data-delay="0.7"
           >
-            <a class="btn btn-main style-small" href="about.html">
+            <a class="btn btn-main style-small" href="/layanan">
               <span>
                 <span>Lebih Banyak</span>
               </span>
