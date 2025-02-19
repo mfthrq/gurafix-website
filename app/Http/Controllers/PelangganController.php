@@ -4,10 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
+use App\Models\User;
+use App\Models\Layanan;
 
 class PelangganController extends Controller
 {
@@ -43,6 +44,11 @@ class PelangganController extends Controller
     }
 
     // ==== customer ====
+    public function indexBeranda(){
+        $layanans = Layanan::latest()->take(2)->get();
+        return view('customer.index', compact('layanans'));
+    }
+
     public function IndexPelanggan(){
         $users = User::where('id_role', 2)->get();
         return view('customer.profile', compact('users'));

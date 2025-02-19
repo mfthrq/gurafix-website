@@ -40,7 +40,13 @@
                                     <div class="mt-3">
                                         <span style="color: #DDF247;">Biaya:</span> <br>
                                         <span style="color: white;">
-                                            Rp{{ $paket->harga }}
+                                            Rp{{ number_format($paket->harga, 0, ',', '.') }}
+                                        </span>
+                                    </div>
+                                    <div class="mt-3">
+                                        <span style="color: #DDF247;">Durasi Pengerjaan:</span> <br>
+                                        <span style="color: white;">
+                                            {{ $paket->durasi_pengerjaan }} Hari
                                         </span>
                                     </div>
                                     <div class="mt-3">
@@ -59,11 +65,11 @@
                     </div>
                 </div>
                 <div class="col-xl-9 col-lg-8">
-                    <form class="create-items-form" action="{{ route('pemesanan.store') }}" method="POST" enctype="multipart/form-data">
+                    <form class="create-items-form" id="form-paket" action="{{ route('pemesanan.store') }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         <h4 style="color: white;">Form Brief Desain</h4>
                         
-                        <input type="hidden" id="id_pelanggan" name="id_pelanggan" value="{{ Auth::user()->id }}">
+                        <input type="hidden" id="id_pelanggan" name="id_pelanggan" value="{{ Auth::check() ? Auth::user()->id : '' }}">
                         <input type="hidden" id="id_paket" name="id_paket" value="{{ $paket->id }}">
                         <input type="hidden" id="id_layanan" name="id_layanan" value="{{ $paket->layanan->id }}">
                         <input type="hidden" id="tanggal_pemesanan" name="tanggal_pemesanan">
@@ -72,7 +78,7 @@
                         <div class="image-upload d-md-flex justify-content-between align-items-center mt-2">
                             <p class="mb-md-0">
                                 <img class="me-2" src="{{ asset('assets/img/icon/13.png') }}" alt="img">
-                                Refrensi Desain (Format: PNG, JPG, GIF, WEBP Max 10Mb)
+                                Refrensi Desain (Format: PNG, JPG, JPEG, Max 10 MB)
                             </p>
                             <label class="upload-file">
                                 <input type="file" id="pelanggan_referensi_desain" name="pelanggan_referensi_desain" required>
@@ -80,7 +86,11 @@
                             </label>
                         </div>
                         <textarea class="item-field" placeholder="Masukkan brief desain" style="color: white;" id="pelanggan_brief" name="pelanggan_brief" required></textarea>
-                        <button type="submit" class="btn btn-base mt-4" href="#">Pesan</button>
+                        @auth
+                            <button type="submit" class="btn btn-base mt-4" href="#">Pesan</button>
+                        @else
+                            <button type="submit" class="btn btn-base mt-4" id="btn-submit" href="#">Pesan</button>
+                        @endauth
                     </form>
                 </div>
             </div>
@@ -107,6 +117,34 @@
             }
         });
     </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            @if(Auth::check())
+                var isLoggedIn = true;
+            @else
+                var isLoggedIn = false;
+            @endif
+        
+            var formPaket = document.getElementById('form-paket');
+            if(formPaket){
+                formPaket.addEventListener('submit', function (e) {
+                    if (!isLoggedIn) {
+                        e.preventDefault(); // Mencegah form submit
+                        Swal.fire({
+                            icon: 'warning',
+                            iconColor: '#004CE7',
+                            title: 'Anda harus login',
+                            text: 'Silakan login terlebih dahulu untuk melakukan pemesanan.',
+                            confirmButtonColor: '#004CE7',
+                            confirmButtonText: 'OK'
+                        });
+                    }
+                });
+            }
+        });
+        </script>
 
 </body>
 

@@ -1,30 +1,33 @@
 <!DOCTYPE html>
 <html lang="zxx">
-    <x-header :title="'Detail Layanan | Gurafix'" />
-    <body>
-        <!-- cursor -->
-        <div class="cursor"></div>
-        <div class="cursor-follower"></div>
-        <!-- cursor End -->
+<x-header :title="'Detail Layanan | Gurafix'" />
 
-        <div class="body-overlay" id="body-overlay"></div>
+<body>
+    <!-- cursor -->
+    <div class="cursor"></div>
+    <div class="cursor-follower"></div>
+    <!-- cursor End -->
 
-        <x-navbar/>
+    <div class="body-overlay" id="body-overlay"></div>
 
-        <!-- tournament area start -->
-        <div class="tournament-area pd-top-120">
-            <div class="container">
-                <div class="section-title">
-                    <h2 class="title move-line-3d" style="color: #ddf247;">{{ $layanan->nama }}</h2>
-                </div>
-                <div class="row">
-                    @forelse ($pakets as $paket)
+    <x-navbar />
+
+    <!-- tournament area start -->
+    <div class="tournament-area pd-top-120">
+        <div class="container">
+            <div class="section-title">
+                <h2 class="title move-line-3d" style="color: #ddf247;">{{ $layanan->nama }}</h2>
+            </div>
+            <div class="row">
+                @forelse ($pakets as $paket)
                     <div class="col-lg-4 fade-slide bottom" data-delay="0.2">
                         <div class="single-tournament-2">
                             <img class="bg-img" src="{{ asset('assets/img/tournament/bg-3.png') }}" alt="img">
                             <div class="content-area">
                                 <div class="top-area d-flex align-items-center align-self-center">
-                                    <img class="me-3 main-img" src="{{ asset('assets_admin/gambar_paket/' . $paket->gambar_paket) }}" alt="img" />
+                                    <img class="me-3 main-img"
+                                        src="{{ asset('assets_admin/gambar_paket/' . $paket->gambar_paket) }}"
+                                        alt="img" />
                                     <div class="details">
                                         <h3 class="mb-0">{{ $paket->nama }}</h3>
                                     </div>
@@ -47,7 +50,7 @@
                                         </div>
                                         <div class="mt-3">
                                             <ul>
-                                                @foreach(explode(',', $paket->fitur) as $fitur)
+                                                @foreach (explode(',', $paket->fitur) as $fitur)
                                                     <li>{{ trim($fitur) }}</li>
                                                 @endforeach
                                             </ul>
@@ -63,22 +66,22 @@
                             </div>
                         </div>
                     </div>
-                    @empty
-                    @endforelse
-                </div>
+                @empty
+                @endforelse
             </div>
         </div>
-        <!-- tournament area end -->
+    </div>
+    <!-- tournament area end -->
 
-        <x-footer/>
+    <x-footer />
 
-        <!-- back to top area start -->
-        <div class="back-to-top">
-            <span class="back-top"><i class="fa fa-angle-up"></i></span>
-        </div>
-        <!-- back to top area end -->
+    <!-- back to top area start -->
+    <div class="back-to-top">
+        <span class="back-top"><i class="fa fa-angle-up"></i></span>
+    </div>
+    <!-- back to top area end -->
 
-        <x-script-plugins/>
-        
-    </body>
+    <x-script-plugins />
+</body>
+
 </html>

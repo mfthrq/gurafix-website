@@ -106,9 +106,7 @@ Route::post('/pemesanan/store', [PemesananController::class, 'storeCustomer'])->
 // Route::post('/midtrans-callback', [PemesananController::class, 'callback']);
 
 // ========== OTHER CUSTOMER PAGES ==========
-Route::get('/', function () {
-    return view('customer/index');
-})->name('beranda');
+Route::get('/', [PelangganController::class, 'indexBeranda'])->name('beranda');
 
 Route::get('/tentang', function () {
     return view('customer/about');
