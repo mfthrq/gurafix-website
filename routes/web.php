@@ -7,9 +7,9 @@ use App\Http\Controllers\LayananController;
 use App\Http\Controllers\PaketController;
 use App\Http\Controllers\PemesananController;
 use App\Http\Controllers\ChatController;
+use App\Http\Controllers\AdminController;
 use App\Http\Middleware\AdminMiddleware;
 use App\Http\Middleware\PelangganMiddleware;
-use App\Http\Middleware\DisableCsrfForMidtrans;
 
 // ========================== ADMIN ============================
 
@@ -20,9 +20,8 @@ Route::post('/logout-admin', [AuthController::class, 'logoutAdmin'])->name('admi
 
 // Rute yang hanya bisa diakses oleh admin
 Route::middleware([AdminMiddleware::class])->group(function () {
-    Route::get('/admin', function () {
-        return view('admin.index-admin');
-    })->name('admin.index-admin');
+
+    Route::get('/admin', [AdminController::class, 'index'])->name('admin.index-admin');
 
     Route::get('/admin/data-pelanggan', [PelangganController::class, 'indexDataPelanggan'])->name('admin.data-pelanggan');
     
@@ -50,6 +49,13 @@ Route::delete('/admin/data-paket/{id}', [PaketController::class, 'destroy'])->na
 Route::post('/admin/data-pemesanan/store', [PemesananController::class, 'store'])->name('data-pemesanan.store');
 Route::put('/admin/data-pemesanan/{id}', [PemesananController::class, 'update'])->name('data-pemesanan.update');
 Route::delete('/admin/data-pemesanan/{id}', [PemesananController::class, 'destroy'])->name('data-pemesanan.destroy');
+
+Route::get('/admin/data-pemesanan/menunggu-pembayaran', [PemesananController::class, 'indexMenungguPembayaran']);
+Route::get('/admin/data-pemesanan/pembayaran-berhasil', [PemesananController::class, 'indexPembayaranBerhasil']);
+Route::get('/admin/data-pemesanan/progress', [PemesananController::class, 'indexProgress']);
+Route::get('/admin/data-pemesanan/revisi', [PemesananController::class, 'indexRevisi']);
+Route::get('/admin/data-pemesanan/gagal', [PemesananController::class, 'indexGagal']);
+Route::get('/admin/data-pemesanan/selesai', [PemesananController::class, 'indexSelesai']);
 
 // ====== CHAT FOR ADMIN =======
 Route::get('/admin/chat-admin/get-chat/{id}', [ChatController::class, 'getChat'])->name('chat-admin.getChat');

@@ -106,7 +106,7 @@
                         <div class="geex-container">
                             <div class="geex-content__summary__count__single primary-bg">
                                 <div class="geex-content__summary__count__single__content">
-                                    <h4 class="geex-content__summary__count__single__title">10</h4>
+                                    <h4 class="geex-content__summary__count__single__title">{{ $totalPelanggan }}</h4>
                                     <p class="geex-content__summary__count__single__subtitle">Total Pelanggan</p>
                                 </div>
                                 <div class="geex-content__summary__count__single__icon">
@@ -123,7 +123,7 @@
                             </div>
                             <div class="geex-content__summary__count__single primary-bg">
                                 <div class="geex-content__summary__count__single__content">
-                                    <h4 class="geex-content__summary__count__single__title">5</h4>
+                                    <h4 class="geex-content__summary__count__single__title">{{ $totalLayanan }}</h4>
                                     <p class="geex-content__summary__count__single__subtitle">Total Layanan</p>
                                 </div>
                                 <div class="geex-content__summary__count__single__icon">
@@ -140,7 +140,7 @@
                             </div>
                             <div class="geex-content__summary__count__single primary-bg">
                                 <div class="geex-content__summary__count__single__content">
-                                    <h4 class="geex-content__summary__count__single__title">8</h4>
+                                    <h4 class="geex-content__summary__count__single__title">{{ $totalPaket }}</h4>
                                     <p class="geex-content__summary__count__single__subtitle">Total Paket</p>
                                 </div>
                                 <div class="geex-content__summary__count__single__icon">
@@ -157,7 +157,7 @@
                             </div>
                             <div class="geex-content__summary__count__single primary-bg">
                                 <div class="geex-content__summary__count__single__content">
-                                    <h4 class="geex-content__summary__count__single__title">0</h4>
+                                    <h4 class="geex-content__summary__count__single__title">{{ $totalPemesanan }}</h4>
                                     <p class="geex-content__summary__count__single__subtitle">Total Pemesanan</p>
                                 </div>
                                 <div class="geex-content__summary__count__single__icon">
@@ -180,7 +180,7 @@
                             <div class="geex-content__section geex-content__income-count">
                                 <div class="geex-content__section__header">
                                     <div class="geex-content__section__header__title-part">
-                                        <h3 class="geex-content__section__header__title">Total Pemesanan Berdasarkan Umur</h4>
+                                        <h3 class="geex-content__section__header__title">Total Pemesanan Berdasarkan Pekerjaan</h4>
                                     </div>
                                 </div>
                                 <div class="geex-content__section__content">

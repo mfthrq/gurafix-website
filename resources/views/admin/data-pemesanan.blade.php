@@ -9,7 +9,27 @@
         <x-admin-sidebar />
 
         <div class="geex-content">
-            <x-admin-header-content :title="'Data Pemesanan'" />
+            @php
+                $status = 'Gagal'; // default status
+            @endphp
+
+            @if (request()->is('admin/data-pemesanan'))
+                @php $status = 'Semua'; @endphp
+            @elseif (request()->is('admin/data-pemesanan/menunggu-pembayaran'))
+                @php $status = 'Menunggu Pembayaran'; @endphp
+            @elseif (request()->is('admin/data-pemesanan/pembayaran-berhasil'))
+                @php $status = 'Pembayaran Berhasil'; @endphp
+            @elseif (request()->is('admin/data-pemesanan/progress'))
+                @php $status = 'Progress'; @endphp
+            @elseif (request()->is('admin/data-pemesanan/revisi'))
+                @php $status = 'Revisi'; @endphp
+            @elseif (request()->is('admin/data-pemesanan/gagal'))
+                @php $status = 'Gagal'; @endphp
+            @elseif (request()->is('admin/data-pemesanan/selesai'))
+                @php $status = 'Selesai'; @endphp
+            @endif
+
+            <x-admin-header-content :title="'Data Pemesanan - ' . $status" />
 
             <button class="geex-btn geex-btn--transparent mb-3" data-bs-toggle="modal" data-bs-target="#tambahModal">+
                 Tambah

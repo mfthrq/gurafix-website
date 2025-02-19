@@ -35,7 +35,7 @@
                                         style="color: #ddf247; font-weight: bold;">Login</a></p>
                             </div>
                         </div>
-                        <form class="login-form-inner" action="{{ route('signup.store') }}" method="POST">
+                        <form id="signupForm" class="login-form-inner" action="{{ route('signup.store') }}" method="POST">
                             @csrf
                             <div class="single-input-inner style-border">
                                 <input type="email" placeholder="Email" id="email" name="email">
@@ -72,10 +72,35 @@
                                     <option value="Lainnya">Lainnya</option>
                                 </select>
                             </div>
-                            <div class="single-input-inner style-border">
-                                <input type="password" placeholder="Kata Sandi" id="password" name="password" autocomplete="new-password">
-                                <span><img src="assets/img/icon/18.png" alt="img"></span>
+                            <div class="single-input-inner style-border" style="display: flex;">
+                                <input type="password" id="exampleInputPassword1" placeholder="Kata Sandi"
+                                    name="password" autocomplete="new-password">
+                                <span class="input-group-text ms-1" onclick="togglePassword()"
+                                    style="cursor: pointer; background-color: #DDF247; border-radius: 10px; border: 0;">
+                                    <i id="eyeIcon" class="fas fa-eye"></i>
+                                </span>
                             </div>
+
+                            <div id="passwordRequirements" class="fw-bold alert alert-danger"
+                                style="display: none; border: none; background-color: #DDF247; color: black; font-size: 15px; border-radius: 10px;">
+                                Password harus mengandung minimal 8 karakter, huruf besar, huruf kecil, angka, dan
+                                karakter khusus (@$!%*?&).
+                            </div>
+
+                            <div class="single-input-inner style-border" style="display: flex;">
+                                <input type="password" id="exampleInputPassword2" placeholder="Konfirmasi Kata Sandi"
+                                    name="konfirmasiPassword" autocomplete="new-password">
+                                <span class="input-group-text ms-1" onclick="toggleKonfirmPassword()"
+                                    style="cursor: pointer; background-color: #DDF247; border-radius: 10px; border: 0;">
+                                    <i id="eyeIcon2" class="fas fa-eye"></i>
+                                </span>
+                            </div>
+
+                            <div id="passwordError" class="fw-bold alert alert-danger"
+                            style="display: none; border: none; background-color: #DDF247; color: black; font-size: 15px; border-radius: 10px;">
+                                Password dan Konfirmasi Password tidak sama.
+                            </div>
+
                             <button type="submit" class="btn btn-base tt-uppercase w-100">Daftar</button>
                         </form>
                     </div>
@@ -95,6 +120,8 @@
 
     <x-script-plugins />
 
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
     <script>
         fetch('https://www.emsifa.com/api-wilayah-indonesia/api/provinces.json')
             .then(response => response.json())
@@ -112,6 +139,101 @@
         document.getElementById('domisili').addEventListener('change', function() {
             let selectedOption = this.options[this.selectedIndex];
             console.log('Provinsi Terpilih:', selectedOption.value);
+        });
+    </script>
+
+    <script>
+        function togglePassword() {
+            const passwordInput = document.getElementById('exampleInputPassword1');
+            const eyeIcon = document.getElementById('eyeIcon');
+
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                eyeIcon.classList.remove('fa-eye');
+                eyeIcon.classList.add('fa-eye-slash');
+            } else {
+                passwordInput.type = 'password';
+                eyeIcon.classList.remove('fa-eye-slash');
+                eyeIcon.classList.add('fa-eye');
+            }
+        }
+
+        function toggleKonfirmPassword() {
+            const passwordInput = document.getElementById('exampleInputPassword2');
+            const eyeIcon = document.getElementById('eyeIcon2');
+
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                eyeIcon.classList.remove('fa-eye');
+                eyeIcon.classList.add('fa-eye-slash');
+            } else {
+                passwordInput.type = 'password';
+                eyeIcon.classList.remove('fa-eye-slash');
+                eyeIcon.classList.add('fa-eye');
+            }
+        }
+
+        // Event listener untuk memeriksa kesamaan password saat pengguna mengetik
+        document.getElementById("exampleInputPassword1").addEventListener("input", checkPasswords);
+        document.getElementById("exampleInputPassword2").addEventListener("input", checkPasswords);
+
+        document.getElementById("signupForm").addEventListener("submit", function(event) {
+            var password = document.getElementById("exampleInputPassword1").value;
+            var confirmPassword = document.getElementById("exampleInputPassword2").value;
+
+            // Cek apakah password dan konfirmasi password cocok
+            if (password !== confirmPassword) {
+                event.preventDefault(); // Mencegah form dari submit
+
+                // Tampilkan alert menggunakan SweetAlert
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Gagal!',
+                    text: 'Password dan Konfirmasi Password Tidak Sama!',
+                    confirmButtonColor: '#d33'
+                });
+            }
+        });
+
+        function checkPasswords() {
+            var password = document.getElementById("exampleInputPassword1").value;
+            var confirmPassword = document.getElementById("exampleInputPassword2").value;
+            var passwordError = document.getElementById("passwordError");
+            var passwordRequirements = document.getElementById("passwordRequirements");
+
+            // Regular expression to check password requirements
+            var passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+
+            // Check if the password meets the requirements
+            if (!passwordRegex.test(password)) {
+                passwordRequirements.style.display = "block"; // Show requirements message
+            } else {
+                passwordRequirements.style.display = "none"; // Hide requirements message
+            }
+
+            // Check if password and confirm password match
+            if (password !== confirmPassword) {
+                passwordError.style.display = "block"; // Show mismatch error
+            } else {
+                passwordError.style.display = "none"; // Hide mismatch error
+            }
+        }
+
+        document.getElementById("signupForm").addEventListener("submit", function(event) {
+            var password = document.getElementById("exampleInputPassword1").value;
+            var confirmPassword = document.getElementById("exampleInputPassword2").value;
+            var passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+
+            // Validasi ketentuan password saat submit
+            if (!passwordRegex.test(password) || password !== confirmPassword) {
+                event.preventDefault();
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Gagal!',
+                    text: 'Password harus sama dan mengandung minimal 8 karakter, huruf besar, huruf kecil, angka, dan karakter khusus (@$!%*?&).',
+                    confirmButtonColor: '#d33'
+                });
+            }
         });
     </script>
 </body>
