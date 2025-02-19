@@ -9,6 +9,7 @@ use App\Http\Controllers\PemesananController;
 use App\Http\Controllers\ChatController;
 use App\Http\Middleware\AdminMiddleware;
 use App\Http\Middleware\PelangganMiddleware;
+use App\Http\Middleware\DisableCsrfForMidtrans;
 
 // ========================== ADMIN ============================
 
@@ -72,9 +73,7 @@ Route::post('/signup/store', [PelangganController::class, 'storePelanggan'])->na
 Route::middleware([PelangganMiddleware::class])->group(function () { 
 
     // ========== PROFILE ==========
-    Route::get('/profile', function () {
-        return view('customer.profile');
-    })->name('profile');
+    Route::get('/profile', [PelangganController::class, 'indexPelanggan'])->name('profile');
     
     // ========== CHAT FOR CUSTOMER PAGE ==========
     Route::get('/chat', function () {
@@ -102,12 +101,10 @@ Route::get('/detail-paket/{id}', [PaketController::class, 'showDetailPaket'])->n
 // ========== PEMESANAN ==========
 Route::post('/pemesanan/store', [PemesananController::class, 'storeCustomer'])->name('pemesanan.store');
 
-
+// Route::post('/midtrans-callback', [PemesananController::class, 'callback']);
 
 // ========== OTHER CUSTOMER PAGES ==========
-Route::get('/', function () {
-    return view('customer/index');
-})->name('beranda');
+Route::get('/', [PelangganController::class, 'indexBeranda'])->name('beranda');
 
 Route::get('/tentang', function () {
     return view('customer/about');

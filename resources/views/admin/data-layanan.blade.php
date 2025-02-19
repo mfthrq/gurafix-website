@@ -64,7 +64,8 @@
                                         <form action="{{ route('data-layanan.destroy', $layanan->id) }}" method="POST">
                                           @csrf
                                           @method('DELETE')
-                                          <button type="submit" class="geex-btn geex-btn--danger delete-btn">Hapus</button>
+                                          <button type="submit" class="geex-btn geex-btn--danger delete-btn" 
+                                          data-id="{{ $layanan->id }}">Hapus</button>
                                         </form>
                                     </div>
                                 </td>
@@ -187,6 +188,47 @@
 
                 // Update action URL form edit
                 document.getElementById('editForm').action = `/admin/data-layanan/${id}`;
+            });
+        });
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        
+    @if (session('success'))
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                Swal.fire({
+                    icon: 'success',
+                    iconColor: '#004CE7',
+                    title: 'Berhasil!',
+                    text: '{{ session('success') }}',
+                    confirmButtonColor: '#004CE7',
+                    confirmButtonText: 'OK'
+                });
+            });
+        </script>
+    @endif
+
+    <script>
+        document.querySelectorAll('.delete-btn').forEach(button => {
+            button.addEventListener('click', function(event) {
+                event.preventDefault(); // Mencegah form langsung dikirim
+                const form = this.closest('form'); // Mengambil form terdekat
+                Swal.fire({
+                    title: "Yakin ingin hapus data?",
+                    text: "Data yang dihapus tidak dapat dikembalikan!",
+                    icon: "warning",
+                    iconColor: '#004CE7',
+                    showCancelButton: true,
+                    confirmButtonColor: "#FF5B5B",
+                    cancelButtonColor: "#004CE7",
+                    confirmButtonText: "Ya, hapus!",
+                    cancelButtonText: "Batal"
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        form.submit(); // Kirim form jika konfirmasi diterima
+                    }
+                });
             });
         });
     </script>

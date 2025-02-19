@@ -26,9 +26,9 @@
                             </div>
                         </div>
                         <div class="geex-content__header__popup__footer mt-3">
-                            <form action="{{ route('admin.logout') }}" method="POST">
+                            <form id="logoutForm" action="{{ route('admin.logout') }}" method="POST">
                                 @csrf
-                                <button type="submit" class="geex-content__header__popup__footer__link" style="border: 0;">
+                                <button type="submit" id="logoutButton" class="geex-content__header__popup__footer__link" style="border: 0;">
                                     <i class="uil uil-arrow-up-left"></i>Logout
                                 </button>
                             </form>
@@ -39,3 +39,26 @@
         </div>
     </div>
 </div>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<script>
+    document.getElementById('logoutButton').addEventListener('click', function(e) {
+        e.preventDefault(); // Mencegah perilaku submit default
+        Swal.fire({
+            title: 'Yakin ingin keluar?',
+            icon: 'warning',
+            iconColor: '#004CE7',
+            showCancelButton: true,
+            confirmButtonColor: "#FF5B5B",
+            cancelButtonColor: "#004CE7",
+            confirmButtonText: 'Ya, keluar!',
+            cancelButtonText: 'Batal'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // Jika pengguna konfirmasi, submit form logout
+                document.getElementById('logoutForm').submit();
+            }
+        });
+    });
+</script>

@@ -3,21 +3,28 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use App\Models\Layanan;
 use App\Models\Paket;
 use App\Models\Pemesanan;
 use App\Models\User;
-use Illuminate\Support\Facades\Auth;
 
 class PemesananController extends Controller
 {
     // ========= admin ========
     public function IndexDataPemesanan(){
-        $pemesanans = Pemesanan::all();
+        // Mengurutkan berdasarkan created_at secara descending, sehingga data terbaru muncul di atas
+        $pemesanans = Pemesanan::orderBy('created_at', 'desc')->get();
+    
+        // Jika kamu ingin menggunakan id, kamu bisa gunakan:
+        // $pemesanans = Pemesanan::orderBy('id', 'desc')->get();
+    
         $pakets = Paket::all();
         $layanans = Layanan::all();
         $users = User::where('id_role', 2)->get();
+        
         return view('admin.data-pemesanan', compact('pemesanans', 'pakets', 'layanans', 'users'));
     }
 
@@ -104,7 +111,7 @@ class PemesananController extends Controller
 
         $pemesanan->save();
 
-        return redirect()->route('admin.data-pemesanan')->with('success', 'Data pemesanan berhasil ditambahkan!');
+        return redirect()->route('admin.data-pemesanan')->with('success', 'Data pemesanan berhasil diperbarui!');
     }
 
     public function destroy($id)
@@ -112,28 +119,80 @@ class PemesananController extends Controller
         $pemesanan = Pemesanan::findOrFail($id);
         $pemesanan->delete();
 
-        return redirect()->route('admin.data-pemesanan')->with('success', 'Data berhasil dihapus!');
+        return redirect()->route('admin.data-pemesanan')->with('success', 'Data pemesanan berhasil dihapus!');
     } 
 
     // ========= customer ========
     public function indexRiwayat(){
-        // Pastikan user sudah login, jika tidak, middleware harus meng-handle-nya
+        // Pastikan user sudah login
         $userId = Auth::id();
         if(!$userId){
             abort(403, 'Anda harus login.');
         }
         
-        // Ambil data pemesanan berdasarkan kolom id_pelanggan
-        $pemesanans = Pemesanan::where('id_pelanggan', $userId)->get();
+        // Ambil data pemesanan berdasarkan id_pelanggan
+        $pemesanans = Pemesanan::where('id_pelanggan', $userId)
+            ->with(['pelanggan', 'layanan', 'paket'])
+            ->get();
     
-        // Pastikan data terkait memiliki kolom yang dibutuhkan
-        $pakets     = Paket::all();
-        $layanans   = Layanan::all();
-        $users      = User::where('id_role', 2)->get();
+        // Array untuk menyimpan snap token tiap pemesanan pending
+        $snapTokens = [];
     
-        return view('customer.riwayat', compact('pemesanans', 'pakets', 'layanans', 'users'));
+        // Loop melalui semua pemesanan yang statusnya Menunggu Pembayaran
+        $pendingPemesanans = $pemesanans->where('status', 'Menunggu Pembayaran');
+    
+        foreach ($pendingPemesanans as $pemesanan) {
+            $pelanggan = $pemesanan->pelanggan;
+            $paket = $pemesanan->paket;
+    
+            // Konfigurasi Midtrans
+            \Midtrans\Config::$serverKey = config('midtrans.server_key');
+            \Midtrans\Config::$isProduction = false;
+            \Midtrans\Config::$isSanitized = true;
+            \Midtrans\Config::$is3ds = true;
+        
+            $params = [
+                'transaction_details' => [
+                    'order_id' => $pemesanan->id,
+                    'gross_amount' => $paket->harga ?? 0,
+                ],
+                'customer_details' => [
+                    'nama'    => $pelanggan->nama ?? 'Guest',
+                    'email'   => $pelanggan->email ?? 'guest@example.com',
+                    'no_telp' => $pelanggan->no_telp ?? '0000000000',
+                ],
+            ];
+    
+            try {
+                $snapTokens[$pemesanan->id] = \Midtrans\Snap::getSnapToken($params);
+            } catch (\Exception $e) {
+                Log::error("Midtrans Snap Error (Order {$pemesanan->id}): " . $e->getMessage());
+                $snapTokens[$pemesanan->id] = '';
+            }
+            
+            // Opsional: Perbarui status jika token sudah berhasil diambil (bisa juga dilakukan via webhook)
+            // Misalnya, ambil status transaksi dan update jika perlu.
+            try {
+                $client = new \GuzzleHttp\Client();
+                $orderId = $pemesanan->id;
+                $response = $client->request('GET', "https://api.sandbox.midtrans.com/v2/{$orderId}/status", [
+                    'headers' => [
+                        'accept' => 'application/json',
+                        'authorization' => 'Basic ' . base64_encode(config('midtrans.server_key') . ':'),
+                    ],
+                ]);
+                $statusData = json_decode($response->getBody()->getContents(), true);
+                if (isset($statusData['transaction_status']) && $statusData['transaction_status'] === 'capture') {
+                    $pemesanan->update(['status' => 'Pembayaran Berhasil']);
+                }
+            } catch (\Exception $e) {
+                Log::error("Midtrans Status Request Error (Order {$pemesanan->id}): " . $e->getMessage());
+            }
+        }
+        
+        return view('customer.riwayat', compact('pemesanans', 'snapTokens'));
     }
-
+    
     public function storeCustomer(Request $request){
         $request->validate([
             'id_pelanggan' => 'required',

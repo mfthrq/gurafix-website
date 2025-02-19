@@ -4,10 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
+use App\Models\User;
+use App\Models\Layanan;
+use App\Models\Pemesanan;
+use Illuminate\Support\Facades\Auth;
 
 class PelangganController extends Controller
 {
@@ -43,9 +46,49 @@ class PelangganController extends Controller
     }
 
     // ==== customer ====
+    public function indexBeranda(){
+        $layanans = Layanan::latest()->take(2)->get();
+        return view('customer.index', compact('layanans'));
+    }
+
     public function IndexPelanggan(){
-        $users = User::where('id_role', 2)->get();
-        return view('customer.profile', compact('users'));
+        $userId = Auth::user()->id;
+
+        $totalPemesanan = Pemesanan::where('id_pelanggan', $userId)->count();
+
+        $menungguPembayaran = Pemesanan::where('id_pelanggan', $userId)
+            ->where('status', 'Menunggu Pembayaran')
+            ->count();
+
+        $pembayaranBerhasil = Pemesanan::where('id_pelanggan', $userId)
+            ->where('status', 'Pembayaran Berhasil')
+            ->count();
+
+        $progress = Pemesanan::where('id_pelanggan', $userId)
+            ->where('status', 'Progress')
+            ->count();
+
+        $revisi = Pemesanan::where('id_pelanggan', $userId)
+            ->where('status', 'Revisi')
+            ->count();
+
+        $selesai = Pemesanan::where('id_pelanggan', $userId)
+            ->where('status', 'Selesai')
+            ->count();
+
+        $gagal = Pemesanan::where('id_pelanggan', $userId)
+            ->where('status', 'Gagal')
+            ->count();
+
+        return view('customer.profile', compact(
+            'totalPemesanan',
+            'menungguPembayaran', 
+            'pembayaranBerhasil', 
+            'progress', 
+            'revisi', 
+            'selesai', 
+            'gagal'
+        ));
     }
 
     public function updatePelanggan(Request $request, $id)
@@ -90,6 +133,8 @@ class PelangganController extends Controller
             'pekerjaan' => $pelanggan->pekerjaan,
             'tanggal_lahir' => $pelanggan->tanggal_lahir,
         ]);
+
+        return redirect()->intended('profile')->with('success', 'Data berhasil diperbarui.');
     
         // Redirect ke /profile dengan pesan sukses
         return redirect('/profile')->with('success', 'Data berhasil diperbarui!');

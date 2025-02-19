@@ -10,7 +10,7 @@
 				<div class="geex-content__authentication__content__wrapper">
 					<div class="geex-content__authentication__content__logo">
 						
-							<img class="logo-lite" src="assets/img/logo_gurafix_no_bg.png" width="70px" alt="logo">
+							<img class="logo-lite" src="{{ asset('assets/img/logo_gurafix_no_bg.png') }}" width="70px" alt="logo">
 						
 					</div>
 					<form action="{{ route('admin.login.submit') }}" id="signInForm" class="geex-content__authentication__form" method="POST">
@@ -42,6 +42,23 @@
 	</main>
 
 	<x-admin-footer/>
+
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+	
+	@if (session('success'))
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                Swal.fire({
+                    icon: 'success',
+                    iconColor: '#004CE7',
+                    title: 'Berhasil!',
+                    text: '{{ session('success') }}',
+                    confirmButtonColor: '#004CE7',
+                    confirmButtonText: 'OK'
+                });
+            });
+        </script>
+    @endif
 
 </body>
 
