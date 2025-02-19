@@ -28,6 +28,91 @@ class PemesananController extends Controller
         return view('admin.data-pemesanan', compact('pemesanans', 'pakets', 'layanans', 'users'));
     }
 
+    // ========= admin - filter status ==========
+    public function IndexMenungguPembayaran(){
+        // Mengurutkan berdasarkan created_at secara descending, sehingga data terbaru muncul di atas
+        $pemesanans = Pemesanan::where('status', 'Menunggu Pembayaran')->orderBy('created_at', 'desc')->get();
+    
+        // Jika kamu ingin menggunakan id, kamu bisa gunakan:
+        // $pemesanans = Pemesanan::orderBy('id', 'desc')->get();
+    
+        $pakets = Paket::all();
+        $layanans = Layanan::all();
+        $users = User::where('id_role', 2)->get();
+        
+        return view('admin.data-pemesanan', compact('pemesanans', 'pakets', 'layanans', 'users'));
+    }
+
+    public function IndexPembayaranBerhasil(){
+        // Mengurutkan berdasarkan created_at secara descending, sehingga data terbaru muncul di atas
+        $pemesanans = Pemesanan::where('status', 'Pembayaran Berhasil')->orderBy('created_at', 'desc')->get();
+    
+        // Jika kamu ingin menggunakan id, kamu bisa gunakan:
+        // $pemesanans = Pemesanan::orderBy('id', 'desc')->get();
+    
+        $pakets = Paket::all();
+        $layanans = Layanan::all();
+        $users = User::where('id_role', 2)->get();
+        
+        return view('admin.data-pemesanan', compact('pemesanans', 'pakets', 'layanans', 'users'));
+    }
+
+    public function IndexProgress(){
+        // Mengurutkan berdasarkan created_at secara descending, sehingga data terbaru muncul di atas
+        $pemesanans = Pemesanan::where('status', 'Progress')->orderBy('created_at', 'desc')->get();
+    
+        // Jika kamu ingin menggunakan id, kamu bisa gunakan:
+        // $pemesanans = Pemesanan::orderBy('id', 'desc')->get();
+    
+        $pakets = Paket::all();
+        $layanans = Layanan::all();
+        $users = User::where('id_role', 2)->get();
+        
+        return view('admin.data-pemesanan', compact('pemesanans', 'pakets', 'layanans', 'users'));
+    }
+
+    public function IndexRevisi(){
+        // Mengurutkan berdasarkan created_at secara descending, sehingga data terbaru muncul di atas
+        $pemesanans = Pemesanan::where('status', 'Revisi')->orderBy('created_at', 'desc')->get();
+    
+        // Jika kamu ingin menggunakan id, kamu bisa gunakan:
+        // $pemesanans = Pemesanan::orderBy('id', 'desc')->get();
+    
+        $pakets = Paket::all();
+        $layanans = Layanan::all();
+        $users = User::where('id_role', 2)->get();
+        
+        return view('admin.data-pemesanan', compact('pemesanans', 'pakets', 'layanans', 'users'));
+    }
+
+    public function IndexGagal(){
+        // Mengurutkan berdasarkan created_at secara descending, sehingga data terbaru muncul di atas
+        $pemesanans = Pemesanan::where('status', 'Gagal')->orderBy('created_at', 'desc')->get();
+    
+        // Jika kamu ingin menggunakan id, kamu bisa gunakan:
+        // $pemesanans = Pemesanan::orderBy('id', 'desc')->get();
+    
+        $pakets = Paket::all();
+        $layanans = Layanan::all();
+        $users = User::where('id_role', 2)->get();
+        
+        return view('admin.data-pemesanan', compact('pemesanans', 'pakets', 'layanans', 'users'));
+    }
+
+    public function IndexSelesai(){
+        // Mengurutkan berdasarkan created_at secara descending, sehingga data terbaru muncul di atas
+        $pemesanans = Pemesanan::where('status', 'Selesai')->orderBy('created_at', 'desc')->get();
+    
+        // Jika kamu ingin menggunakan id, kamu bisa gunakan:
+        // $pemesanans = Pemesanan::orderBy('id', 'desc')->get();
+    
+        $pakets = Paket::all();
+        $layanans = Layanan::all();
+        $users = User::where('id_role', 2)->get();
+        
+        return view('admin.data-pemesanan', compact('pemesanans', 'pakets', 'layanans', 'users'));
+    }
+
     public function store(Request $request){
         $request->validate([
             'id_pelanggan' => 'required',

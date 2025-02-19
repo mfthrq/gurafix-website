@@ -101,6 +101,29 @@
 						</svg>							
 						<span>Data Pemesanan</span>
 					</a>
+					<ul class="geex-sidebar__submenu">
+                        <li class="geex-sidebar__menu__item">
+                            <a href="/admin/data-pemesanan" class="geex-sidebar__menu__link">Semua</a>
+                        </li>
+                        <li class="geex-sidebar__menu__item">
+                            <a href="/admin/data-pemesanan/menunggu-pembayaran" class="geex-sidebar__menu__link">Menunggu Pembayaran</a>
+                        </li>
+                        <li class="geex-sidebar__menu__item">
+                            <a href="/admin/data-pemesanan/pembayaran-berhasil" class="geex-sidebar__menu__link">Pembayaran Berhasil</a>
+                        </li>
+                        <li class="geex-sidebar__menu__item">
+                            <a href="/admin/data-pemesanan/progress" class="geex-sidebar__menu__link">Progress</a>
+                        </li>
+						<li class="geex-sidebar__menu__item">
+                            <a href="/admin/data-pemesanan/revisi" class="geex-sidebar__menu__link">Revisi</a>
+                        </li>
+						<li class="geex-sidebar__menu__item">
+                            <a href="/admin/data-pemesanan/gagal" class="geex-sidebar__menu__link">Gagal</a>
+                        </li>
+						<li class="geex-sidebar__menu__item">
+                            <a href="/admin/data-pemesanan/selesai" class="geex-sidebar__menu__link">Selesai</a>
+                        </li>
+                    </ul>
 				</li>
 
 				<li class="geex-sidebar__menu__item has-children">

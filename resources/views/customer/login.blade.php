@@ -44,9 +44,11 @@
                                 <input type="email" placeholder="Masukkan Email Anda" id="email" name="email">
                                 <span><img src="assets/img/icon/17.png" alt="img"></span>
                             </div>
-                            <div class="single-input-inner style-border">
-                                <input type="password" placeholder="Masukkan Kata Sandi" id="password" name="password">
-                                <span><img src="assets/img/icon/18.png" alt="img"></span>
+                            <div class="single-input-inner style-border" style="display: flex;">
+                                <input type="password" id="exampleInputPassword1" placeholder="Masukkan Kata Sandi" name="password" style="border-top-left-radius: 10px; border-bottom-left-radius: 10px;">
+                                <span class="input-group-text ms-1" onclick="togglePassword()" style="cursor: pointer; background-color: #DDF247; border-radius: 10px; border: 0;">
+                                    <i id="eyeIcon" class="fas fa-eye"></i>
+                                </span>
                             </div>
                             <button type="submit" class="btn btn-base tt-uppercase w-100">Masuk</button>
                         </form>
@@ -83,6 +85,23 @@
             });
         </script>
     @endif
+
+    <script>
+        function togglePassword() {
+            const passwordInput = document.getElementById('exampleInputPassword1');
+            const eyeIcon = document.getElementById('eyeIcon');
+            
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                eyeIcon.classList.remove('fa-eye');
+                eyeIcon.classList.add('fa-eye-slash');
+            } else {
+                passwordInput.type = 'password';
+                eyeIcon.classList.remove('fa-eye-slash');
+                eyeIcon.classList.add('fa-eye');
+            }
+        }
+    </script>
 </body>
 
 </html>
