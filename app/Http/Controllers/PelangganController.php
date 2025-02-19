@@ -9,6 +9,8 @@ use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 use App\Models\User;
 use App\Models\Layanan;
+use App\Models\Pemesanan;
+use Illuminate\Support\Facades\Auth;
 
 class PelangganController extends Controller
 {
@@ -50,8 +52,43 @@ class PelangganController extends Controller
     }
 
     public function IndexPelanggan(){
-        $users = User::where('id_role', 2)->get();
-        return view('customer.profile', compact('users'));
+        $userId = Auth::user()->id;
+
+        $totalPemesanan = Pemesanan::where('id_pelanggan', $userId)->count();
+
+        $menungguPembayaran = Pemesanan::where('id_pelanggan', $userId)
+            ->where('status', 'Menunggu Pembayaran')
+            ->count();
+
+        $pembayaranBerhasil = Pemesanan::where('id_pelanggan', $userId)
+            ->where('status', 'Pembayaran Berhasil')
+            ->count();
+
+        $progress = Pemesanan::where('id_pelanggan', $userId)
+            ->where('status', 'Progress')
+            ->count();
+
+        $revisi = Pemesanan::where('id_pelanggan', $userId)
+            ->where('status', 'Revisi')
+            ->count();
+
+        $selesai = Pemesanan::where('id_pelanggan', $userId)
+            ->where('status', 'Selesai')
+            ->count();
+
+        $gagal = Pemesanan::where('id_pelanggan', $userId)
+            ->where('status', 'Gagal')
+            ->count();
+
+        return view('customer.profile', compact(
+            'totalPemesanan',
+            'menungguPembayaran', 
+            'pembayaranBerhasil', 
+            'progress', 
+            'revisi', 
+            'selesai', 
+            'gagal'
+        ));
     }
 
     public function updatePelanggan(Request $request, $id)

@@ -59,15 +59,23 @@
                         </div>
 
                         <div class="price-meta">
-                            <h4 style="color: black;">Total Pemesanan: <span style="color: #004CE7;">20</span></h4>
+                            <h4 style="color: black;">Total Pemesanan: <span style="color: #004CE7;">{{ $totalPemesanan }}</span></h4>
                             <!-- Baris pertama (3 kolom di tengah) -->
                             <div class="row text-center gap-2 px-2">
                                 <div class="col p-2">
                                     <div style="background-color: #ddf247; border-radius: 10px;" class="mb-2">
-                                        <span style="color: black; font-size: 15px;">Diverifikasi</span><br>
+                                        <span style="color: black; font-size: 15px;">Unpaid</span><br>
                                     </div>
                                     <div style="background-color: #004CE7; border-radius: 10px;">
-                                        <span style="color: white;">20 </span>
+                                        <span style="color: white;">{{ $menungguPembayaran }}</span>
+                                    </div>
+                                </div>
+                                <div class="col p-2">
+                                    <div style="background-color: #ddf247; border-radius: 10px;" class="mb-2">
+                                        <span style="color: black; font-size: 15px;">Paid</span><br>
+                                    </div>
+                                    <div style="background-color: #004CE7; border-radius: 10px;">
+                                        <span style="color: white;">{{ $pembayaranBerhasil }}</span>
                                     </div>
                                 </div>
                                 <div class="col p-2">
@@ -75,7 +83,7 @@
                                         <span style="color: black; font-size: 15px;">Progress</span><br>
                                     </div>
                                     <div style="background-color: #004CE7; border-radius: 10px;">
-                                        <span style="color: white;">10000 </span>
+                                        <span style="color: white;">{{ $progress }} </span>
                                     </div>
                                 </div>
                                 <div class="col p-2">
@@ -83,7 +91,7 @@
                                         <span style="color: black; font-size: 15px;">Revisi</span><br>
                                     </div>
                                     <div style="background-color: #004CE7; border-radius: 10px;">
-                                        <span style="color: white;">10000 </span>
+                                        <span style="color: white;">{{ $revisi }} </span>
                                     </div>
                                 </div>
                                 <div class="col p-2">
@@ -91,7 +99,7 @@
                                         <span style="color: black; font-size: 15px;">Selesai</span><br>
                                     </div>
                                     <div style="background-color: #004CE7; border-radius: 10px;">
-                                        <span style="color: white;">10000 </span>
+                                        <span style="color: white;">{{ $selesai }} </span>
                                     </div>
                                 </div>
                                 <div class="col p-2">
@@ -99,7 +107,7 @@
                                         <span style="color: black; font-size: 15px;">Gagal</span><br>
                                     </div>
                                     <div style="background-color: #004CE7; border-radius: 10px;">
-                                        <span style="color: white;">10000 </span>
+                                        <span style="color: white;">{{ $gagal }} </span>
                                     </div>
                                 </div>
                             </div>

@@ -15,10 +15,16 @@ class PemesananController extends Controller
 {
     // ========= admin ========
     public function IndexDataPemesanan(){
-        $pemesanans = Pemesanan::all();
+        // Mengurutkan berdasarkan created_at secara descending, sehingga data terbaru muncul di atas
+        $pemesanans = Pemesanan::orderBy('created_at', 'desc')->get();
+    
+        // Jika kamu ingin menggunakan id, kamu bisa gunakan:
+        // $pemesanans = Pemesanan::orderBy('id', 'desc')->get();
+    
         $pakets = Paket::all();
         $layanans = Layanan::all();
         $users = User::where('id_role', 2)->get();
+        
         return view('admin.data-pemesanan', compact('pemesanans', 'pakets', 'layanans', 'users'));
     }
 

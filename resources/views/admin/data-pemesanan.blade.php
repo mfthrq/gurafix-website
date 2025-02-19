@@ -67,7 +67,7 @@
                                 </td>
                                 <td>
                                     <div class="author-area">
-                                        <p>{{ $pemesanan->tanggal_pemesanan }}</p>
+                                        <p>{{ $pemesanan->created_at }}</p>
                                     </div>
                                 </td>
                                 <td>

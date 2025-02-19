@@ -41,7 +41,7 @@
                                     </div>
                                     <div class="mt-3">
                                         <p style="color: white;"><b>Tanggal Pemesanan</b> <br>
-                                            {{ $pemesanan->tanggal_pemesanan ?? 'Tanggal Pemesanan' }}
+                                            {{ $pemesanan->created_at ?? 'Tanggal Pemesanan' }}
                                         </p>
                                         <p style="color: white;"><b>Durasi Pengerjaan</b> <br>
                                             {{ $pemesanan->paket->durasi_pengerjaan ?? 'Durasi Pengerjaan' }} Hari
@@ -102,12 +102,21 @@
                                                 </button>
                                             </div>
                                         @else
-                                            <div>
-                                                <a class="btn btn-base" style="width: 100%;"
-                                                    href="{{ $pemesanan->link_desain ?? '#' }}">
-                                                    Link File <i class="fa fa-arrow-right"></i>
-                                                </a>
-                                            </div>
+                                            @if (empty($pemesanan->link_desain))
+                                                <div>
+                                                    <button type="button" class="btn btn-base btn-no-link"
+                                                        style="width: 100%;">
+                                                        Link File <i class="fa fa-arrow-right"></i>
+                                                    </button>
+                                                </div>
+                                            @else
+                                                <div>
+                                                    <a class="btn btn-base" style="width: 100%;"
+                                                        href="{{ $pemesanan->link_desain }}">
+                                                        Link File <i class="fa fa-arrow-right"></i>
+                                                    </a>
+                                                </div>
+                                            @endif
                                         @endif
                                     </div>
                                 </div>
@@ -160,6 +169,25 @@
                         alert("Token tidak tersedia untuk transaksi ini.");
                     }
 
+                });
+            });
+        </script>
+
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                document.querySelectorAll('.btn-no-link').forEach(function(button) {
+                    button.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        Swal.fire({
+                            icon: 'warning',
+                            iconColor: '#004CE7',
+                            title: 'Link Belum Tersedia',
+                            html: 'Link hasil desain <b>tersedia</b> jika status <b style="color: #ffc107;">Progress</b> atau <b style="color: #198754;">Selesai</b>.',
+                            confirmButtonColor: '#004CE7',
+                            confirmButtonText: 'OK'
+                        });
+                    });
                 });
             });
         </script>

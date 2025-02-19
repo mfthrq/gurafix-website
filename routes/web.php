@@ -73,9 +73,7 @@ Route::post('/signup/store', [PelangganController::class, 'storePelanggan'])->na
 Route::middleware([PelangganMiddleware::class])->group(function () { 
 
     // ========== PROFILE ==========
-    Route::get('/profile', function () {
-        return view('customer.profile');
-    })->name('profile');
+    Route::get('/profile', [PelangganController::class, 'indexPelanggan'])->name('profile');
     
     // ========== CHAT FOR CUSTOMER PAGE ==========
     Route::get('/chat', function () {
