@@ -101,7 +101,7 @@ class PaketController extends Controller
         $paket = Paket::findOrFail($id);
         $paket->delete();
 
-        return redirect()->route('admin.data-paket')->with('success', 'Data berhasil dihapus!');
+        return redirect()->route('admin.data-paket')->with('success', 'Data paket berhasil dihapus!');
     } 
 
     // ===== customer ======

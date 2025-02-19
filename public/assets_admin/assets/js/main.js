@@ -274,11 +274,11 @@
   	});
 
   	// Chat Action Toggle
-  	$(".geex-content__chat__action__toggle__btn").click(function(e) {
-		e.preventDefault();
-		$(this).toggleClass("active");
-		$(this).siblings(".geex-content__chat__action__toggle__content").slideToggle();
-  	});
+  	// $(".geex-content__chat__action__toggle__btn").click(function(e) {
+	// 	e.preventDefault();
+	// 	$(this).toggleClass("active");
+	// 	$(this).siblings(".geex-content__chat__action__toggle__content").slideToggle();
+  	// });
 
   	// Popup Toggle
   	$(".geex-content__header__quickaction__link").click(function(e) {

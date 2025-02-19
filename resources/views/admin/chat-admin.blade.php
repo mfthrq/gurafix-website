@@ -20,7 +20,7 @@
                         </button>
 
                         <div class="geex-content__chat__sidebar">
-                            <div class="geex-content__chat__sidebar__searchform">
+                            {{-- <div class="geex-content__chat__sidebar__searchform">
                                 <div class="geex-content__chat__sidebar__searchform__search">
                                     <input type="text" placeholder="Cari" class="geex-content__header__btn" />
                                     <i class="uil uil-search"></i>
@@ -28,9 +28,9 @@
                                 <button class="geex-content__chat__sidebar__searchform__btn">
                                     <i class="uil-plus"></i>
                                 </button>
-                            </div>
+                            </div> --}}
 
-                            <ul class="nav nav-tabs geex-content__chat__sidebar__tab mb-20" role="tablist">
+                            <ul class="nav nav-tabs geex-content__chat__sidebar__tab mb-20 pt-3" role="tablist">
                                 @forelse($users as $user)
                                     <li class="nav-item" role="presentation">
                                         <a href="#" class="nav-link chat-tab" data-id="{{ $user->id }}"

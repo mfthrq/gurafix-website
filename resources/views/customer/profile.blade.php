@@ -49,9 +49,9 @@
                                     Edit
                                 </button>
 
-                                <form action="{{ route('customer.logout') }}" method="POST">
+                                <form id="logoutForm" action="{{ route('customer.logout') }}" method="POST">
                                     @csrf
-                                    <button type="submit"
+                                    <button id="logoutButton" type="submit"
                                         class="btn btn-base d-flex justify-content-center align-items-center bg-danger text-white"
                                         style="width: 80px;" href="#">Logout</button>
                                 </form>
@@ -59,55 +59,57 @@
                         </div>
 
                         <div class="price-meta">
-                            <h4 style="color: black;">Total Pemesanan: <span style="color: #004CE7;">{{ $totalPemesanan }}</span></h4>
+                            <h4 style="color: black;">Total Pemesanan: 
+                                <span style="color: #004CE7;">{{ $totalPemesanan }}</span>
+                            </h4>
                             <!-- Baris pertama (3 kolom di tengah) -->
                             <div class="row text-center gap-2 px-2">
                                 <div class="col p-2">
-                                    <div style="background-color: #ddf247; border-radius: 10px;" class="mb-2">
+                                    <div style="background-color: #ddf247; border-radius: 6px;" class="mb-2">
                                         <span style="color: black; font-size: 15px;">Unpaid</span><br>
                                     </div>
-                                    <div style="background-color: #004CE7; border-radius: 10px;">
-                                        <span style="color: white;">{{ $menungguPembayaran }}</span>
+                                    <div style="background-color: #004CE7; border-radius: 6px;">
+                                        <span style="color: white; font-weight: bold;">{{ $menungguPembayaran }}</span>
                                     </div>
                                 </div>
                                 <div class="col p-2">
-                                    <div style="background-color: #ddf247; border-radius: 10px;" class="mb-2">
+                                    <div style="background-color: #ddf247; border-radius: 6px;" class="mb-2">
                                         <span style="color: black; font-size: 15px;">Paid</span><br>
                                     </div>
-                                    <div style="background-color: #004CE7; border-radius: 10px;">
-                                        <span style="color: white;">{{ $pembayaranBerhasil }}</span>
+                                    <div style="background-color: #004CE7; border-radius: 6px;">
+                                        <span style="color: white; font-weight: bold;">{{ $pembayaranBerhasil }}</span>
                                     </div>
                                 </div>
                                 <div class="col p-2">
-                                    <div style="background-color: #ddf247; border-radius: 10px;" class="mb-2">
+                                    <div style="background-color: #ddf247; border-radius: 6px;" class="mb-2">
                                         <span style="color: black; font-size: 15px;">Progress</span><br>
                                     </div>
-                                    <div style="background-color: #004CE7; border-radius: 10px;">
-                                        <span style="color: white;">{{ $progress }} </span>
+                                    <div style="background-color: #004CE7; border-radius: 6px;">
+                                        <span style="color: white; font-weight: bold;">{{ $progress }} </span>
                                     </div>
                                 </div>
                                 <div class="col p-2">
-                                    <div style="background-color: #ddf247; border-radius: 10px;" class="mb-2">
+                                    <div style="background-color: #ddf247; border-radius: 6px;" class="mb-2">
                                         <span style="color: black; font-size: 15px;">Revisi</span><br>
                                     </div>
-                                    <div style="background-color: #004CE7; border-radius: 10px;">
-                                        <span style="color: white;">{{ $revisi }} </span>
+                                    <div style="background-color: #004CE7; border-radius: 6px;">
+                                        <span style="color: white; font-weight: bold;">{{ $revisi }} </span>
                                     </div>
                                 </div>
                                 <div class="col p-2">
-                                    <div style="background-color: #ddf247; border-radius: 10px;" class="mb-2">
+                                    <div style="background-color: #ddf247; border-radius: 6px;" class="mb-2">
                                         <span style="color: black; font-size: 15px;">Selesai</span><br>
                                     </div>
-                                    <div style="background-color: #004CE7; border-radius: 10px;">
-                                        <span style="color: white;">{{ $selesai }} </span>
+                                    <div style="background-color: #004CE7; border-radius: 6px;">
+                                        <span style="color: white; font-weight: bold;">{{ $selesai }} </span>
                                     </div>
                                 </div>
                                 <div class="col p-2">
-                                    <div style="background-color: #ddf247; border-radius: 10px;" class="mb-2">
+                                    <div style="background-color: #ddf247; border-radius: 6px;" class="mb-2">
                                         <span style="color: black; font-size: 15px;">Gagal</span><br>
                                     </div>
-                                    <div style="background-color: #004CE7; border-radius: 10px;">
-                                        <span style="color: white;">{{ $gagal }} </span>
+                                    <div style="background-color: #004CE7; border-radius: 6px;">
+                                        <span style="color: white; font-weight: bold;">{{ $gagal }} </span>
                                     </div>
                                 </div>
                             </div>
@@ -265,6 +267,45 @@
             console.log('Provinsi Terpilih:', selectedOption.value);
         });
     </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    @if (session('success'))
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                Swal.fire({
+                    icon: 'success',
+                    iconColor: '#004CE7',
+                    title: 'Berhasil!',
+                    text: '{{ session('success') }}',
+                    confirmButtonColor: '#004CE7',
+                    confirmButtonText: 'OK'
+                });
+            });
+        </script>
+    @endif
+
+    <script>
+        document.getElementById('logoutButton').addEventListener('click', function(e) {
+            e.preventDefault(); // Mencegah perilaku submit default
+            Swal.fire({
+                title: 'Yakin ingin keluar?',
+                icon: 'warning',
+                iconColor: '#004CE7',
+                showCancelButton: true,
+                confirmButtonColor: "#DC3545",
+                cancelButtonColor: "#004CE7",
+                confirmButtonText: 'Ya, keluar!',
+                cancelButtonText: 'Batal'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Jika pengguna konfirmasi, submit form logout
+                    document.getElementById('logoutForm').submit();
+                }
+            });
+        });
+    </script>
+
 </body>
 
 </html>

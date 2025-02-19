@@ -43,6 +43,23 @@
 
 	<x-admin-footer/>
 
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+	
+	@if (session('success'))
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                Swal.fire({
+                    icon: 'success',
+                    iconColor: '#004CE7',
+                    title: 'Berhasil!',
+                    text: '{{ session('success') }}',
+                    confirmButtonColor: '#004CE7',
+                    confirmButtonText: 'OK'
+                });
+            });
+        </script>
+    @endif
+
 </body>
 
 </html>

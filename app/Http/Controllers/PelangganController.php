@@ -133,6 +133,8 @@ class PelangganController extends Controller
             'pekerjaan' => $pelanggan->pekerjaan,
             'tanggal_lahir' => $pelanggan->tanggal_lahir,
         ]);
+
+        return redirect()->intended('profile')->with('success', 'Data berhasil diperbarui.');
     
         // Redirect ke /profile dengan pesan sukses
         return redirect('/profile')->with('success', 'Data berhasil diperbarui!');

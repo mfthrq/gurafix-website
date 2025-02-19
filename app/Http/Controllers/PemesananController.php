@@ -111,7 +111,7 @@ class PemesananController extends Controller
 
         $pemesanan->save();
 
-        return redirect()->route('admin.data-pemesanan')->with('success', 'Data pemesanan berhasil ditambahkan!');
+        return redirect()->route('admin.data-pemesanan')->with('success', 'Data pemesanan berhasil diperbarui!');
     }
 
     public function destroy($id)
@@ -119,7 +119,7 @@ class PemesananController extends Controller
         $pemesanan = Pemesanan::findOrFail($id);
         $pemesanan->delete();
 
-        return redirect()->route('admin.data-pemesanan')->with('success', 'Data berhasil dihapus!');
+        return redirect()->route('admin.data-pemesanan')->with('success', 'Data pemesanan berhasil dihapus!');
     } 
 
     // ========= customer ========
@@ -193,7 +193,6 @@ class PemesananController extends Controller
         return view('customer.riwayat', compact('pemesanans', 'snapTokens'));
     }
     
-
     public function storeCustomer(Request $request){
         $request->validate([
             'id_pelanggan' => 'required',

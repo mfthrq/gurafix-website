@@ -87,7 +87,7 @@ class LayananController extends Controller
         $layanan = Layanan::findOrFail($id);
         $layanan->delete();
 
-        return redirect()->route('admin.data-layanan')->with('success', 'Data berhasil dihapus!');
+        return redirect()->route('admin.data-layanan')->with('success', 'Data layanan berhasil dihapus!');
     }  
 
     // ===== customer ======
