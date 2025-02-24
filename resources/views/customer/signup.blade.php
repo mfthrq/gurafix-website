@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <x-header :title="'Daftar | Gurafix'" />
-
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/themes/dark.css">
 <body>
     <!-- cursor -->
     <div class="cursor"></div>
@@ -45,7 +45,7 @@
                             </div>
                             <div class="single-input-inner style-border">
                                 <input type="date" placeholder="Tanggal Lahir" id="tanggal_lahir"
-                                    name="tanggal_lahir">
+                                    name="tanggal_lahir" placeholder="Tanggal Lahir">
                             </div>
                             <div class="single-input-inner style-border">
                                 <input type="number" placeholder="Nomor Telepon" id="no_telp" name="no_telp"
@@ -121,6 +121,13 @@
     <x-script-plugins />
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
+    <script>
+        flatpickr("#tanggal_lahir", {
+          dateFormat: "Y-m-d"
+        });
+      </script>
 
     <script>
         fetch('https://www.emsifa.com/api-wilayah-indonesia/api/provinces.json')

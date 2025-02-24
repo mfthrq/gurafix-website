@@ -232,10 +232,6 @@
                         </div>
 
                         <div class="p-0" style="display: flex;">
-                            <button class="btn btn-danger me-3 d-flex justify-content-center align-items-center w-100"
-                                data-bs-dismiss="modal">
-                                Batal
-                            </button>
                             <button type="submit"
                                 class="btn btn-base d-flex justify-content-center align-items-center w-100">
                                 Perbarui
