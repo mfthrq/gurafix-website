@@ -40,6 +40,7 @@
                     <thead>
                         <tr style="width: 100%">
                             <th>No</th>
+                            <th>Midtrans Order ID</th>
                             <th>Pelanggan</th>
                             <th>Layanan</th>
                             <th>Paket</th>
@@ -57,6 +58,11 @@
                                 <td>
                                     <div class="author-area">
                                         <p>{{ $index + 1 }}</p>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="author-area">
+                                        <p>{{ $pemesanan->midtrans_order_id ? $pemesanan->midtrans_order_id : "-" }}</p>
                                     </div>
                                 </td>
                                 <td>
@@ -160,7 +166,7 @@
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="10">
+                                <td colspan="11">
                                     <p class="text-center">Tidak ada data pemesanan.</p>
                                 </td>
                             </tr>

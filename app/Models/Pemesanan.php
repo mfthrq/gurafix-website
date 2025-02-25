@@ -12,6 +12,7 @@ class Pemesanan extends Model
     protected $table = 'pemesanan';
 
     protected $fillable = [
+        'midtrans_order_id',
         'id_pelanggan',
         'id_layanan',
         'id_paket',

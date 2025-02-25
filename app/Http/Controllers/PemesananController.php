@@ -238,7 +238,7 @@ class PemesananController extends Controller
         
             $params = [
                 'transaction_details' => [
-                    'order_id' => $pemesanan->id,
+                    'order_id' => $pemesanan->midtrans_order_id,
                     'gross_amount' => $paket->harga ?? 0,
                 ],
                 'customer_details' => [
@@ -249,17 +249,17 @@ class PemesananController extends Controller
             ];
     
             try {
-                $snapTokens[$pemesanan->id] = \Midtrans\Snap::getSnapToken($params);
+                $snapTokens[$pemesanan->midtrans_order_id] = \Midtrans\Snap::getSnapToken($params);
             } catch (\Exception $e) {
-                Log::error("Midtrans Snap Error (Order {$pemesanan->id}): " . $e->getMessage());
-                $snapTokens[$pemesanan->id] = '';
+                Log::error("Midtrans Snap Error (Order {$pemesanan->midtrans_order_id}): " . $e->getMessage());
+                $snapTokens[$pemesanan->midtrans_order_id] = '';
             }
             
             // Opsional: Perbarui status jika token sudah berhasil diambil (bisa juga dilakukan via webhook)
             // Misalnya, ambil status transaksi dan update jika perlu.
             try {
                 $client = new \GuzzleHttp\Client();
-                $orderId = $pemesanan->id;
+                $orderId = $pemesanan->midtrans_order_id;
                 $response = $client->request('GET', "https://api.sandbox.midtrans.com/v2/{$orderId}/status", [
                     'headers' => [
                         'accept' => 'application/json',
@@ -271,7 +271,7 @@ class PemesananController extends Controller
                     $pemesanan->update(['status' => 'Pembayaran Berhasil']);
                 }
             } catch (\Exception $e) {
-                Log::error("Midtrans Status Request Error (Order {$pemesanan->id}): " . $e->getMessage());
+                Log::error("Midtrans Status Request Error (Order {$pemesanan->midtrans_order_id}): " . $e->getMessage());
             }
         }
         
@@ -298,8 +298,11 @@ class PemesananController extends Controller
         date_default_timezone_set('Asia/Jakarta');
         $tanggalPemesanan = date('Y-m-d H:i');
 
+        $midtrans_order_id = 'order_' . uniqid() . '_' . date('YmdHis');
+
         // Simpan data ke database
         Pemesanan::create([
+            'midtrans_order_id' => $midtrans_order_id,
             'id_pelanggan' => $request->id_pelanggan,
             'id_layanan' => $request->id_layanan,
             'id_paket' => $request->id_paket,

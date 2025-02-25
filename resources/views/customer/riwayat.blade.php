@@ -96,7 +96,7 @@
                                         @if ($pemesanan->status == 'Menunggu Pembayaran')
                                             <div>
                                                 <button class="btn btn-base pay-button"
-                                                    data-snap-token="{{ $snapTokens[$pemesanan->id] ?? '' }}"
+                                                    data-snap-token="{{ $snapTokens[$pemesanan->midtrans_order_id] ?? '' }}"
                                                     style="background-color: #ddf100; width: 100%;">
                                                     Bayar
                                                 </button>
