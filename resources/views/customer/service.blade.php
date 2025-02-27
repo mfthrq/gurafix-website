@@ -37,7 +37,7 @@
                             <img class="bg-one w-100" src="assets/img/bg/5.png" alt="img" />
                             <div class="content-inner text-center">
                                 <div class="icon">
-                                    <img src="{{ asset('assets_admin/gambar_layanan/' . $layanan->gambar_layanan) }}" alt="img" />
+                                    <img src="{{ asset('assets_admin/gambar_layanan/' . $layanan->gambar_layanan) }}" alt="img" width="150px" />
                                 </div>
                                 <span class="mt-3">Layanan {{ $index + 1 }}</span>
                                 <h4>{{ $layanan->nama }}</h3>

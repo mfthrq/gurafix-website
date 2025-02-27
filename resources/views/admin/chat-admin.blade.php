@@ -45,9 +45,9 @@
                                         </a>
                                     </li>
                                 @empty
-                                    <li class="nav-item" role="presentation">
+                                    <p align="center">
                                         Tidak ada data pelanggan.
-                                    </li>
+                                    </p>
                                 @endforelse
 
                             </ul>

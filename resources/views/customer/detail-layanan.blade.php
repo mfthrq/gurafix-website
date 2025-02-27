@@ -21,7 +21,7 @@
             <div class="row">
                 @forelse ($pakets as $paket)
                     <div class="col-lg-4 fade-slide bottom" data-delay="0.2">
-                        <div class="single-tournament-2">
+                        <div class="single-tournament-2" style="height: 480px;">
                             <img class="bg-img" src="{{ asset('assets/img/tournament/bg-3.png') }}" alt="img">
                             <div class="content-area">
                                 <div class="top-area d-flex align-items-center align-self-center">
