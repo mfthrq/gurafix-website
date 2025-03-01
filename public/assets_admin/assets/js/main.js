@@ -1078,63 +1078,63 @@
 
 
 	// Summary Chart
-	let summaryOptions = {
-		series: [30, 34, 6, 30],
-		labels: ['Ethereum', 'Litecoin', 'Ripple', 'Bitcoin'],
-		colors: ["#00ADA3", "#374C98", "#23292F", "#FFBB54"],
-		plotOptions: {
-			pie: {
-				expandOnClick: false,
-				startAngle: 0,
-				dataLabels: {
-					enabled: false,
-				},
-				customScale: 1, // Adjust this value to control the series border radius
-			},
-			stroke: {
-				width: 25, // Width of the stroke
-				colors: ['transparent'], // Color of the stroke (use 'transparent' to make it invisible)
-			},
-		},
-		chart: {
-			height: '350px',
-			type: 'donut',
-		},
-		responsive: [{
-			breakpoint: 576,
-			options: {
-				chart: {
-					height: '550px'
-				}
-			},
-		}],
-		legend: {
-			show: true,
-			position: "bottom",
-			fontSize: '14px',
-      		fontWeight: 500,
-			formatter: function (seriesName, opts) {
-				let data = opts.w.globals.seriesTotals[opts.seriesIndex];
-				return seriesName + ":  " + data;
-				// return `<div class="custom-legend-item">${seriesName} <span> ${data} </span></div>`;
-			},
-		},
-		responsive: [{
-			breakpoint: 480,
-			options: {
-				chart: {
-					width: 200
-				},
-				legend: {
-					position: 'bottom'
-				}
-			}
-		}]
-	};
+	// let summaryOptions = {
+	// 	series: [30, 34, 6, 30],
+	// 	labels: ['Ethereum', 'Litecoin', 'Ripple', 'Bitcoin'],
+	// 	colors: ["#00ADA3", "#374C98", "#23292F", "#FFBB54"],
+	// 	plotOptions: {
+	// 		pie: {
+	// 			expandOnClick: false,
+	// 			startAngle: 0,
+	// 			dataLabels: {
+	// 				enabled: false,
+	// 			},
+	// 			customScale: 1, // Adjust this value to control the series border radius
+	// 		},
+	// 		stroke: {
+	// 			width: 25, // Width of the stroke
+	// 			colors: ['transparent'], // Color of the stroke (use 'transparent' to make it invisible)
+	// 		},
+	// 	},
+	// 	chart: {
+	// 		height: '350px',
+	// 		type: 'donut',
+	// 	},
+	// 	responsive: [{
+	// 		breakpoint: 576,
+	// 		options: {
+	// 			chart: {
+	// 				height: '550px'
+	// 			}
+	// 		},
+	// 	}],
+	// 	legend: {
+	// 		show: true,
+	// 		position: "bottom",
+	// 		fontSize: '14px',
+    //   		fontWeight: 500,
+	// 		formatter: function (seriesName, opts) {
+	// 			let data = opts.w.globals.seriesTotals[opts.seriesIndex];
+	// 			return seriesName + ":  " + data;
+	// 			// return `<div class="custom-legend-item">${seriesName} <span> ${data} </span></div>`;
+	// 		},
+	// 	},
+	// 	responsive: [{
+	// 		breakpoint: 480,
+	// 		options: {
+	// 			chart: {
+	// 				width: 200
+	// 			},
+	// 			legend: {
+	// 				position: 'bottom'
+	// 			}
+	// 		}
+	// 	}]
+	// };
 
-	let summaryChartContainer = document.querySelector("#summary-chart");
-	let summaryChart = summaryChartContainer && new ApexCharts(summaryChartContainer, summaryOptions);
-	summaryChart && summaryChart.render();
+	// let summaryChartContainer = document.querySelector("#summary-chart");
+	// let summaryChart = summaryChartContainer && new ApexCharts(summaryChartContainer, summaryOptions);
+	// summaryChart && summaryChart.render();
 
 	// Stack Chart
 	let stackOptions = {
@@ -1218,103 +1218,102 @@
 	stackChart && stackChart.render();
 
 	// Income Chart
-	let incomeOptions = {
-		series: [{
-			data: [40, 32, 45, 65, 23, 54, 23]
-		}],
+	// let pekerjaanLabels = pemesananData.map(item => item.pekerjaan);
+	// let pekerjaanValues = pemesananData.map(item => item.total);
+
+	// let incomeOptions = {
+	// 	series: [{
+	// 		data: pekerjaanValues
+	// 	}],
+
+	// 	chart: {
+	// 		height: 350,
+	// 		type: 'bar',
+	// 		toolbar: {
+	// 			show: false,
+	// 		}
+	// 	},
+
+	// 	colors: ["#1BD5FE"],
+
+	// 	fill: {
+	// 		type: "gradient",
+	// 		gradient: {
+	// 			type: "vertical",
+	// 			shadeIntensity: 1,
+	// 			opacityFrom: 1,
+	// 			opacityTo: 1,
+	// 			stops: [0, 100],
+	// 			gradientToColors: ["#216BDB"]
+	// 		}
+	// 	},
+
+	// 	plotOptions: {
+	// 		bar: {
+	// 			columnWidth: 50,
+	// 			borderRadius: 12,
+	// 		}
+	// 	},
+
+	// 	dataLabels: {
+	// 		enabled: false,
+	// 	},
+
+	// 	xaxis: {
+	// 		categories: pekerjaanLabels, // Diganti dengan label pekerjaan
+	// 		position: 'bottom',
+	// 		axisBorder: {
+	// 			show: false,
+	// 		},
+	// 		axisTicks: {
+	// 			show: false,
+	// 		},
+	// 		crosshairs: {
+	// 			show: false,
+	// 		},
+	// 		tooltip: {
+	// 			enabled: false,
+	// 		}
+	// 	},
+
+	// 	yaxis: {
+	// 		labels: {
+	// 			show: true,
+	// 			offsetX: 0
+	// 		},
+	// 		min: 0,
+	// 		tickAmount: 3,
+	// 	},
+
+	// 	grid: {
+	// 		show: true,
+	// 		padding: { left: 0, right: 0, top: 0, bottom: 0 },
+	// 	},
+
+	// 	tooltip: {
+	// 		enabled: true,
+	// 		custom: function ({ series, seriesIndex, dataPointIndex, w }) {
+	// 			let value = w.globals.series[seriesIndex][dataPointIndex];
+	// 			var maxValue = Math.max(...series[0]);
+	// 			var percentage = ((value / maxValue) * 10).toFixed(0);
+
+	// 			var mouseX = window.mouseX || 0;
+	// 			var mouseY = window.mouseY || 0;
+
+	// 			var tooltipX = mouseX - 50;
+	// 			var tooltipY = mouseY - 30;
+
+	// 			return '<div class="custom-tooltip" style="left:' + tooltipX + 'px; top:' + tooltipY + 'px;">' +
+	// 				'<span class="custom-tooltip__title">$' + percentage + '</span>' +
+	// 				'<span class="custom-tooltip__subtitle">' + value + ' Orders</span>' +
+	// 				'</div>';
+	// 		},
+	// 	},
+	// };
 	
-		chart: {
-			height: 350,
-			type: 'bar',
-			toolbar: {
-				show: false,
-			}
-		},
-	
-		colors: ["#1BD5FE"],
-	
-		fill: {
-			type: "gradient",
-			gradient: {
-				type: "vertical",
-				shadeIntensity: 1,
-				opacityFrom: 1,
-				opacityTo: 1,
-				stops: [0, 100],
-				gradientToColors: ["#216BDB"]
-			}
-		},
-	
-		plotOptions: {
-			bar: {
-				columnWidth: 50,
-				borderRadius: 12,
-			}
-		},
-	
-		dataLabels: {
-			enabled: false,
-		},
-	
-		xaxis: {
-			categories: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
-			position: 'bottom',
-			axisBorder: {
-				show: false,
-			},
-			axisTicks: {
-				show: false,
-			},
-			crosshairs: {
-				show: false,
-			},
-			tooltip: {
-				enabled: false,
-			}
-		},
-	
-		yaxis: {
-			labels: {
-				show: true,
-				offsetX: 0
-			},
-			min: 0, // Set the min and max as actual category values.
-			max: 70,
-			tickAmount: 3,
-		},
-	
-		grid: {
-			show: true,
-			padding: { left: 0, right: 0, top: 0, bottom: 0 },
-		},
-	
-		tooltip: {
-			enabled: true,
-			custom: function ({ series, seriesIndex, dataPointIndex, w }) {
-				// Calculate the percentage based on the max value
-				let value = w.globals.series[seriesIndex][dataPointIndex]
-				var maxValue = Math.max(...series[0]);
-				var percentage = ((value / maxValue) * 10).toFixed(0);
-				
-				// Get the mouse position from the global variable or state
-				var mouseX = window.mouseX || 0;
-				var mouseY = window.mouseY || 0;
-		  
-				// Calculate the position of the tooltip above the bar
-				var tooltipX = mouseX - 50;
-				var tooltipY = mouseY - 30; // Adjust the offset as needed
-		  
-				return '<div class="custom-tooltip" style="left:' + tooltipX + 'px; top:' + tooltipY + 'px;">' +
-				  '<span class="custom-tooltip__title">$' + percentage + '</span>' +
-				  '<span class="custom-tooltip__subtitle">' + value + ' Visitors</span>' +
-				  '</div>';
-			},
-		},
-	};
-	
-	let incomeChartContainer = document.querySelector("#income-chart");
-	let incomeChart = incomeChartContainer && new ApexCharts(incomeChartContainer, incomeOptions);
-	incomeChart && incomeChart.render();
+	// let incomeChartContainer = document.querySelector("#income-chart");
+	// let incomeChart = incomeChartContainer && new ApexCharts(incomeChartContainer, incomeOptions);
+	// incomeChart && incomeChart.render();
 
 	// Expense Chart
 	let expenseOptions = {
@@ -1414,8 +1413,6 @@
 	let expenseChartContainer = document.querySelector("#expense-chart");
 	let expenseChart = expenseChartContainer && new ApexCharts(expenseChartContainer, expenseOptions);
 	expenseChart && expenseChart.render();
-
-
 
 	if($("#chart-5").length){
 		var options = {

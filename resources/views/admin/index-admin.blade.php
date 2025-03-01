@@ -32,8 +32,7 @@
                             <button class="geex-btn geex-customizer__btn geex-customizer__btn--ltr active">
                                 <svg width="24" height="20" viewBox="0 0 24 20" fill="none"
                                     xmlns="http://www.w3.org/2000/svg">
-                                    <rect x="4.5" y="2.5" width="13" height="5" rx="1.5"
-                                        stroke="white" />
+                                    <rect x="4.5" y="2.5" width="13" height="5" rx="1.5" stroke="white" />
                                     <rect x="4.5" y="12.5" width="19" height="5" rx="1.5"
                                         stroke="white" />
                                     <rect width="1" height="20" fill="white" />
@@ -101,7 +100,7 @@
 
             <div class="geex-content__wrapper">
                 <div class="geex-content__section-wrapper">
-                    
+
                     <div class="geex-content__summary">
                         <div class="geex-container">
                             <div class="geex-content__summary__count__single primary-bg">
@@ -180,23 +179,12 @@
                             <div class="geex-content__section geex-content__income-count">
                                 <div class="geex-content__section__header">
                                     <div class="geex-content__section__header__title-part">
-                                        <h3 class="geex-content__section__header__title">Total Pemesanan Berdasarkan Pekerjaan</h4>
+                                        <h3 class="geex-content__section__header__title">Total Pemesanan Berdasarkan
+                                            Pekerjaan</h4>
                                     </div>
                                 </div>
                                 <div class="geex-content__section__content">
-                                    {{-- <div class="geex-content__section__content__top">
-                                        <div class="geex-content__section__content__top__left">
-                                        <h4 class="geex-content__section__content__amount increment">
-                                            <i class="uil uil-angle-up"></i>
-                                            +4,6%
-                                        </h4>
-                                        <p class="geex-content__section__content__subtitle">Bigger than last week</p>
-                                        </div>
-                                        <div class="geex-content__section__content__top__right">
-                                        <h4 class="geex-content__section__content__price">$1,572.68</h4>
-                                        </div>
-                                    </div> --}}
-                                    <div id="income-chart" class="column-chart"></div>
+                                    <div id="pekerjaan-chart" class="column-chart"></div>
                                 </div>
                             </div>
                         </div>
@@ -204,13 +192,29 @@
                             <div class="geex-content__widget__single geex-content__widget__summary">
                                 <div class="geex-content__widget__summary__header">
                                     <h4 class="geex-content__section__header__title">Persentase Domisili</h4>
-                                    
+
                                 </div>
                                 <div class="geex-content__widget__summary__content">
-                                    <div id="summary-chart"></div>
+                                    <div id="domisili-chart"></div>
                                 </div>
                             </div>
                         </div>
+                    </div>
+                    <div class="mt-5" style="display: flex; flex-wrap: wrap; gap: 20px;">
+                        <div style="flex: 1; min-width: 300px;">
+                            <div class="geex-content__section geex-content__income-count">
+                                <div class="geex-content__section__header">
+                                    <div class="geex-content__section__header__title-part">
+                                        <h3 class="geex-content__section__header__title">Total Pemesanan Berdasarkan
+                                            Layanan</h4>
+                                    </div>
+                                </div>
+                                <div class="geex-content__section__content">
+                                    <div id="top-layanan-chart" class="column-chart"></div>
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
 
                 </div>
@@ -218,10 +222,10 @@
         </div>
     </main>
 
-    <x-admin-footer/>
+    <x-admin-footer />
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    
+
     @if (session('success'))
         <script>
             document.addEventListener('DOMContentLoaded', function() {
@@ -236,6 +240,205 @@
             });
         </script>
     @endif
+
+    {{-- Total Pemesanan Berdasarkan Pekerjaan Chart --}}
+    <script>
+        var pemesananData = @json($pemesananByPekerjaan);
+        console.log(pemesananData);
+
+        let pekerjaanLabels = pemesananData.map(item => item.pekerjaan);
+        let pekerjaanValues = pemesananData.map(item => item.total);
+
+        let incomeOptions = {
+            series: [{
+                data: pekerjaanValues
+            }],
+
+            chart: {
+                height: 350,
+                type: 'bar',
+            },
+
+            colors: ["#1BD5FE"],
+
+            fill: {
+                type: "gradient",
+                gradient: {
+                    type: "vertical",
+                    shadeIntensity: 1,
+                    opacityFrom: 1,
+                    opacityTo: 1,
+                    stops: [0, 100],
+                    gradientToColors: ["#216BDB"]
+                }
+            },
+
+            plotOptions: {
+                bar: {
+                    columnWidth: 50,
+                    borderRadius: 12,
+                }
+            },
+
+            // dataLabels: {
+            //     enabled: false,
+            // },
+
+            xaxis: {
+                categories: pekerjaanLabels, // Diganti dengan label pekerjaan
+                position: 'bottom',
+                axisBorder: {
+                    show: false,
+                },
+                axisTicks: {
+                    show: false,
+                },
+                crosshairs: {
+                    show: false,
+                },
+                tooltip: {
+                    enabled: false,
+                }
+            },
+
+            yaxis: {
+                labels: {
+                    show: true,
+                    offsetX: 0
+                },
+                min: 0,
+                tickAmount: 3,
+            },
+
+            grid: {
+                show: true,
+                padding: {
+                    left: 0,
+                    right: 0,
+                    top: 0,
+                    bottom: 0
+                },
+            },
+
+        };
+
+        let incomeChartContainer = document.querySelector("#pekerjaan-chart");
+        let incomeChart = incomeChartContainer && new ApexCharts(incomeChartContainer, incomeOptions);
+        incomeChart && incomeChart.render();
+    </script>
+
+    {{-- Persentase Domisili --}}
+    <script>
+        var domisiliData = @json($domisiliData);
+        console.log(domisiliData);
+
+        let domisiliLabels = domisiliData.map(item => item.domisili);
+        let domisiliValues = domisiliData.map(item => item.total);
+
+        let summaryOptions = {
+            series: domisiliValues,
+            labels: domisiliLabels,
+            colors: ["#00ADA3", "#374C98", "#23292F", "#FFBB54", "#FF5733"], // Tambahkan warna jika banyak kategori
+            chart: {
+                height: '350px',
+                type: 'donut',
+            },
+            plotOptions: {
+                pie: {
+                    expandOnClick: true,
+                    dataLabels: {
+                        enabled: false,
+                    },
+                }
+            },
+            legend: {
+                show: true,
+                position: "bottom",
+                fontSize: '14px',
+                fontWeight: 500,
+                formatter: function(seriesName, opts) {
+                    let data = opts.w.globals.seriesTotals[opts.seriesIndex];
+                    return seriesName + ": " + data;
+                },
+            },
+            responsive: [{
+                breakpoint: 576,
+                options: {
+                    chart: {
+                        height: '550px'
+                    }
+                },
+            }]
+        };
+
+        let summaryChartContainer = document.querySelector("#domisili-chart");
+        let summaryChart = summaryChartContainer && new ApexCharts(summaryChartContainer, summaryOptions);
+        summaryChart && summaryChart.render();
+    </script>
+
+    <script>
+        let layananData = {!! json_encode(
+            $pemesananByLayanan->map(function ($item) {
+                return [
+                    'nama' => $item->nama,
+                    'total' => $item->total,
+                ];
+            }),
+        ) !!};
+
+        if (layananData.length > 0) {
+            let categories = layananData.map(item => item.nama); // Nama layanan sebagai label
+            let seriesData = layananData.map(item => item.total); // Total pemesanan
+
+            let chartOptions = {
+                series: [{
+                    name: "Total Pemesanan",
+                    data: seriesData
+                }],
+
+                colors: ["#FEA625"],
+
+                fill: {
+                    type: "gradient",
+                    gradient: {
+                        type: "vertical",
+                        shadeIntensity: 1,
+                        opacityFrom: 1,
+                        opacityTo: 1,
+                        stops: [0, 100],
+                        gradientToColors: ["#F75B00"]
+                    }
+                },
+                chart: {
+                    height: 350,
+                    type: 'bar'
+                },
+                xaxis: {
+                    categories: categories
+                },
+                grid: {
+                    show: true,
+                    padding: {
+                        left: 0,
+                        right: 0,
+                        top: 0,
+                        bottom: 0
+                    },
+                },
+                plotOptions: {
+                    bar: {
+                        columnWidth: 50,
+                        borderRadius: 12,
+                    }
+                },
+            };
+
+            let layananChart = new ApexCharts(document.querySelector("#top-layanan-chart"), chartOptions);
+            layananChart.render();
+        } else {
+            console.warn("Data layanan kosong, tidak menampilkan chart.");
+        }
+    </script>
 </body>
 
 </html>
