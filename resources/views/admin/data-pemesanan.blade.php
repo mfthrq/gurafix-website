@@ -40,7 +40,6 @@
                     <thead>
                         <tr style="width: 100%">
                             <th>No</th>
-                            <th>Midtrans Order ID</th>
                             <th>Pelanggan</th>
                             <th>Layanan</th>
                             <th>Paket</th>
@@ -58,11 +57,6 @@
                                 <td>
                                     <div class="author-area">
                                         <p>{{ $index + 1 }}</p>
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="author-area">
-                                        <p>{{ $pemesanan->midtrans_order_id ? $pemesanan->midtrans_order_id : "-" }}</p>
                                     </div>
                                 </td>
                                 <td>
