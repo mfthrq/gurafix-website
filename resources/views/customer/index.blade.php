@@ -177,7 +177,7 @@
                         <div class="content-inner text-center">
                             <div class="icon">
                                 <img src="{{ asset('assets_admin/gambar_layanan/' . $layanan->gambar_layanan) }}"
-                                    alt="img" />
+                                    alt="img" width="150px" />
                             </div>
                             <span class="mt-3">Layanan {{ $index + 1 }}</span>
                             <h3>{{ $layanan->nama }}</h3>
