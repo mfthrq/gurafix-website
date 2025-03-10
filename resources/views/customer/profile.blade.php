@@ -29,7 +29,7 @@
                 <div class="col-lg-8">
                     <div class="team-details-page-content">
                         <div class="thumb mb-4">
-                            <img class="w-100" src="assets/img/team/team-d-1.png" alt="img">
+                            <img class="w-100" style="border-radius: 10px;" src="assets/img/banner/banner_profile.png" alt="img">
                         </div>
                         <div
                             class="grid info-meta d-flex flex-column flex-lg-row justify-content-between align-self-center">
