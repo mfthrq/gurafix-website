@@ -38,7 +38,7 @@
                         @if ($errors->has('loginError'))
                             <div class="alert alert-danger">{{ $errors->first('loginError') }}</div>
                         @endif
-                        <form action="{{ route('customer.login.submit') }}" class="login-form-inner" method="POST">
+                        <form action="{{ route('login.submit') }}" class="login-form-inner" method="POST">
                             @csrf
                             <div class="single-input-inner style-border">
                                 <input type="email" placeholder="Masukkan Email Anda" id="email" name="email">

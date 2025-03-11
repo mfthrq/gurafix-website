@@ -23,6 +23,6 @@ class AdminMiddleware
         }
 
         // Jika bukan admin, redirect atau tampilkan pesan error
-        return redirect()->route('admin.login-admin')->with('error', 'Anda tidak memiliki akses ke halaman ini.');
+        return redirect()->route('customer.login')->with('error', 'Anda tidak memiliki akses ke halaman ini.');
     }
 }

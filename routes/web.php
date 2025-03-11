@@ -14,8 +14,8 @@ use App\Http\Middleware\PelangganMiddleware;
 // ========================== ADMIN ============================
 
 // Rute halaman login admin
-Route::get('/login-admin', [AuthController::class, 'showLoginFormAdmin'])->name('admin.login-admin');
-Route::post('/login-admin', [AuthController::class, 'loginAdmin'])->name('admin.login.submit');
+// Route::get('/login-admin', [AuthController::class, 'showLoginFormAdmin'])->name('admin.login-admin');
+// Route::post('/login-admin', [AuthController::class, 'loginAdmin'])->name('admin.login.submit');
 Route::post('/logout-admin', [AuthController::class, 'logoutAdmin'])->name('admin.logout');
 
 // Rute yang hanya bisa diakses oleh admin
@@ -64,8 +64,8 @@ Route::post('/admin/chat-admin/store', [ChatController::class, 'store'])->name('
 // ========================== PELANGGAN ============================
 
 // ========== LOGIN ==========
-Route::get('/login', [AuthController::class, 'showLoginFormCustomer'])->name('customer.login');
-Route::post('/login', [AuthController::class, 'loginCustomer'])->name('customer.login.submit');
+Route::get('/login', [AuthController::class, 'showLoginFormCustomerAndAdmin'])->name('customer.login');
+Route::post('/login', [AuthController::class, 'login'])->name('login.submit');
 Route::post('/logout', [AuthController::class, 'logoutCustomer'])->name('customer.logout');
 
 // ========== SIGNUP ==========
