@@ -6,10 +6,10 @@
                     <img src="{{ asset('assets/img/logo_gurafix_no_bg.png') }}" width="50px" alt="img" />
                 </a>
                 <ul class="p-0 m-0">
-                    <li><a href="index-2.html">Beranda</a></li>
-                    <li><a href="about.html">Tentang Kami</a></li>
-                    <li><a href="service.html">Layanan</a></li>
-                    <li><a href="contact.html">Kontak</a></li>
+                    <li><a href="/">Beranda</a></li>
+                    <li><a href="/tentang">Tentang Kami</a></li>
+                    <li><a href="/layanan">Layanan</a></li>
+                    <li><a href="/kontak">Kontak</a></li>
                 </ul>
             </div>
             <p class="copyright">
