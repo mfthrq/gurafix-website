@@ -168,7 +168,7 @@
                             let chatClass = chat.id_sender == response.admin_id ? "active" : "";
 
                             let imageAttachment = chat.attachments ?
-                                `<img src="/assets_admin/attachments/${chat.attachments}" alt="Attachment" width="200">` :
+                                `<img src="/assets_admin/attachments/${chat.attachments}" alt="Attachment" width="500">` :
                                 "";
 
                             chatHtml += `

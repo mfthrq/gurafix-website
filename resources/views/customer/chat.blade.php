@@ -37,12 +37,18 @@
 
     .chat-box-admin {
         align-self: flex-start;
-        max-width: 70%;
     }
 
     .chat-box-customer {
         align-self: flex-end;
-        max-width: 70%;
+    }
+
+    /* Untuk tablet dan layar lebih besar */
+    @media (min-width: 768px) {
+        .chat-box-admin,
+        .chat-box-customer {
+            max-width: 50%;
+        }
     }
 
     .admin-message {
@@ -192,7 +198,7 @@
 
                             // Cek apakah ada gambar di kolom attachments
                             let imageAttachment = chat.attachments ?
-                                `<img src="/assets_admin/attachments/${chat.attachments}" alt="Attachment" width="200">` :
+                                `<img src="/assets_admin/attachments/${chat.attachments}" alt="Attachment" width="500">` :
                                 "";
 
                             if (chat.id_sender == customerId) {
