@@ -180,11 +180,11 @@
                                 <div class="geex-content__section__header">
                                     <div class="geex-content__section__header__title-part">
                                         <h3 class="geex-content__section__header__title">Total Pemesanan Berdasarkan
-                                            Pekerjaan</h4>
+                                            Layanan</h4>
                                     </div>
                                 </div>
                                 <div class="geex-content__section__content">
-                                    <div id="pekerjaan-chart" class="column-chart"></div>
+                                    <div id="top-layanan-chart" class="column-chart"></div>
                                 </div>
                             </div>
                         </div>
@@ -202,15 +202,16 @@
                     </div>
                     <div class="mt-5" style="display: flex; flex-wrap: wrap; gap: 20px;">
                         <div style="flex: 1; min-width: 300px;">
+
                             <div class="geex-content__section geex-content__income-count">
                                 <div class="geex-content__section__header">
                                     <div class="geex-content__section__header__title-part">
                                         <h3 class="geex-content__section__header__title">Total Pemesanan Berdasarkan
-                                            Layanan</h4>
+                                            Pekerjaan</h4>
                                     </div>
                                 </div>
                                 <div class="geex-content__section__content">
-                                    <div id="top-layanan-chart" class="column-chart"></div>
+                                    <div id="pekerjaan-chart" class="column-chart"></div>
                                 </div>
                             </div>
                         </div>
