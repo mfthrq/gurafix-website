@@ -20,7 +20,8 @@
                     <a href="{{ route('beranda') }}" class="{{ Request::is('/') ? 'active' : '' }}">Beranda</a>
                 </li>
                 <li>
-                    <a href="{{ route('tentang') }}" class="{{ Request::is('tentang') ? 'active' : '' }}">Tentang Kami</a>
+                    <a href="{{ route('tentang') }}" class="{{ Request::is('tentang') ? 'active' : '' }}">Tentang
+                        Kami</a>
                 </li>
                 <li>
                     <a href="{{ route('layanan') }}" class="{{ Request::is('layanan') ? 'active' : '' }}">Layanan</a>
@@ -28,19 +29,30 @@
                 <li>
                     <a href="{{ route('kontak') }}" class="{{ Request::is('kontak') ? 'active' : '' }}">Kontak</a>
                 </li>
-                
-                @if(Auth::check() && Auth::user()->id_role == 2)
-                    <li>
-                        <a href="{{ route('chat') }}"  style="color: white; background-color: #004CE7; padding: 15px; border-radius: 20px;" >Chat</a>
-                    </li>
-                    <li>
-                        <a href="{{ route('profile') }}"  style="color: white; background-color: #004CE7; padding: 15px; border-radius: 20px;">Profile</a>
-                    </li>
+
+                @if (Auth::check())
+                    @if (Auth::user()->id_role == 2)
+                        <li>
+                            <a href="{{ route('chat') }}"
+                                style="color: white; background-color: #004CE7; padding: 15px; border-radius: 20px;">Chat</a>
+                        </li>
+                        <li>
+                            <a href="{{ route('profile') }}"
+                                style="color: white; background-color: #004CE7; padding: 15px; border-radius: 20px;">Profile</a>
+                        </li>
+                    @elseif(Auth::user()->id_role == 1)
+                        <li>
+                            <a href="{{ route('admin.index-admin') }}"
+                                style="color: white; background-color: #004CE7; padding: 15px; border-radius: 20px;">Admin</a>
+                        </li>
+                    @endif
                 @else
                     <li>
-                        <a href="{{ route('customer.login') }}" style="color: white; background-color: #004CE7; padding: 15px; border-radius: 20px;">Login</a>
+                        <a href="{{ route('customer.login') }}"
+                            style="color: white; background-color: #004CE7; padding: 15px; border-radius: 20px;">Login</a>
                     </li>
                 @endif
+
             </ul>
         </div>
     </div>
