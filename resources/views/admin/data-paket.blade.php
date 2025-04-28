@@ -54,8 +54,8 @@
                                     </div>
                                 </td>
                                 <td>
-                                    <div class="author-area">
-                                        <p>{{ $paket->fitur }}</p>
+                                    <div style="max-height: 100px; overflow-y: auto;">
+                                        {{ $paket->fitur }}
                                     </div>
                                 </td>
                                 <td>

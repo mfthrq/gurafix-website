@@ -65,7 +65,7 @@
                                     </div>
                                 </td>
                                 <td>
-                                    <div  style="max-height: 150px; overflow-y: auto;">
+                                    <div style="max-height: 150px; overflow-y: auto;">
                                         <p>{{ $pemesanan->layanan->nama }}</p>
                                     </div>
                                 </td>
@@ -131,8 +131,9 @@
                                     </div>
                                 </td>
                                 <td>
-                                    <div class="author-area">
-                                        <p>{{ $pemesanan->link_desain ? $pemesanan->link_desain : '-' }}</p>
+                                    <div
+                                        style="max-width: 200px; overflow-y: auto;">
+                                        {{ $pemesanan->link_desain ? $pemesanan->link_desain : '-' }}
                                     </div>
                                 </td>
                                 <td>
@@ -224,8 +225,8 @@
 
                         <label for="pelanggan_brief" class="form-label">Pelanggan Brief</label>
                         <div class="geex-content__form__single__box mb-20">
-                            <textarea placeholder="Masukkan pelanggan brief" class="form-control"
-                                id="pelanggan_brief" name="pelanggan_brief" style="height: 200px" required></textarea>
+                            <textarea placeholder="Masukkan pelanggan brief" class="form-control" id="pelanggan_brief" name="pelanggan_brief"
+                                style="height: 200px" required></textarea>
                         </div>
 
                         <label for="tanggal_pemesanan" class="form-label">Tanggal Pemesanan</label>
@@ -319,8 +320,8 @@
 
                         <label for="pelanggan_brief" class="form-label">Pelanggan Brief</label>
                         <div class="geex-content__form__single__box mb-20">
-                            <textarea placeholder="Masukkan pelanggan brief" class="form-control"
-                                id="editPelanggan_brief" name="pelanggan_brief" style="height: 200px;"></textarea>
+                            <textarea placeholder="Masukkan pelanggan brief" class="form-control" id="editPelanggan_brief"
+                                name="pelanggan_brief" style="height: 200px;"></textarea>
                         </div>
 
                         <label for="tanggal_pemesanan" class="form-label">Tanggal Pemesanan</label>
@@ -458,7 +459,7 @@
     </script>
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-            
+
     @if (session('success'))
         <script>
             document.addEventListener('DOMContentLoaded', function() {
@@ -497,7 +498,7 @@
             });
         });
     </script>
-    
+
 </body>
 
 </html>
