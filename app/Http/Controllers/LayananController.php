@@ -50,7 +50,7 @@ class LayananController extends Controller
         $request->validate([
             'nama' => 'required|string|max:500',
             'deskripsi' => 'required|string',
-            'foto_produk' => 'nullable|image|mimes:jpg,jpeg,png|max:5048',
+            'gambar_layanan' => 'nullable|image|mimes:jpg,jpeg,png|max:10048',
         ]);
     
         // Memperbarui data produk
